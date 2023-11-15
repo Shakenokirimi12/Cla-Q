@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaQ - 先生用</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .form-container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .input-field {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .action-button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>ClaQ - 先生用</h2>
+        <form id="teacher-form">
+            <label for="email-input">メールアドレス:</label>
+            <input type="email" id="email-input" class="input-field" placeholder="メールアドレスを入力">
+            <br>
+            <label for="password-input">パスワード:</label>
+            <input type="password" id="password-input" class="input-field" placeholder="パスワードを入力">
+            <br>
+            <button type="button" class="action-button" onclick="signInTeacher()">先生としてログイン</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>ClaQ - クラス参加</h2>
+        <form id="class-join-form">
+            <label for="class-code-input">クラスコード:</label>
+            <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力">
+            <br>
+            <label for="teacher-email-input">先生のメールアドレス:</label>
+            <input type="email" id="teacher-email-input" class="input-field" placeholder="先生のメールアドレスを入力">
+            <br>
+            <label for="teacher-password-input">先生のパスワード:</label>
+            <input type="password" id="teacher-password-input" class="input-field" placeholder="先生のパスワードを入力">
+            <br>
+            <button type="button" class="action-button" onclick="joinClass()">クラスに参加</button>
+        </form>
+    </div>
+
+    <script>
+        // Firebaseの初期化などが必要な場合はここに追加
+
+        function signInTeacher() {
+            // 先生としてログインする処理を追加
+            var email = document.getElementById('email-input').value;
+            var password = document.getElementById('password-input').value;
+            firebase.auth().signInWithEmailAndPassword(email, password);
+        }
+
+        function joinClass() {
+            // クラスに参加する処理を追加
+            var classCode = document.getElementById('class-code-input').value;
+            var teacherEmail = document.getElementById('teacher-email-input').value;
+            var teacherPassword = document.getElementById('teacher-password-input').value;
+            firebase.auth().signInWithEmailAndPassword(teacherEmail, teacherPassword)
+              .then(function () {
+                  // 先生がログインした後にクラスに参加する処理を追加
+              })
+              .catch(function (error) {
+                  // エラーハンドリング
+              });
+        }
+    </script>
+
+</body>
+</html>
