@@ -63,13 +63,6 @@
 
     <script>
 
-        // ログイン状態を確認し、未ログインの場合はログイン画面にリダイレクト
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (!user) {
-                // ログインしていない場合はログイン画面にリダイレクト
-                window.location.href = '/student_login.html';
-            }
-        });
 
         function submitAnswer() {
             // 送信処理のコードを追加
