@@ -48,6 +48,7 @@
             background-color: #45a049;
         }
     </style>
+    <script src='https://cdn.firebase.com/js/client/10.6.0/firebase.js'></script>
 </head>
 
 <body>
@@ -92,7 +93,8 @@
                     alert('ログインに失敗しました。（' + error.message + '）')
                 });
         }
-
+    </script>
+    <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
@@ -116,5 +118,4 @@
         const analytics = getAnalytics(app);
     </script>
 </body>
-
 </html>
