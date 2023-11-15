@@ -48,7 +48,16 @@
             background-color: #45a049;
         }
     </style>
-    <script src='https://cdn.firebase.com/js/client/10.6.0/firebase.js'></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js'
+
+        // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js'
+
+        // Add Firebase products that you want to use
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js'
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js'
+    </script>
 </head>
 
 <body>
@@ -96,8 +105,6 @@
     </script>
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -114,8 +121,9 @@
         };
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+        const firebase = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
     </script>
 </body>
+
 </html>
