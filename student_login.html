@@ -77,39 +77,15 @@
             <button type="button" class="action-button" onclick="Login()">ログイン</button>
         </form>
     </div>
-    <script>
-        function Login() {
-            //独自APIへの接続処理を記述
-            //そのあとにログイン
-            var email = document.getElementById('email-input').value;
-            var password = document.getElementById('password-input').value;
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    var user = userCredential.user;
-                    firebase.auth().onAuthStateChanged(function (user) {
-                        if (user) {
-                            alert("ログインが完了しました。次へ進みます。")
-                            window.location.href = '/student_menu.html';
-                        } else {
-                            //ログアウト状態
-                        }
-                    });
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert('ログインに失敗しました。（' + error.message + '）')
-                });
-        }
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
+        import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
@@ -125,7 +101,32 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+
+        function studentLogin() {
+            var email = document.getElementById('email-input').value;
+            var password = document.getElementById('password-input').value;
+
+            signInWithEmailAndPassword(app.auth(), email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    onAuthStateChanged(app.auth(), function (user) {
+                        if (user) {
+                            alert("ログインが完了しました。次へ進みます。")
+                            window.location.href = '/student_menu.html';
+                        } else {
+                            //ログアウト状態
+                        }
+                    });
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('ログインに失敗しました。（' + error.message + '）')
+                });
+        }
     </script>
+
 </body>
 
 </html>
