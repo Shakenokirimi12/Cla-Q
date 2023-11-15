@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,6 +49,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div id="class-info">
@@ -60,12 +62,9 @@
     <button id="submit-button" onclick="submitAnswer()">送信</button>
 
     <script>
-         // Firebaseの初期化などが必要な場合はここに追加
-        // 例: var firebaseConfig = { ... };
-        // 例: firebase.initializeApp(firebaseConfig);
 
         // ログイン状態を確認し、未ログインの場合はログイン画面にリダイレクト
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function (user) {
             if (!user) {
                 // ログインしていない場合はログイン画面にリダイレクト
                 window.location.href = '/student_login.html';
@@ -85,7 +84,7 @@
                     // 例: サーバーとの通信、データベースへの保存など
                     // 例: 送信が成功したら、成功メッセージを表示
                     alert("答えが送信されました: " + answer);
-                    
+
                     // ボックス内をクリア
                     answerBox.value = "";
                 }
@@ -104,4 +103,5 @@
     </script>
 
 </body>
+
 </html>
