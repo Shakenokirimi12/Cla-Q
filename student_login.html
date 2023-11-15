@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClaQ - クラス参加</title>
+    <title>ClaQ - 生徒ログイン</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -16,32 +17,24 @@
             background-color: #f5f5f5;
         }
 
-        #class-form {
+        #login-form {
             text-align: center;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%; /* 新しく追加 */
-        }
-
-        #class-join-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .input-field {
-            width:50%; /* 変更 */
+            width: 80%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
-            box-sizing: border-box; /* 追加 */
         }
 
-        #login-button {
+        .action-button {
             background-color: #4caf50;
             color: #ffffff;
             padding: 10px 20px;
@@ -51,49 +44,65 @@
             cursor: pointer;
         }
 
-        #login-button:hover {
+        .action-button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
+
 <body>
 
-    <div id="class-form">
-        <h2>ClaQ - クラス参加</h2>
-        <form id="class-join-form">
-            <label for="class-code-input">クラスコード:</label>
-            <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力">
-            <br>
-            <label for="student-email-input">メールアドレス:</label>
-            <input type="email" id="student-email-input" class="input-field" placeholder="メールアドレスを入力">
-            <br>
-            <label for="student-password-input">パスワード:</label>
-            <input type="password" id="student-password-input" class="input-field" placeholder="パスワードを入力">
-            <br>
-            <button type="button" id="login-button">参加する</button>
+    <div id="login-form">
+        <h2>ClaQ - 生徒ログイン</h2>
+        <form id="student-login-form">
+            <label for="email-input">メールアドレス:</label>
+            <input type="email" id="email-input" class="input-field" placeholder="メールアドレスを入力">
+
+            <label for="password-input">パスワード:</label>
+            <input type="password" id="password-input" class="input-field" placeholder="パスワードを入力">
+
+            <button type="button" class="action-button" onclick="studentLogin()">ログイン</button>
         </form>
     </div>
 
-    <script>z
-        // ここに必要なJavaScriptコードを追加（Firebaseの初期化など）
-        // 例: Firebaseの初期化コード
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+
+    <script>
+        // Firebaseの設定（ご自身のプロジェクトの設定に置き換えてください）
         var firebaseConfig = {
-            apiKey: "your-api-key",
-            authDomain: "your-auth-domain",
-            projectId: "your-project-id",
-            storageBucket: "your-storage-bucket",
-            messagingSenderId: "your-messaging-sender-id",
-            appId: "your-app-id"
+            apiKey: "AIzaSyDzQ1hdnji5NqO89ta4ooan52208sjXBbY",
+            authDomain: "idaas-quick-question.firebaseapp.com",
+            projectId: "idaas-quick-question",
+            storageBucket: "idaas-quick-question.appspot.com",
+            messagingSenderId: "263715742913",
+            appId: "1:263715742913:web:f8934eef477a16c52b6040",
+            measurementId: "G-2SYNR6568E"
         };
+
+        // Firebaseの初期化
         firebase.initializeApp(firebaseConfig);
 
-        // 例: ログインボタンがクリックされた時の処理
-        document.getElementById('login-button').addEventListener('click', function () {
-            //ここにFirebaseのログイン処理などを追加
-            var classCode = document.getElementById('class-code-input').value;
-            firebase.auth().signInWithEmailAndPassword(email, password);
-        });
+        function studentLogin() {
+            var email = document.getElementById('email-input').value;
+            var password = document.getElementById('password-input').value;
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(function (userCredential) {
+                    // ログイン成功時の処理
+                    var user = userCredential.user;
+                    alert("ログイン成功: " + user.email);
+                    // ログイン成功後に遷移などの処理を追加することができます
+                })
+                .catch(function (error) {
+                    // ログイン失敗時の処理
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert("ログイン失敗: " + errorMessage);
+                });
+        }
     </script>
 
 </body>
+
 </html>
