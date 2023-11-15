@@ -60,8 +60,20 @@
     <button id="submit-button" onclick="submitAnswer()">送信</button>
 
     <script>
+         // Firebaseの初期化などが必要な場合はここに追加
+        // 例: var firebaseConfig = { ... };
+        // 例: firebase.initializeApp(firebaseConfig);
+
+        // ログイン状態を確認し、未ログインの場合はログイン画面にリダイレクト
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user) {
+                // ログインしていない場合はログイン画面にリダイレクト
+                window.location.href = '/student_login.html';
+            }
+        });
+
         function submitAnswer() {
-            // 確認ダイアログを表示
+            // 送信処理のコードを追加
             var answerBox = document.getElementById('answer-box');
             var answer = answerBox.value.trim();
 
