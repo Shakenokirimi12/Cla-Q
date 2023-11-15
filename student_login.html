@@ -64,16 +64,39 @@
             <label for="password-input">パスワード:</label>
             <input type="password" id="password-input" class="input-field" placeholder="パスワードを入力">
 
-            <button type="button" class="action-button" onclick="studentLogin()">ログイン</button>
+            <button type="button" class="action-button" onclick="Login()">ログイン</button>
         </form>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"></script>
-
     <script>
-        // Firebaseの設定（ご自身のプロジェクトの設定に置き換えてください）
-        var firebaseConfig = {
+        function Login() {
+            //独自APIへの接続処理を記述
+            //そのあとにログイン
+            var email = document.getElementById('email-input').value;
+            var password = document.getElementById('password-input').value;
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    alert("ログインが完了しました。次へ進みます。")
+                    window.location.href = '/student_menu.html';
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('ログインに失敗しました。（' + error.message + '）')
+                });
+        }
+    </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
             apiKey: "AIzaSyDzQ1hdnji5NqO89ta4ooan52208sjXBbY",
             authDomain: "idaas-quick-question.firebaseapp.com",
             projectId: "idaas-quick-question",
@@ -83,29 +106,10 @@
             measurementId: "G-2SYNR6568E"
         };
 
-        // Firebaseの初期化
-        firebase.initializeApp(firebaseConfig);
-
-        function studentLogin() {
-            var email = document.getElementById('email-input').value;
-            var password = document.getElementById('password-input').value;
-
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(function (userCredential) {
-                    // ログイン成功時の処理
-                    var user = userCredential.user;
-                    alert("ログイン成功: " + user.email);
-                    // ログイン成功後に遷移などの処理を追加することができます
-                })
-                .catch(function (error) {
-                    // ログイン失敗時の処理
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert("ログイン失敗: " + errorMessage);
-                });
-        }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
     </script>
-
 </body>
 
 </html>
