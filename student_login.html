@@ -77,8 +77,14 @@
                 .then((userCredential) => {
                     // Signed in
                     var user = userCredential.user;
-                    alert("ログインが完了しました。次へ進みます。")
-                    window.location.href = '/student_menu.html';
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            alert("ログインが完了しました。次へ進みます。")
+                            window.location.href = '/student_menu.html';
+                        } else {
+                            //ログアウト状態
+                        }
+                    });
                 })
                 .catch((error) => {
                     var errorCode = error.code;
