@@ -110,6 +110,18 @@
             var classCode = document.getElementById('class-code-input').value;
             firebase.auth().signInWithEmailAndPassword(email, password);
         });
+        let uiConfig = {
+            callbacks: {
+                signInSuccessWithAuthResult: function () {
+                    console.log("ログイン成功")
+                    return true;
+                },
+            },
+            signInOptions: [
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            ],
+        };
+
         let ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.start('#firebaseui-auth-container', uiConfig);
     </script>
