@@ -79,10 +79,18 @@
         #end-button:hover {
             background-color: #45a049;
         }
+
+        #controlArea {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
     </style>
 </head>
 
-<body>
 
     <div id="class-info">
         <p id="mail_address">メールアドレス:</p>
@@ -91,9 +99,11 @@
         <button id="logout_button" onclick="logOut()">ログアウト</button>
     </div>
     
-    <button id="start-button" onclick="startQuestion()">問題の開始</button>
-    <button id="end-button" onclick="sendQuestion()">問題の終了</button>
-    <p id="status">現在:1問目開始</p>
+    <div id="controlArea">
+        <button id="start-button" onclick="startQuestion()">問題の開始</button>
+        <button id="end-button" onclick="sendQuestion()">問題の終了</button>
+        <p id="status">現在:1問目開始</p>
+    </div>
 
     <script>
         var questionnumber = 1;
