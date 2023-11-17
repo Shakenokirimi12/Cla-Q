@@ -30,14 +30,20 @@
                 console.log(user);  // firebaseから受け取ったユーザー情報。本番運用時はconsole.logは消すこと
                 var loginText = "ようこそ" + user.displayName + 'さん！' + user.email + "<button onclick='logOut()'>ログアウト</button>";
                 document.getElementById('firebaseui-auth-container').innerHTML = loginText;
+                if(user.email.includes("-")){
+                    window.location.href = "/teacher_login"
+                }
+                else{
+                    window.location.href = "/student_login"
+                }
             } else {  // 未ログイン時
                 var ui = new firebaseui.auth.AuthUI(firebase.auth());
                 ui.start('#firebaseui-auth-container', {
-                    signInSuccessUrl: '/switch-usertype.html',
                     signInOptions: [
                         firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
                     ],
                 });
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             }
         });
         function logOut() {
