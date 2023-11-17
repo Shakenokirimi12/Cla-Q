@@ -11,10 +11,17 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background-color: #3498db; /* Change background color to blue */
+            color: #fff; /* Change text color to white */
+        }
+
+        #login-header {
+            margin-top: 20px;
+            font-size: 24px;
+            text-align: center;
         }
 
         #login-form {
@@ -23,6 +30,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
         .input-field {
@@ -51,9 +59,11 @@
 </head>
 
 <body>
+    <div id="login-header">
+        <p>ClaQ - 生徒ログイン</p>
+    </div>
 
     <div id="login-form">
-        <h2>ClaQ - 生徒ログイン</h2>
         <form id="student-login-form">
             <label for="class-code-input">クラスコード:</label>
             <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力">
@@ -64,7 +74,7 @@
     <script>
         function Login() {
             var student_num = document.getElementById('class-code-input').value;
-            
+            // Add your login logic here
         }
     </script>
 </body>
