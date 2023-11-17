@@ -1,131 +1,130 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ClaQ - 生徒メニュー</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+            authDomain: "cla-q-7e2d9.firebaseapp.com",
+            projectId: "cla-q-7e2d9",
+            storageBucket: "cla-q-7e2d9.appspot.com",
+            messagingSenderId: "809026902811",
+            appId: "1:809026902811:web:eb91e5c91d1020e15311be"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            background-color: #3498db; /* Change background color to blue */
-            color: #fff; /* Change text color to white */
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: #3498db; /* Change background color to blue */
+        color: #fff; /* Change text color to white */
+      }
 
-        #class-info {
-            text-align: left;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
+      #class-info {
+        text-align: left;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+      }
 
-        #answer-box {
-            width: 80%;
-            height: 200px;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            resize: vertical;
-        }
+      #answer-box {
+        width: 80%;
+        height: 200px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        resize: vertical;
+      }
 
-        #submit-button {
-            background-color: #4caf50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+      #submit-button {
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        cursor: pointer;
+      }
 
-        #submit-button:hover {
-            background-color: #45a049;
-        }
+      #submit-button:hover {
+        background-color: #45a049;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div id="class-info">
-        <p id="mail_address">メールアドレス:</p>
-        <p id="user_name"></p>
-        <p id="class_code">クラスコード:</p>
+      <p id="mail_address">メールアドレス:</p>
+      <p id="user_name"></p>
+      <p id="class_code">クラスコード:</p>
     </div>
 
-    <textarea id="answer-box" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
+    <textarea
+      id="answer-box"
+      placeholder="答えを入力してください"
+      onkeydown="handleKeyDown(event)"
+    ></textarea>
 
     <button id="submit-button" onclick="submitAnswer()">送信</button>
 
     <script>
+      function submitAnswer() {
+        // 送信処理のコードを追加
+        var answerBox = document.getElementById("answer-box");
+        var answer = answerBox.value.trim();
 
+        if (answer !== "") {
+          var confirmation = confirm("本当に答えを送信しますか？");
 
-        function submitAnswer() {
-            // 送信処理のコードを追加
-            var answerBox = document.getElementById('answer-box');
-            var answer = answerBox.value.trim();
+          if (confirmation) {
+            // ここに答えを送信する処理を追加
+            // 例: サーバーとの通信、データベースへの保存など
+            // 例: 送信が成功したら、成功メッセージを表示
+            alert("答えが送信されました: " + answer);
 
-            if (answer !== "") {
-                var confirmation = confirm("本当に答えを送信しますか？");
+            // ボックス内をクリア
+            answerBox.value = "";
+          }
+        } else {
+          alert("答えを入力してください。");
+        }
+      }
 
-                if (confirmation) {
-                    // ここに答えを送信する処理を追加
-                    // 例: サーバーとの通信、データベースへの保存など
-                    // 例: 送信が成功したら、成功メッセージを表示
-                    alert("答えが送信されました: " + answer);
+      function handleKeyDown(event) {
+        // Enter キーが押された場合に送信処理を行う
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          submitAnswer();
+        }
+      }
 
-                    // ボックス内をクリア
-                    answerBox.value = "";
-                }
-            } else {
-                alert("答えを入力してください。");
+      firebase.auth().onAuthStateChanged(function (user) {
+            if (user) { // ログイン時
+                // Update the user information display
+                document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
+                document.getElementById('user_name').innerHTML =  user.displayName;
+                document.getElementById('class_code').innerHTML = "";
+
+            } else {  // 未ログイン時
+                window.location.href = "/login"
             }
-        }
-
-        function handleKeyDown(event) {
-            // Enter キーが押された場合に送信処理を行う
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                submitAnswer();
-            }
-        }
-
-        window.onload = function(){
-            const { user } = useUser();
-            console.log(user);
-            document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
-            document.getElementById('user_name').innerHTML = "ユーザー名:" + user.displayName;
-
-        }
-
-        function useUser(){
-            const auth = getAuth();
-            const user = auth.currentUser;
-
-            if (user !== null) {
-                const email = user.email;
-                const accessToken = user.accessToken;
-
-                const userInfo = {
-                    email,
-                    accessToken,
-                };
-
-                return { user: userInfo };
-            } else {
-                return { user };
-            }
-        }
+        });
     </script>
-
-</body>
-
+  </body>
 </html>
