@@ -65,6 +65,16 @@
       #submit-button:hover {
         background-color: #45a049;
       }
+
+      #logout_button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+        }
     </style>
   </head>
 
@@ -73,6 +83,7 @@
       <p id="mail_address">メールアドレス:</p>
       <p id="user_name"></p>
       <p id="class_code">クラスコード:</p>
+      <button id="logout_button" onclick="logOut()">ログアウト</button>
     </div>
 
     <textarea
@@ -125,6 +136,12 @@
                 window.location.href = "/login"
             }
         });
+
+        function logOut() {
+            firebase.auth().signOut().then(function () {
+                location.reload();
+            });
+        }
     </script>
   </body>
 </html>

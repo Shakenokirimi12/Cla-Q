@@ -114,12 +114,18 @@
             if (user) { // ログイン時
                 // Update the user information display
                 var userInfoElement = document.querySelector('.user-info');
-                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p>";
+                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
 
             } else {  // 未ログイン時
               window.location.href = "/login"
             }
         });
+
+        function logOut() {
+            firebase.auth().signOut().then(function () {
+                location.reload();
+            });
+        }
     </script>
 </body>
 

@@ -59,6 +59,16 @@
             top: 20px;
             left: 20px;
         }
+
+        #logout_button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
@@ -130,12 +140,18 @@
             if (user) { // ログイン時
                 // Update the user information display
                 var userInfoElement = document.querySelector('.user-info');
-                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p>";
+                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
 
             } else {  // 未ログイン時
                 window.location.href = "/login"
             }
         });
+
+        function logOut() {
+            firebase.auth().signOut().then(function () {
+                location.reload();
+            });
+        }
     </script>
 
 </body>
