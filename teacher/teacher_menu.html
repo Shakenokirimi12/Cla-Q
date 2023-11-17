@@ -109,8 +109,8 @@
     
     <div id="controlArea">
         <button id="start-button" onclick="startQuestion()">問題の開始</button>
-        <button id="end-button" onclick="sendQuestion()">問題の終了</button>
-        <p id="status">現在:1問目開始</p>
+        <button id="end-button" onclick="endQuestion()" disabled="true">問題の終了</button>
+        <p id="status">現在:1問目開始s</p>
     </div>
 
     <script>
@@ -119,10 +119,18 @@
             var status = document.getElementById("status").innerHTML;
             if(status.includes("開始待ち")){
                 status = "現在:" + questionnumber + "問目実施中";
+            document.getElementById("start-button").disabled = true;
+            document.getElementById("end-button").disabled = false;
             }
-            else if(status.includes("実施中")){
-                questionnumber +=1;
+        }
+
+        function endQuestion(){
+            var status = document.getElementById("status").innerHTML;
+            if(status.includes("実施中")){
+                questionnumber++;
                 status = "現在:" + questionnumber + "問目開始待ち";
+            document.getElementById("start-button").disabled = false;
+            document.getElementById("end-button").disabled = true;
             }
         }
 
