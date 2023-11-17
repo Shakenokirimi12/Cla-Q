@@ -34,7 +34,7 @@
                 ui.start('#firebaseui-auth-container', {
                     signInSuccessUrl: '/',
                     signInOptions: [
-                        firebase.auth.EmailAuthProvider,
+                        firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
                     ],
                 });
             }
