@@ -151,7 +151,15 @@
         }
       }
 
-      window.onload = function screen_lock() {
+      window.onload = function () {
+        if (
+          (navigator.userAgent.indexOf("iPhone") > 0 &&
+            navigator.userAgent.indexOf("iPad") == -1) ||
+          navigator.userAgent.indexOf("iPod") > 0 ||
+          navigator.userAgent.indexOf("Android") > 0
+        ) {
+          location.href = "/mobile.html";
+        }
         let lock_screen = document.createElement("div");
         lock_screen.id = "screenLock";
 
