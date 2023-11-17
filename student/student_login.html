@@ -59,10 +59,35 @@
         #class_code_label { 
             color: black;
         }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+            authDomain: "cla-q-7e2d9.firebaseapp.com",
+            projectId: "cla-q-7e2d9",
+            storageBucket: "cla-q-7e2d9.appspot.com",
+            messagingSenderId: "809026902811",
+            appId: "1:809026902811:web:eb91e5c91d1020e15311be"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 </head>
 
 <body>
+  <div class="user-info">
+  </div>
+
     <div id="login-header">
         <p>ClaQ - 生徒ログイン</p>
         <label class="class_code_label">クラスコードを入力して参加</label>
@@ -70,7 +95,7 @@
 
     <div id="login-form">
         <form id="student-login-form">
-            <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力">
+            <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true">
             <br>
             <button type="button" class="action-button" onclick="Login()">ログイン</button>
         </form>
@@ -79,7 +104,22 @@
         function Login() {
             var student_num = document.getElementById('class-code-input').value;
             // Add your login logic here
+            var success = true;//とりあえず仮でtrueを通す
+            if(success){
+              window.location.href = "/student/student_menu.html"
+            }
         }
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) { // ログイン時
+                // Update the user information display
+                var userInfoElement = document.querySelector('.user-info');
+                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p>";
+
+            } else {  // 未ログイン時
+              window.location.href = "/login"
+            }
+        });
     </script>
 </body>
 

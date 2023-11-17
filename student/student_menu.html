@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaQ - 生徒メニュー</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        #class-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        #answer-box {
+            width: 80%;
+            height: 200px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        #submit-button {
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="class-info">
+        <p id="mail_address">メールアドレス:</p>
+        <p id="user_name"></p>
+        <p id="class_code">クラスコード:</p>
+    </div>
+
+    <textarea id="answer-box" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
+
+    <button id="submit-button" onclick="submitAnswer()">送信</button>
+
+    <script>
+
+
+        function submitAnswer() {
+            // 送信処理のコードを追加
+            var answerBox = document.getElementById('answer-box');
+            var answer = answerBox.value.trim();
+
+            if (answer !== "") {
+                var confirmation = confirm("本当に答えを送信しますか？");
+
+                if (confirmation) {
+                    // ここに答えを送信する処理を追加
+                    // 例: サーバーとの通信、データベースへの保存など
+                    // 例: 送信が成功したら、成功メッセージを表示
+                    alert("答えが送信されました: " + answer);
+
+                    // ボックス内をクリア
+                    answerBox.value = "";
+                }
+            } else {
+                alert("答えを入力してください。");
+            }
+        }
+
+        function handleKeyDown(event) {
+            // Enter キーが押された場合に送信処理を行う
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                submitAnswer();
+            }
+        }
+
+        window.onload = function(){
+            const { user } = useUser();
+            console.log(user);
+            document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
+            document.getElementById('user_name').innerHTML = "ユーザー名:" + user.displayName;
+
+        }
+
+        function useUser(){
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            if (user !== null) {
+                const email = user.email;
+                const accessToken = user.accessToken;
+
+                const userInfo = {
+                    email,
+                    accessToken,
+                };
+
+                return { user: userInfo };
+            } else {
+                return { user };
+            }
+        }
+    </script>
+
+</body>
+
+</html>

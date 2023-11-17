@@ -53,9 +53,9 @@
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) { // ログイン時
                 if (user.email.includes("-")) {
-                    window.location.href = "/teacher_login";
+                    window.location.href = "/teacher/teacher_login";
                 } else {
-                    window.location.href = "/student_login";
+                    window.location.href = "/student/student_login";
                 }
             } else {  // 未ログイン時
                 var ui = new firebaseui.auth.AuthUI(firebase.auth());

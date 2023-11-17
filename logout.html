@@ -48,7 +48,7 @@
 
 <body>
     <div id="login-header">
-        <p>Cla-Qからログアウトしています....</p>
+        <p>Cla-Qからログアウトしています...</p>
     </div>
     <script>
         firebase.auth().onAuthStateChanged(function (user) {
@@ -60,12 +60,6 @@
                 window.location.href = "/login"
             }
         });
-
-        function logOut() {
-            firebase.auth().signOut().then(function () {
-                location.reload();
-            });
-        }
     </script>
 </body>
 
