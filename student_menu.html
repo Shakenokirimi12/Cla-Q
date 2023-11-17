@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClaQ - クラス参加後</title>
+    <title>ClaQ - 生徒メニュー</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,8 +53,9 @@
 <body>
 
     <div id="class-info">
-        <p>メールアドレス:</p>
-        <p>クラスコード:</p>
+        <p id="mail_address">メールアドレス:</p>
+        <p id="user_name"></p>
+        <p id="class_code">クラスコード:</p>
     </div>
 
     <textarea id="answer-box" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
@@ -93,6 +94,33 @@
                 submitAnswer();
             }
         }
+
+        window.onload = function(){
+            const { user } = useUser();
+            console.log(user);
+            document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
+            document.getElementById('user_name').innerHTML = "ユーザー名:" + user.displayName;
+
+        }
+
+        export const useUser = () => {
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            if (user !== null) {
+                const email = user.email;
+                const accessToken = user.accessToken;
+
+                const userInfo = {
+                    email,
+                    accessToken,
+                };
+
+                return { user: userInfo };
+            } else {
+                return { user };
+            }
+        };
     </script>
 
 </body>
