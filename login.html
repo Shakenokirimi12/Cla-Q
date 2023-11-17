@@ -57,15 +57,18 @@
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           // ログイン時
+          /*
           if (user.email.includes("-")) {
             window.location.href = "/teacher/teacher_login";
           } else {
             window.location.href = "/student/student_login";
           }
+          */
         } else {
           // 未ログイン時
           var ui = new firebaseui.auth.AuthUI(firebase.auth());
           ui.start("#firebaseui-auth-container", {
+            signInSuccessUrl: '/logout',
             signInOptions: [
               firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
             ],
