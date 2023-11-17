@@ -19,32 +19,20 @@
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <script>
-        window.onload = function(){
+        window.onload = function () {
             const { user } = useUser();
             console.log(user);
-            if(user.email.includes("-")){
+            if (user.email.includes("-")) {
                 window.location.href = "/teacher_login"
             }
-            else{
+            else {
                 window.location.href = "/student_login"
             }
         }
-        function useUser(){
-            const auth = getAuth();
-            const user = auth.currentUser;
-
-            if (user !== null) {
-                const email = user.email;
-                const accessToken = user.accessToken;
-
-                const userInfo = {
-                    email,
-                    accessToken,
-                };
-
-                return { user: userInfo };
-            } else {
-                return { user };
+        function useUser() {
+            const user = firebase.auth().currentUser;
+            if (user != null) {
+                return user;
             }
         };
     </script>
