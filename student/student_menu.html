@@ -163,7 +163,7 @@
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           if (user.email.includes("-")) {
-            window.location.href = "/teacher/teacher_menu";
+            window.location.href = "/teacher/teacher_login";
           }
           // ログイン時
           // Update the user information display
@@ -171,7 +171,7 @@
             "メールアドレス:" + user.email;
           document.getElementById("user_name").innerHTML = user.displayName;
           document.getElementById("class_code").innerHTML = "";
-          
+
           let screenLock = document.getElementById("screenLock");
           screenLock.parentNode.removeChild(screenLock);
         } else {

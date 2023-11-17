@@ -140,7 +140,7 @@
         if (user) {
           // ログイン時
           if (user.email.includes("-")) {
-            window.location.href = "/teacher/teacher_menu";
+            window.location.href = "/teacher/teacher_login";
           } else {
             // Update the user information display
             var userInfoElement = document.querySelector(".user-info");
@@ -150,7 +150,7 @@
               "</p><p>メールアドレス: " +
               user.email +
               "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-              
+
             let screenLock = document.getElementById("screenLock");
             screenLock.parentNode.removeChild(screenLock);
           }
