@@ -52,9 +52,6 @@
     <script>
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) { // ログイン時
-                console.log(user);
-                var loginText = "ようこそ" + user.displayName + 'さん！' + user.email + "<button onclick='logOut()'>ログアウト</button>";
-                document.getElementById('firebaseui-auth-container').innerHTML = loginText;
                 if (user.email.includes("-")) {
                     window.location.href = "/teacher_login";
                 } else {
