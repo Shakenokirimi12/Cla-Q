@@ -46,9 +46,8 @@
         border: 1px solid #ccc;
         border-radius: 4px;
         background-color: white;
-        color:black;
+        color: black;
         padding: 20px;
-
       }
 
       #answer-box {
@@ -89,7 +88,6 @@
       #answerArea {
         text-align: center;
         background-color: #ffffff;
-        padding: 80px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         top: 0; /* 位置指定 */
@@ -115,9 +113,8 @@
         placeholder="答えを入力してください"
         onkeydown="handleKeyDown(event)"
       ></textarea>
+      <button id="submit-button" onclick="submitAnswer()">送信</button>
     </div>
-
-    <button id="submit-button" onclick="submitAnswer()">送信</button>
 
     <script>
       function submitAnswer() {
