@@ -81,17 +81,17 @@
       }
 
       #answerArea {
-            text-align: center;
-            background-color: #ffffff;
-            padding: 80px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            top:  0;                     /* 位置指定 */
-            bottom:  0;                  /* 位置指定 */
-            left:  0;                    /* 位置指定 */
-            right:  0;                   /* 位置指定 */
-            margin:  auto;               /* 中央寄せ */
-        }
+        text-align: center;
+        background-color: #ffffff;
+        padding: 80px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        top: 0; /* 位置指定 */
+        bottom: 0; /* 位置指定 */
+        left: 0; /* 位置指定 */
+        right: 0; /* 位置指定 */
+        margin: auto; /* 中央寄せ */
+      }
     </style>
   </head>
 
@@ -146,6 +146,9 @@
 
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+          if (user.email.includes("-")) {
+            window.location.href = "/teacher/teacher_menu";
+          }
           // ログイン時
           // Update the user information display
           document.getElementById("mail_address").innerHTML =

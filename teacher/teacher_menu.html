@@ -136,6 +136,9 @@
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) { // ログイン時
+                if (user.email.includes("_")) {
+            window.location.href = "/student/student_menu";
+          }
                 // Update the user information display
                 document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
                 document.getElementById('user_name').innerHTML =  user.displayName;
