@@ -120,12 +120,29 @@
         }
       }
 
+      window.onload = function screen_lock() {
+        let lock_screen = document.createElement("div");
+        lock_screen.id = "screenLock";
+
+        lock_screen.style.height = "100%";
+        lock_screen.style.left = "0px";
+        lock_screen.style.position = "fixed";
+        lock_screen.style.top = "0px";
+        lock_screen.style.width = "100%";
+        lock_screen.style.zIndex = "9999";
+        lock_screen.style.opacity = "0";
+
+        let objBody = document.getElementsByTagName("body").item(0);
+        objBody.appendChild(lock_screen);
+      };
+
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           // ログイン時
           if (user.email.includes("-")) {
             window.location.href = "/teacher/teacher_menu";
-          } else {// Update the user information display
+          } else {
+            // Update the user information display
             var userInfoElement = document.querySelector(".user-info");
             userInfoElement.innerHTML =
               "<p>ユーザー名: " +
@@ -133,6 +150,9 @@
               "</p><p>メールアドレス: " +
               user.email +
               "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+              
+            let screenLock = document.getElementById("screenLock");
+            screenLock.parentNode.removeChild(screenLock);
           }
         } else {
           // 未ログイン時

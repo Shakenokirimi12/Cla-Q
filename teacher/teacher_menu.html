@@ -1,161 +1,187 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
     <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
-            authDomain: "cla-q-7e2d9.firebaseapp.com",
-            projectId: "cla-q-7e2d9",
-            storageBucket: "cla-q-7e2d9.appspot.com",
-            messagingSenderId: "809026902811",
-            appId: "1:809026902811:web:eb91e5c91d1020e15311be"
-        };
-        firebase.initializeApp(firebaseConfig);
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+        authDomain: "cla-q-7e2d9.firebaseapp.com",
+        projectId: "cla-q-7e2d9",
+        storageBucket: "cla-q-7e2d9.appspot.com",
+        messagingSenderId: "809026902811",
+        appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+      };
+      firebase.initializeApp(firebaseConfig);
     </script>
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
     <title>ClaQ - 教師メニュー</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            background-color: #3498db; /* Change background color to blue */
-            color: #fff; /* Change text color to white */
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: #3498db; /* Change background color to blue */
+        color: #fff; /* Change text color to white */
+      }
 
-        #class-info {
-            text-align: left;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
+      #class-info {
+        text-align: left;
+        margin-bottom: 20px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+      }
 
-        #start-button {
-            background-color: #4caf50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+      #start-button {
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        cursor: pointer;
+      }
 
-        #end-button {
-            background-color: #4caf50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+      #end-button {
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        cursor: pointer;
+      }
 
-        #logout_button {
-            background-color: #4caf50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 10px;
-            cursor: pointer;
-        }
+      #logout_button {
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 10px;
+        cursor: pointer;
+      }
 
-        #start-button:hover {
-            background-color: #45a049;
-        }
-        
-        #end-button:hover {
-            background-color: #45a049;
-        }
+      #start-button:hover {
+        background-color: #45a049;
+      }
 
-        #controlArea {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            top:  0;                     /* 位置指定 */
-            bottom:  0;                  /* 位置指定 */
-            left:  0;                    /* 位置指定 */
-            right:  0;                   /* 位置指定 */
-            margin:  auto;               /* 中央寄せ */
-        }
+      #end-button:hover {
+        background-color: #45a049;
+      }
 
-        #status {
-            color: black;
-        }
+      #controlArea {
+        text-align: center;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        top: 0; /* 位置指定 */
+        bottom: 0; /* 位置指定 */
+        left: 0; /* 位置指定 */
+        right: 0; /* 位置指定 */
+        margin: auto; /* 中央寄せ */
+      }
+
+      #status {
+        color: black;
+      }
     </style>
-</head>
-
-
+  </head>
+  <body>
     <div id="class-info">
-        <p id="mail_address"></p>
-        <p id="user_name"></p>
-        <p id="class_code"></p>
-        <button id="logout_button" onclick="logOut()">ログアウト</button>
+      <p id="mail_address"></p>
+      <p id="user_name"></p>
+      <p id="class_code"></p>
+      <button id="logout_button" onclick="logOut()">ログアウト</button>
     </div>
-    
+
     <div id="controlArea">
-        <button id="start-button" onclick="startQuestion()">問題の開始</button>
-        <button id="end-button" onclick="endQuestion()" disabled="true">問題の終了</button>
-        <p id="status">現在:1問目開始s</p>
+      <button id="start-button" onclick="startQuestion()">問題の開始</button>
+      <button id="end-button" onclick="endQuestion()" disabled="true">
+        問題の終了
+      </button>
+      <p id="status">現在:1問目開始待ち</p>
     </div>
 
     <script>
-        var questionnumber = 1;
-        function startQuestion(){
-            var status = document.getElementById("status").innerHTML;
-            if(status.includes("開始待ち")){
-                status = "現在:" + questionnumber + "問目実施中";
-            document.getElementById("start-button").disabled = true;
-            document.getElementById("end-button").disabled = false;
-            }
+      var questionnumber = 1;
+      function startQuestion() {
+        var status = document.getElementById("status").innerHTML;
+        if (status.includes("開始待ち")) {
+          status = "現在:" + questionnumber + "問目実施中";
+          document.getElementById("start-button").disabled = true;
+          document.getElementById("end-button").disabled = false;
         }
+      }
 
-        function endQuestion(){
-            var status = document.getElementById("status").innerHTML;
-            if(status.includes("実施中")){
-                questionnumber++;
-                status = "現在:" + questionnumber + "問目開始待ち";
-            document.getElementById("start-button").disabled = false;
-            document.getElementById("end-button").disabled = true;
-            }
+      function endQuestion() {
+        var status = document.getElementById("status").innerHTML;
+        if (status.includes("実施中")) {
+          questionnumber++;
+          status = "現在:" + questionnumber + "問目開始待ち";
+          document.getElementById("start-button").disabled = false;
+          document.getElementById("end-button").disabled = true;
         }
+      }
 
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) { // ログイン時
-                if (user.email.includes("_")) {
+      window.onload = function screen_lock() {
+        let lock_screen = document.createElement("div");
+        lock_screen.id = "screenLock";
+
+        lock_screen.style.height = "100%";
+        lock_screen.style.left = "0px";
+        lock_screen.style.position = "fixed";
+        lock_screen.style.top = "0px";
+        lock_screen.style.width = "100%";
+        lock_screen.style.zIndex = "9999";
+        lock_screen.style.opacity = "0";
+
+        let objBody = document.getElementsByTagName("body").item(0);
+        objBody.appendChild(lock_screen);
+      };
+
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // ログイン時
+          if (user.email.includes("_")) {
             window.location.href = "/student/student_menu";
           }
-                // Update the user information display
-                document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
-                document.getElementById('user_name').innerHTML =  user.displayName;
-                document.getElementById('class_code').innerHTML = "";
-
-            } else {  // 未ログイン時
-                window.location.href = "/login"
-            }
-        });
-
-        function logOut() {
-            firebase.auth().signOut().then(function () {
-                location.reload();
-            });
+          // Update the user information display
+          document.getElementById("mail_address").innerHTML =
+            "メールアドレス:" + user.email;
+          document.getElementById("user_name").innerHTML = user.displayName;
+          document.getElementById("class_code").innerHTML = "";
+          
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+        } else {
+          // 未ログイン時
+          window.location.href = "/login";
         }
+      });
+
+      function logOut() {
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            location.reload();
+          });
+      }
     </script>
-
-</body>
-
+  </body>
 </html>

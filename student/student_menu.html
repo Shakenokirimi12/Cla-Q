@@ -144,6 +144,22 @@
         }
       }
 
+      window.onload = function screen_lock() {
+        let lock_screen = document.createElement("div");
+        lock_screen.id = "screenLock";
+
+        lock_screen.style.height = "100%";
+        lock_screen.style.left = "0px";
+        lock_screen.style.position = "fixed";
+        lock_screen.style.top = "0px";
+        lock_screen.style.width = "100%";
+        lock_screen.style.zIndex = "9999";
+        lock_screen.style.opacity = "0";
+
+        let objBody = document.getElementsByTagName("body").item(0);
+        objBody.appendChild(lock_screen);
+      };
+
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           if (user.email.includes("-")) {
@@ -155,6 +171,9 @@
             "メールアドレス:" + user.email;
           document.getElementById("user_name").innerHTML = user.displayName;
           document.getElementById("class_code").innerHTML = "";
+          
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
         } else {
           // 未ログイン時
           window.location.href = "/login";

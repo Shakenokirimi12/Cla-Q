@@ -122,47 +122,72 @@
 
     <script>
       function signInTeacher() {
-          // 先生としてログインする処理を追加
-          var method = "createroom";
+        // 先生としてログインする処理を追加
+        var method = "createroom";
 
-          var success = true;//とりあえず仮でtrueを通す
-          if(success){
-            window.location.href = "/teacher/teacher_menu.html"
-          }
-
+        var success = true; //とりあえず仮でtrueを通す
+        if (success) {
+          window.location.href = "/teacher/teacher_menu.html";
+        }
       }
 
       function joinClass() {
-          // クラスに参加する処理を追加
-          var classCode = document.getElementById('class-code-input').value;
-          var method = "joinClass_Teacher";
+        // クラスに参加する処理を追加
+        var classCode = document.getElementById("class-code-input").value;
+        var method = "joinClass_Teacher";
 
-          var success = true;//とりあえず仮でtrueを通す
-          if(success){
-            window.location.href = "/teacher/teacher_menu.html"
-          }
+        var success = true; //とりあえず仮でtrueを通す
+        if (success) {
+          window.location.href = "/teacher/teacher_menu.html";
+        }
       }
 
+      window.onload = function screen_lock() {
+        let lock_screen = document.createElement("div");
+        lock_screen.id = "screenLock";
 
+        lock_screen.style.height = "100%";
+        lock_screen.style.left = "0px";
+        lock_screen.style.position = "fixed";
+        lock_screen.style.top = "0px";
+        lock_screen.style.width = "100%";
+        lock_screen.style.zIndex = "9999";
+        lock_screen.style.opacity = "0";
+
+        let objBody = document.getElementsByTagName("body").item(0);
+        objBody.appendChild(lock_screen);
+      };
 
       firebase.auth().onAuthStateChanged(function (user) {
-          if (user) { // ログイン時
-            if (user.email.includes("_")) {
-                    window.location.href = "/student/student_menu";
-                }
-                else{
-                    // Update the user information display
-                    var userInfoElement = document.querySelector('.user-info');
-                    userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><p>メールアドレス: " + user.email + "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-                }                
-          } else {  // 未ログイン時
-              window.location.href = "/login";
+        if (user) {
+          // ログイン時
+          if (user.email.includes("_")) {
+            window.location.href = "/student/student_menu";
+          } else {
+            // Update the user information display
+            var userInfoElement = document.querySelector(".user-info");
+            userInfoElement.innerHTML =
+              "<p>ユーザー名: " +
+              user.displayName +
+              "</p><p>メールアドレス: " +
+              user.email +
+              "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+            //ログイン越え回避解除
+            let screenLock = document.getElementById("screenLock");
+            screenLock.parentNode.removeChild(screenLock);
           }
+        } else {
+          // 未ログイン時
+          window.location.href = "/login";
+        }
       });
 
       function logOut() {
-          firebase.auth().signOut().then(function () {
-              location.reload();
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            location.reload();
           });
       }
     </script>
