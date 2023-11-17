@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,10 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background-color: #3498db;
+            /* Change background color to blue */
+            color: #fff;
+            /* Change text color to white */
         }
 
         .form-container {
@@ -23,6 +27,8 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 20px;
+            color: #333;
+            /* Change form text color to dark */
         }
 
         .input-field {
@@ -47,14 +53,27 @@
         .action-button:hover {
             background-color: #45a049;
         }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
     </style>
 </head>
+
 <body>
+
+    <div class="user-info">
+        <!-- Add an element to display user information -->
+        <p>ユーザー名: John Doe</p>
+        <p>メールアドレス: john.doe@example.com</p>
+    </div>
 
     <div class="form-container">
         <h2>ClaQ - 先生用</h2>
         <form id="teacher-form">
-            <button type="button" class="action-button" onclick="startClass()">授業を開始</button>
+            <button type="button" class="action-button" onclick="signInTeacher()">授業を開始</button>
         </form>
     </div>
 
@@ -64,7 +83,7 @@
             <label for="class-code-input">クラスコード:</label>
             <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力">
             <br>
-            <button type="button" class="action-button" onclick="joinClass()">開始済みのクラスに参加</button>
+            <button type="button" class="action-button" onclick="joinClass()">開始済みクラスに参加</button>
         </form>
     </div>
 
@@ -73,15 +92,40 @@
             // 先生としてログインする処理を追加
             var method = "createroom";
 
+            // Perform login and update user information display
+            updateUserInfo("John Doe", email);
         }
 
         function joinClass() {
             // クラスに参加する処理を追加
             var classCode = document.getElementById('class-code-input').value;
-            var method = "joinClass_Teacher"
+            var method = "joinClass_Teacher";
 
+            // Perform class join and update user information display
+            updateUserInfo("Jane Smith", teacherEmail);
         }
+
+        function updateUserInfo(username, email) {
+        }
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) { // ログイン時
+                // Update the user information display
+                var userInfoElement = document.querySelector('.user-info');
+                userInfoElement.innerHTML = "<p>ユーザー名: " + user.displayName + "</p><br><p>メールアドレス: " + user.email + "</p>";
+
+            } else {  // 未ログイン時
+                var ui = new firebaseui.auth.AuthUI(firebase.auth());
+                ui.start('#firebaseui-auth-container', {
+                    signInOptions: [
+                        firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
+                    ],
+                });
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            }
+        });
     </script>
 
 </body>
+
 </html>
