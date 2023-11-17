@@ -81,14 +81,12 @@
     </div>
 
     <script>
-        // Firebaseの初期化などが必要な場合はここに追加
-
         function signInTeacher() {
             // 先生としてログインする処理を追加
             var email = document.getElementById('email-input').value;
             var password = document.getElementById('password-input').value;
             var method = "createroom";
-            
+
         }
 
         function joinClass() {
@@ -96,7 +94,7 @@
             var classCode = document.getElementById('class-code-input').value;
             var teacherEmail = document.getElementById('teacher-email-input').value;
             var teacherPassword = document.getElementById('teacher-password-input').value;
-            
+            var method = "joinClass_Teacher"
         }
     </script>
 

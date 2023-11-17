@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-        <script>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyDzQ1hdnji5NqO89ta4ooan52208sjXBbY",
-            authDomain: "idaas-quick-question.firebaseapp.com",
-            projectId: "idaas-quick-question",
-            storageBucket: "idaas-quick-question.appspot.com",
-            messagingSenderId: "263715742913",
-            appId: "1:263715742913:web:80870179e9e93f6e2b6040",
-            measurementId: "G-GCEZFHXZ89"
+            apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+            authDomain: "cla-q-7e2d9.firebaseapp.com",
+            projectId: "cla-q-7e2d9",
+            storageBucket: "cla-q-7e2d9.appspot.com",
+            messagingSenderId: "809026902811",
+            appId: "1:809026902811:web:eb91e5c91d1020e15311be"
         };
         firebase.initializeApp(firebaseConfig);
-        </script>
-        <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-    </head>
-    <body>
-        <div id="firebaseui-auth-container">
-        </div>
-        <script>
-            firebase.auth().onAuthStateChanged(function(user) {
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+</head>
+
+<body>
+    <div id="firebaseui-auth-container">
+    </div>
+    <script>
+        firebase.auth().onAuthStateChanged(function (user) {
             if (user) { // ログイン時
                 console.log(user);  // firebaseから受け取ったユーザー情報。本番運用時はconsole.logは消すこと
                 var loginText = "ようこそ" + user.displayName + 'さん！' + user.email + "<button onclick='logOut()'>ログアウト</button>";
@@ -32,18 +33,19 @@
             } else {  // 未ログイン時
                 var ui = new firebaseui.auth.AuthUI(firebase.auth());
                 ui.start('#firebaseui-auth-container', {
-                    signInSuccessUrl: '/',
+                    signInSuccessUrl: '/switch-usertype.html',
                     signInOptions: [
                         firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
                     ],
                 });
             }
+        });
+        function logOut() {
+            firebase.auth().signOut().then(function () {
+                location.reload();
             });
-            function logOut() {
-                firebase.auth().signOut().then(function() {
-                    location.reload();
-                });
-            }
-        </script>
-    </body>
+        }
+    </script>
+</body>
+
 </html>
