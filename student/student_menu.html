@@ -7,19 +7,23 @@
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
     <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
-            authDomain: "cla-q-7e2d9.firebaseapp.com",
-            projectId: "cla-q-7e2d9",
-            storageBucket: "cla-q-7e2d9.appspot.com",
-            messagingSenderId: "809026902811",
-            appId: "1:809026902811:web:eb91e5c91d1020e15311be"
-        };
-        firebase.initializeApp(firebaseConfig);
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+        authDomain: "cla-q-7e2d9.firebaseapp.com",
+        projectId: "cla-q-7e2d9",
+        storageBucket: "cla-q-7e2d9.appspot.com",
+        messagingSenderId: "809026902811",
+        appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+      };
+      firebase.initializeApp(firebaseConfig);
     </script>
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
     <style>
       body {
         font-family: "Arial", sans-serif;
@@ -67,13 +71,22 @@
       }
 
       #logout_button {
-            background-color: #4caf50;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 10px;
-            cursor: pointer;
+        background-color: #4caf50;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 10px;
+        cursor: pointer;
+      }
+
+      #answerArea {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
     </style>
   </head>
@@ -86,11 +99,13 @@
       <button id="logout_button" onclick="logOut()">ログアウト</button>
     </div>
 
-    <textarea
-      id="answer-box"
-      placeholder="答えを入力してください"
-      onkeydown="handleKeyDown(event)"
-    ></textarea>
+    <div id="answerArea">
+      <textarea
+        id="answer-box"
+        placeholder="答えを入力してください"
+        onkeydown="handleKeyDown(event)"
+      ></textarea>
+    </div>
 
     <button id="submit-button" onclick="submitAnswer()">送信</button>
 
@@ -126,22 +141,27 @@
       }
 
       firebase.auth().onAuthStateChanged(function (user) {
-            if (user) { // ログイン時
-                // Update the user information display
-                document.getElementById('mail_address').innerHTML = "メールアドレス:" + user.email;
-                document.getElementById('user_name').innerHTML =  user.displayName;
-                document.getElementById('class_code').innerHTML = "";
-
-            } else {  // 未ログイン時
-                window.location.href = "/login"
-            }
-        });
-
-        function logOut() {
-            firebase.auth().signOut().then(function () {
-                location.reload();
-            });
+        if (user) {
+          // ログイン時
+          // Update the user information display
+          document.getElementById("mail_address").innerHTML =
+            "メールアドレス:" + user.email;
+          document.getElementById("user_name").innerHTML = user.displayName;
+          document.getElementById("class_code").innerHTML = "";
+        } else {
+          // 未ログイン時
+          window.location.href = "/login";
         }
+      });
+
+      function logOut() {
+        firebase
+          .auth()
+          .signOut()
+          .then(function () {
+            location.reload();
+          });
+      }
     </script>
   </body>
 </html>
