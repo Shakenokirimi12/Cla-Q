@@ -229,14 +229,15 @@
           .then((data) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
             var message =
-              jsonData.message || (jsonData[0] && jsonData[0].message);
+              data.message || (data[0] && data[0].message);
             var status_Code =
-              jsonData.status_Code || (jsonData[0] && jsonData[0].status_Code);
-            if(message==undefined&&status_Code==undefined){
+              data.status_Code || (data[0] && data[0].status_Code);
+            if (message == undefined && status_Code == undefined) {
               message =
-              jsonData.message || (jsonData[1] && jsonData[1].message);
+                data.message || (data[1] && data[1].message);
               status_Code =
-              jsonData.status_Code || (jsonData[1] && jsonData[1].status_Code);
+                data.status_Code ||
+                (data[1] && data[1].status_Code);
             }
             if (status_Code.includes("E")) {
               alert(data.message);
