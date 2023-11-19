@@ -66,10 +66,9 @@
         top: 20px;
         left: 20px;
         background-color: white;
-        color:black;
+        color: black;
         padding: 20px;
         text-align: center;
-
       }
 
       #logout_button {
@@ -122,22 +121,39 @@
           required="true"
         />
         <br />
-        <button type="button" class="action-button" onclick="Login()">
+        <button type="button" class="action-button" onclick="student_Join()">
           ログイン
         </button>
       </form>
     </div>
     <script>
-      function Login() {
-        var student_num = document.getElementById("class-code-input").value;
+      var userName, userEmail;
+      function student_Join() {
+        var class_Code = document.getElementById("class-code-input").value;
         // Add your login logic here
-        var success = true; //とりあえず仮でtrueを通す
+        var url = "https://api.cla-q.net/student/join";
+        var postData = {
+          class_Code: class_Code,
+          userName: userName,
+        };
+        try {
+          var success = postToAPI(url, postData);
+        } catch (error) {
+          var success = false;
+        }
         if (success) {
           window.location.href = "/student/student_menu.html";
+        } else {
+          alert("ログインできませんでした。");
         }
       }
 
       window.onload = function () {
+        mobileRedirect();
+        prevent_Overlogin();
+      };
+
+      function mobileRedirect() {
         if (
           (navigator.userAgent.indexOf("iPhone") > 0 &&
             navigator.userAgent.indexOf("iPad") == -1) ||
@@ -146,6 +162,9 @@
         ) {
           location.href = "/mobile.html";
         }
+      }
+
+      function prevent_Overlogin() {
         let lock_screen = document.createElement("div");
         lock_screen.id = "screenLock";
 
@@ -159,8 +178,9 @@
 
         let objBody = document.getElementsByTagName("body").item(0);
         objBody.appendChild(lock_screen);
-      };
+      }
 
+      //以下firebase auth
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           // ログイン時
@@ -178,6 +198,8 @@
 
             let screenLock = document.getElementById("screenLock");
             screenLock.parentNode.removeChild(screenLock);
+            userName = user.displayName;
+            userEmail = user.email;
           }
         } else {
           // 未ログイン時
@@ -191,6 +213,30 @@
           .signOut()
           .then(function () {
             location.reload();
+          });
+      }
+      //以上firebase auth
+
+      function postToAPI(url, postData) {
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((data) => {
+            // status_CodeがEを含んでいる場合にメッセージを表示
+            if (data[1].status_Code && data[1].status_Code.includes("E")) {
+              alert(data[1].message);
+            }
+            else if(data[1].status_Code && data[1].status_Code.includes("J-")){
+              return true;
+            }
+          })
+          .catch((error) => {
+            // エラーの処理
+            console.error("Fetch error:", error);
           });
       }
     </script>
