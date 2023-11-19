@@ -244,8 +244,12 @@
             console.log(servermessage)
             if (status_Code.includes("E")) {
               alert(response.message);
+              return false;
             } else if (response.status_Code.includes("J-")) {
               return true;
+            }
+            else{
+              return false;
             }
           })
           .catch((error) => {
