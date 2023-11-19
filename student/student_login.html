@@ -128,7 +128,7 @@
     </div>
     <script>
       var userName, userEmail;
-      function student_Join() {
+      async function student_Join() {
         var class_Code = document.getElementById("class-code-input").value;
         // Add your login logic here
         var url = "https://api.cla-q.net/student/join";
@@ -137,7 +137,7 @@
           userName: userName,
         };
         try {
-          var success = postToAPI(url, postData);
+          var success = await postToAPI(url, postData);
         } catch (error) {
           var success = false;
         }
