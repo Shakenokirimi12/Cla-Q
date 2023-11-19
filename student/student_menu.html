@@ -195,8 +195,8 @@
         }
       });
 
-      function logOut() {
-        leaveClass();
+      async function logOut() {
+        await leaveClass();
         firebase
           .auth()
           .signOut()
@@ -206,7 +206,7 @@
       }
       //以上firebase
       //以下workers
-      function leaveClass() {
+      async function leaveClass() {
         // Add your login logic here
         var url = "https://api.cla-q.net/student/join";
         var postData = {
