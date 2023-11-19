@@ -226,7 +226,7 @@
           },
           body: JSON.stringify(postData),
         })
-          .then((data) => {
+          .then(response =>   {
             // status_CodeがEを含んでいる場合にメッセージを表示
             console.log(data)
             var servermessage =
