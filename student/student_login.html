@@ -228,19 +228,19 @@
         })
           .then((data) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
-            var message =
+            var servermessage =
               data.message || (data[0] && data[0].message);
-            var status_Code =
+            var serverstatus_Code =
               data.status_Code || (data[0] && data[0].status_Code);
-            if (message == undefined && status_Code == undefined) {
-              message =
+            if (servermessage == undefined && serverstatus_Code == undefined) {
+              servermessage =
                 data.message || (data[1] && data[1].message);
-              status_Code =
+                serverstatus_Code =
                 data.status_Code ||
                 (data[1] && data[1].status_Code);
             }
-            console.log(status_Code);
-            console.log(message)
+            console.log(serverstatus_Code);
+            console.log(servermessage)
             if (status_Code.includes("E")) {
               alert(data.message);
             } else if (data.status_Code.includes("J-")) {
