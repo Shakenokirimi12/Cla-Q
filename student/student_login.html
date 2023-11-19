@@ -217,8 +217,8 @@
       }
       //以上firebase auth
 
-      function postToAPI(url, postData) {
-        fetch(url, {
+     async function postToAPI(url, postData) {
+        await fetch(url, {
           method: "POST",
           mode: "no-cors",
           headers: {
