@@ -220,10 +220,9 @@
       function postToAPI(url, postData) {
         fetch(url, {
           method: "POST",
-          mode: 'cors',
+          mode: 'no-cors',
           headers: {
             "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': 'https://app.cla-q.net'
           },
           body: JSON.stringify(postData),
         })
