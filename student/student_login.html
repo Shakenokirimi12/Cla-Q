@@ -228,10 +228,10 @@
         })
           .then((data) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
-            if (data[1].status_Code && data[1].status_Code.includes("E")) {
-              alert(data[1].message);
+            if (data[1].status_Code && data.status_Code.includes("E")) {
+              alert(data.message);
             }
-            else if(data[1].status_Code && data[1].status_Code.includes("J-")){
+            else if(data.status_Code && data.status_Code.includes("J-")){
               return true;
             }
           })
