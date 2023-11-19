@@ -239,6 +239,8 @@
                 data.status_Code ||
                 (data[1] && data[1].status_Code);
             }
+            console.log(status_Code);
+            console.log(message)
             if (status_Code.includes("E")) {
               alert(data.message);
             } else if (data.status_Code.includes("J-")) {
