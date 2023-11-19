@@ -228,6 +228,7 @@
         })
           .then((data) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
+            console.log(data)
             var servermessage =
               data.message || (data[0] && data[0].message);
             var serverstatus_Code =
