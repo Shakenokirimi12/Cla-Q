@@ -51,8 +51,6 @@
         text-align: center;
       }
 
-      
-
       #submit-button {
         background-color: #4caf50;
         color: #ffffff;
@@ -76,7 +74,7 @@
         font-size: 10px;
         cursor: pointer;
       }
-      
+
       #answer-box {
         width: 300px;
         height: 200px;
@@ -92,7 +90,7 @@
         text-align: center;
         background-color: #ffffff;
         border-radius: 8px;
-        padding:20px;
+        padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         top: 0; /* 位置指定 */
         bottom: 0; /* 位置指定 */
@@ -196,11 +194,68 @@
       });
 
       function logOut() {
+        leaveClass();
         firebase
           .auth()
           .signOut()
           .then(function () {
             location.reload();
+          });
+      }
+      //以上firebase
+      //以下workers
+      function leaveClass() {
+        // Add your login logic here
+        var url = "https://api.cla-q.net/student/join";
+        var postData = {
+          userName: userName,
+        };
+        try {
+          var success = postToAPI(url, postData);
+        } catch (error) {
+          var success = false;
+        }
+        if (success) {
+          alert("ログアウトしました。ログイン画面に戻ります。");
+        } else {
+          alert("ログアウトできませんでした。管理者にお問い合わせください。");
+        }
+      }
+
+      async function postToAPI(url, postData) {
+        await fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => {
+            // status_CodeがEを含んでいる場合にメッセージを表示
+            console.log(response);
+            var servermessage =
+              response.message || (response[0] && response[0].message);
+            var serverstatus_Code =
+              response.status_Code || (response[0] && response[0].status_Code);
+            if (servermessage == undefined && serverstatus_Code == undefined) {
+              servermessage =
+                response.message || (response[1] && response[1].message);
+              serverstatus_Code =
+                response.status_Code ||
+                (response[1] && response[1].status_Code);
+            }
+            console.log(serverstatus_Code);
+            console.log(servermessage);
+            if (status_Code.includes("E")) {
+              alert(response.message);
+            } else if (response.status_Code.includes("J-")) {
+              return true;
+            }
+          })
+          .catch((error) => {
+            // エラーの処理
+            console.error("Fetch error:", error);
           });
       }
     </script>
