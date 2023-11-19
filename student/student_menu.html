@@ -213,7 +213,7 @@
           userName: userName,
         };
         try {
-          var success = postToAPI(url, postData);
+          var success = await postToAPI(url, postData);
         } catch (error) {
           var success = false;
         }
