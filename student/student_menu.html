@@ -237,6 +237,7 @@
           .then((response) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
             console.log(response);
+            
             var servermessage =
               response.message || (response[0] && response[0].message);
             var serverstatus_Code =
@@ -248,8 +249,10 @@
                 response.status_Code ||
                 (response[1] && response[1].status_Code);
             }
+
             console.log(serverstatus_Code);
             console.log(servermessage);
+
             if (status_Code.includes("E")) {
               alert(response.message);
             } else if (response.status_Code.includes("J-")) {
