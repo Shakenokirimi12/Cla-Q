@@ -220,7 +220,7 @@
       function postToAPI(url, postData) {
         fetch(url, {
           method: "POST",
-          mode: 'no-cors',
+          mode: "no-cors",
           headers: {
             "Content-Type": "application/json",
           },
@@ -228,10 +228,19 @@
         })
           .then((data) => {
             // status_CodeがEを含んでいる場合にメッセージを表示
-            if (data[1].status_Code && data.status_Code.includes("E")) {
-              alert(data.message);
+            var message =
+              jsonData.message || (jsonData[0] && jsonData[0].message);
+            var status_Code =
+              jsonData.status_Code || (jsonData[0] && jsonData[0].status_Code);
+            if(message==undefined&&status_Code==undefined){
+              message =
+              jsonData.message || (jsonData[1] && jsonData[1].message);
+              status_Code =
+              jsonData.status_Code || (jsonData[1] && jsonData[1].status_Code);
             }
-            else if(data.status_Code && data.status_Code.includes("J-")){
+            if (status_Code.includes("E")) {
+              alert(data.message);
+            } else if (data.status_Code.includes("J-")) {
               return true;
             }
           })
