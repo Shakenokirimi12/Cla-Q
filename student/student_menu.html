@@ -235,11 +235,17 @@
               }
               catch(error2){
                 console.log(error2)
+                try{
+                var result3 = data.result;
+              }
+              catch(error3){
+                console.log(error2)
                 alert("クラスを離脱できませんでした。");
                 return;
               }
+              }
             }
-            if (result1 == "success" || result2 == "success") {
+            if (result1 == "success" || result2 == "success" || result3 == "success") {
               console.log("Successfully leaved the class");
               document.cookie = 'class_Code=' + "";
               window.location.href = "/student/student_login";
