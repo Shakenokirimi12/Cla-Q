@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClaQ - 生徒ログイン</title>
+  <title>ClaQ - 先生用</title>
   <style>
     body {
       font-family: "Arial", sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       height: 100vh;
       background-color: #3498db;
@@ -20,19 +20,15 @@
       /* Change text color to white */
     }
 
-    #login-header {
-      margin-top: 20px;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    #login-form {
+    .form-container {
       text-align: center;
       background-color: #ffffff;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
+      margin: 20px;
+      color: #333;
+      /* Change form text color to dark */
     }
 
     .input-field {
@@ -58,16 +54,12 @@
       background-color: #45a049;
     }
 
-    #class_code_label {
-      color: black;
-    }
-
     .user-info {
-      border: 1px solid #ccc;
-      border-radius: 4px;
       position: absolute;
       top: 20px;
       left: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       background-color: white;
       color: black;
       padding: 20px;
@@ -105,28 +97,33 @@
 <body>
   <div class="user-info"></div>
 
-  <div id="login-header">
-    <p>ClaQ - 生徒ログイン</p>
-    <label class="class_code_label">クラスコードを入力して参加</label>
-  </div>
-
-  <div id="login-form">
-    <form id="student-login-form">
-      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true" />
-      <br />
-      <button type="button" class="action-button" onclick="student_Join()">
-        ログイン
+  <div class="form-container">
+    <h2>ClaQ - 先生用</h2>
+    <form id="teacher-form">
+      <button type="button" class="action-button" onclick="startClass()">
+        授業を開始
       </button>
     </form>
   </div>
+
+  <div class="form-container">
+    <h2>ClaQ - クラス参加</h2>
+    <form id="class-join-form">
+      <label for="class-code-input">クラスコード:</label>
+      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" />
+      <br />
+      <button type="button" class="action-button" onclick="joinClass()">
+        開始済みクラスに参加
+      </button>
+    </form>
+  </div>
+
   <script>
-    var userName, userEmail;
-    async function student_Join() {
-      var class_Code = document.getElementById("class-code-input").value;
-      // Add your login logic here
-      var url = "https://api.cla-q.net/student/join";
+    async function startClass() {
+      var url = "https://api.cla-q.net/teacher/create_class";
       var postData = {
         "class_Code": class_Code,
+        "userEmail": userEmail,
         "userName": userName
       };
       try {
@@ -142,15 +139,13 @@
           .then(response => response.json())
           .then(data => {
             // レスポンスデータの処理
-            console.log(data[1].message, data[0].message, data[1].result, data[0].result)
-            if (data[1].result == "success" || data[0].result == "success") {
-              console.log("Successfully joined the class");
-              console.log(data[1].message, data[0].message, data[1].result, data[0].result);
-              document.cookie = 'class_Code=' + data[0].class_Code;
-              window.location.href = "/student/student_menu";
+            if (data.result == "success") {
+              console.log("Successfully created the class");
+              document.cookie = 'class_Code=' + data.class_Code;
+              window.location.href = "/teacher/teacher_menu";
             }
             else {
-              alert("ログインできませんでした。");
+              alert("ログインできませんでした。:" + data.message);
             }
           })
           .catch(error => {
@@ -162,6 +157,64 @@
       }
     }
 
+
+    async function joinClass() {
+      var class_Code = document.getElementById("class-code-input").value;
+      var url = "https://api.cla-q.net/teacher/rejoin_class";
+      var postData = {
+        "class_Code": class_Code,
+        "userEmail": userEmail,
+        "userName": userName
+      };
+      try {
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            try {
+              var result = data[1].result;
+              if (result == "success") {
+                console.log("Successfully created the class");
+                document.cookie = 'class_Code=' + data[1].class_Code;
+                window.location.href = "/teacher/teacher_menu";
+              }
+              else {
+                alert("ログインできませんでした。:" + data[1].message);
+              }
+            }
+            catch (error) {
+              try {
+                var result2 = data.result;
+                if (result2 == "success") {
+                  console.log("Successfully created the class");
+                  document.cookie = 'class_Code=' + data.class_Code;
+                  window.location.href = "/teacher/teacher_menu";
+                }
+                else {
+                  alert("ログインできませんでした。:" + data.message);
+                }
+              }
+              catch (error) {
+                alert("サーバーエラーです。管理者にお問い合わせください。");
+              }
+            }
+            // レスポンスデータの処理
+          })
+          .catch(error => {
+            alert("ログインできませんでした。");
+          });
+      } catch (error) {
+        console.log("エラー発生。")
+        console.log(error)
+      }
+    }
 
     window.onload = function () {
       mobileRedirect();
@@ -195,12 +248,13 @@
       objBody.appendChild(lock_screen);
     }
 
-    //以下firebase auth
+
+    var userName, userEmail;
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // ログイン時
-        if (user.email.includes("-")) {
-          window.location.href = "/teacher/teacher_login";
+        if (user.email.includes("_")) {
+          window.location.href = "/student/student_start";
         } else {
           // Update the user information display
           var userInfoElement = document.querySelector(".user-info");
@@ -210,7 +264,7 @@
             "</p><p>メールアドレス: " +
             user.email +
             "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-
+          //ログイン越え回避解除
           let screenLock = document.getElementById("screenLock");
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
@@ -230,7 +284,6 @@
           location.reload();
         });
     }
-    //以上firebase auth
   </script>
 </body>
 

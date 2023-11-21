@@ -182,14 +182,14 @@
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         if (user.email.includes("-")) {
-          window.location.href = "/teacher/teacher_login";
+          window.location.href = "/teacher/teacher_start";
         }
         // ログイン時
         // Update the user information display
         document.getElementById("mail_address").innerHTML =
           "メールアドレス:" + user.email;
         document.getElementById("user_name").innerHTML = user.displayName;
-        document.getElementById("class_code").innerHTML = class_Code;
+        document.getElementById("class_code").innerHTML = "参加中のクラス:" + class_Code;
 
         let screenLock = document.getElementById("screenLock");
         screenLock.parentNode.removeChild(screenLock);
@@ -249,7 +249,7 @@
               console.log("Successfully leaved the class");
               alert("クラスを離脱しました。クラス参加画面に戻ります。")
               document.cookie = 'class_Code=' + "";
-              window.location.href = "/student/student_login";
+              window.location.href = "/student/student_start";
             }
             else {
               console.log("データエラー。successが返されなかった。")
