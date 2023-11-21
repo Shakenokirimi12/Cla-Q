@@ -131,14 +131,23 @@
       };
       try {
         var success = await postToAPI(url, postData);
+        console.log(success);
+        if (success == true) {
+          window.location.href = "/student/student_menu.html";
+        } else {
+          console.log(success)
+          alert("ログインできませんでした。");
+        }
       } catch (error) {
+        console.log("エラー発生。")
         console.log(error)
         var success = false;
-      }
-      if (success) {
-        window.location.href = "/student/student_menu.html";
-      } else {
-        alert("ログインできませんでした。");
+        if (success == true) {
+          window.location.href = "/student/student_menu.html";
+        } else {
+          console.log(success)
+          alert("ログインできませんでした。");
+        }
       }
     }
 
