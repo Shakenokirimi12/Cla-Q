@@ -185,7 +185,7 @@
       let objBody = document.getElementsByTagName("body").item(0);
       objBody.appendChild(lock_screen);
     }
-
+    var userName,userEmail;
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // ログイン時
@@ -200,6 +200,8 @@
 
         let screenLock = document.getElementById("screenLock");
         screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
       } else {
         // 未ログイン時
         window.location.href = "/login";
