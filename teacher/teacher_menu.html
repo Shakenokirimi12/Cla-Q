@@ -4,6 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+      authDomain: "cla-q-7e2d9.firebaseapp.com",
+      projectId: "cla-q-7e2d9",
+      storageBucket: "cla-q-7e2d9.appspot.com",
+      messagingSenderId: "809026902811",
+      appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
   <title>ClaQ - 先生メニュー</title>
   <style>
     body {
@@ -23,8 +39,8 @@
     #class-info {
       text-align: left;
       margin-bottom: 20px;
-      position: relative;
-      top: 50px;
+      position: absolute;
+      top: 20px;
       left: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
@@ -32,6 +48,44 @@
       color: black;
       padding: 20px;
       text-align: center;
+    }
+
+    #start-button {
+      background-color: #4caf50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #end-button {
+      background-color: #4caf50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #logout_button {
+      background-color: #4caf50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    #start-button:hover {
+      background-color: #45a049;
+    }
+
+    #end-button:hover {
+      background-color: #45a049;
     }
 
     #controlArea {
@@ -50,44 +104,6 @@
       /* 位置指定 */
       margin: auto;
       /* 中央寄せ */
-    }
-
-    #answer-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    #answer-list>div {
-      margin-bottom: 20px;
-      width: 40%;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #fff;
-      color: black;
-      padding: 20px;
-    }
-
-    #answer-list>div:first-child {
-      margin-top: 0;
-    }
-
-    #answer-list>div>h4 {
-      font-size: 18px;
-    }
-
-    #answer-list>div>p {
-      font-size: 16px;
-    }
-
-    #question-number {
-      position: absolute;
-      top: 0;
-      right: 20px;
-      font-size: 20px;
-      font-weight: bold;
     }
 
     #status {
@@ -112,11 +128,8 @@
     <p id="status">現在:1問目開始待ち</p>
   </div>
 
-  <div id="answer-list"></div>
-
   <script>
     var questionnumber = 1;
-
     function startQuestion() {
       var status = document.getElementById("status").innerHTML;
       if (status.includes("開始待ち")) {
@@ -142,7 +155,7 @@
         new RegExp(key + '\=([^\;]*)\;*')
       )[1];
       class_Code = value;
-      if (class_Code == "" || class_Code == undefined) {
+      if(class_Code == "" || class_Code == undefined){
         window.location.href = "/teacher/teacher_start"
       }
       redirectMobile();
@@ -175,8 +188,7 @@
       let objBody = document.getElementsByTagName("body").item(0);
       objBody.appendChild(lock_screen);
     }
-
-    var userName, userEmail;
+    var userName,userEmail;
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // ログイン時
@@ -214,6 +226,7 @@
             headers: {
               "Content-Type": "application/json",
               "Origin": "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
           })
@@ -227,7 +240,7 @@
                   window.location.href = "/teacher/teacher_start";
                 }
                 else {
-                  alert("ログアウトできませんでした。:" + data[1].message);
+                  alert("ログインできませんでした。:" + data[1].message);
                 }
               }
               catch (error) {
@@ -239,16 +252,17 @@
                     window.location.href = "/teacher/teacher_start";
                   }
                   else {
-                    alert("ログアウトできませんでした。:" + data.message);
+                    alert("ログインできませんでした。:" + data.message);
                   }
                 }
                 catch (error) {
                   alert("サーバーエラーです。管理者にお問い合わせください。");
                 }
               }
+              // レスポンスデータの処理
             })
             .catch(error => {
-              alert("ログアウトできませんでした。");
+              alert("ログインできませんでした。");
             });
         } catch (error) {
           console.log("エラー発生。")
