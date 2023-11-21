@@ -212,11 +212,11 @@
     //以上firebase auth
 
     async function postToAPI(url, postData) {
-      fetch(url, {
+      await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Origin":"https://app.cla-q.net/",
+          "Origin": "https://app.cla-q.net/",
           // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
         },
         body: JSON.stringify(postData),
@@ -224,16 +224,17 @@
         .then(response => response.json())
         .then(data => {
           // レスポンスデータの処理
+          console.log(data[1].message, data[0].message, data[1].result, data[0].result)
           if (data.length > 1 && data[1].result == "success") {
             console.log("Successfully joined the class");
-            console.log(data[1].message,data[0].message,data[1].result,data[0].result);
+            console.log(data[1].message, data[0].message, data[1].result, data[0].result);
             return true;
           }
-          else if(data.length > 1 && data[0].result == "success"){
+          else if (data.length > 1 && data[0].result == "success") {
             console.log("Successfully joined the class");
-            console.log(data[1].message,data[0].message,data[1].result,data[0].result);
+            console.log(data[1].message, data[0].message, data[1].result, data[0].result);
             return true;
-          } 
+          }
           else {
             console.error("Failed to join the class");
             return false;
