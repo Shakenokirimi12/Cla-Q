@@ -220,18 +220,28 @@
         },
         body: JSON.stringify(postData),
       })
-        .then((response) => {
-          //ステータスが ok であればレスポンスを JSON として解析
-          if (response.ok) {
-            return response.json();
+        .then(response => response.json())
+        .then(data => {
+          // 結果を処理する
+          if (Array.isArray(data) && data.length > 0) {
+            var resultObj = data[1];
+            if (resultObj.result == undefined || resultObj.result == "") {
+              resultObj = data[0];
+            }
+            if (resultObj && resultObj.result === 'success') {
+              console.log('Success!');
+              return true;
+            } else {
+              console.error('Failed:', resultObj.message);
+              return false;
+            }
           } else {
-            //ステータスが ok でなければエラーにする
-            throw new Error(`リクエスト失敗:${response.status} ${response.statusText}`);
+            console.error('Invalid response format');
+            return false;
           }
         })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data)
+        .catch(error => {
+          console.error('Error:', error);
         });
     }
   </script>
