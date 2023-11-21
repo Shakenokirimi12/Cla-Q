@@ -156,7 +156,7 @@
         new RegExp(key + '\=([^\;]*)\;*')
       )[1];
       class_Code = value;
-      if(class_Code == "" || class_Code == undefined){
+      if (class_Code == "" || class_Code == undefined) {
         window.location.href = "/student/student_start"
       }
       mobileRedirect();
@@ -265,7 +265,18 @@
             }
             else {
               console.log("データエラー。successが返されなかった。")
-              alert("クラスを離脱できませんでした。:" + data[0].message);
+              if (result1 != undefined) {
+                alert("クラスを離脱できませんでした。接続画面に遷移します。:" + data[0].message);
+                window.location.href = "/student/student_start";
+              }
+              else if (result2 != undefined) {
+                alert("クラスを離脱できませんでした。接続画面に遷移します。:" + data[1].message);
+                window.location.href = "/student/student_start";
+              }
+              else {
+                alert("クラスを離脱できませんでした。接続画面に遷移します。:" + data.message);
+                window.location.href = "/student/student_start";
+              }
             }
           })
           .catch(error => {
