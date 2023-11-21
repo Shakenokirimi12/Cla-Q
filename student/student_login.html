@@ -132,6 +132,7 @@
       try {
         var success = await postToAPI(url, postData);
       } catch (error) {
+        console.log(error)
         var success = false;
       }
       if (success) {
