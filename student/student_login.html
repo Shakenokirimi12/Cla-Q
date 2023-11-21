@@ -126,8 +126,8 @@
       // Add your login logic here
       var url = "https://api.cla-q.net/student/join";
       var postData = {
-        class_Code: class_Code,
-        userName: userName,
+        "class_Code": class_Code,
+        "userName": userName
       };
       try {
         var success = await postToAPI(url, postData);
