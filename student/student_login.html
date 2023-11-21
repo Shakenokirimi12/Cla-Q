@@ -130,12 +130,38 @@
         "userName": userName
       };
       try {
-        await postToAPI(url, postData, "/student/student_menu.html");
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            // レスポンスデータの処理
+            console.log(data[1].message, data[0].message, data[1].result, data[0].result)
+            if (data[1].result == "success" || data[0].result == "success") {
+              console.log("Successfully joined the class");
+              console.log(data[1].message, data[0].message, data[1].result, data[0].result);
+              document.cookie = 'class_Code=' + data[0].class_Code;
+              window.location.href = "/student/student_menu";
+            }
+            else {
+              alert("ログインできませんでした。");
+            }
+          })
+          .catch(error => {
+            alert("ログインできませんでした。");
+          });
       } catch (error) {
         console.log("エラー発生。")
         console.log(error)
       }
     }
+
 
     window.onload = function () {
       mobileRedirect();
@@ -205,35 +231,6 @@
         });
     }
     //以上firebase auth
-
-    async function postToAPI(url, postData, destination) {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Origin": "https://app.cla-q.net/",
-          // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-        },
-        body: JSON.stringify(postData),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // レスポンスデータの処理
-          console.log(data[1].message, data[0].message, data[1].result, data[0].result)
-          if (data[1].result == "success" || data[0].result == "success") {
-            console.log("Successfully joined the class");
-            console.log(data[1].message, data[0].message, data[1].result, data[0].result);
-            document.cookie = 'class_Code=' + data[0].class_Code;
-            window.location.href = destination;
-          }
-          else {
-            alert("ログインできませんでした。");
-          }
-        })
-        .catch(error => {
-          alert("ログインできませんでした。");
-        });
-    }
   </script>
 </body>
 
