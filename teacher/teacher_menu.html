@@ -39,75 +39,98 @@
     #class-info {
       text-align: left;
       margin-bottom: 20px;
-      position: absolute;
-      top: 20px;
-      left: 20px;
+      position: relative;
+      /* Changed to relative to prevent overlapping */
       border: 1px solid #ccc;
       border-radius: 4px;
       background-color: white;
       color: black;
       padding: 20px;
       text-align: center;
+      width: 80%;
+      /* Added width to limit the size */
+      max-width: 400px;
+      /* Added max-width for responsiveness */
+      margin-top: 20px;
+      /* Added margin-top for spacing */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Added box-shadow for a subtle lift */
     }
 
-    #start-button {
-      background-color: #4caf50;
-      color: #ffffff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    #end-button {
-      background-color: #4caf50;
-      color: #ffffff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
+    #start-button,
+    #end-button,
     #logout_button {
       background-color: #4caf50;
       color: #ffffff;
       padding: 10px 20px;
       border: none;
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 18px;
       cursor: pointer;
+      margin-top: 10px;
+      /* Added margin-top for spacing */
     }
 
-    #start-button:hover {
-      background-color: #45a049;
+    #logout_button {
+      font-size: 14px;
+      /* Increased font size for better visibility */
     }
 
-    #end-button:hover {
+    #start-button:hover,
+    #end-button:hover,
+    #logout_button:hover {
       background-color: #45a049;
     }
 
     #controlArea {
+      display: flex;
+      flex-direction: column;
       text-align: center;
       background-color: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      top: 0;
-      /* 位置指定 */
-      bottom: 0;
-      /* 位置指定 */
-      left: 0;
-      /* 位置指定 */
-      right: 0;
-      /* 位置指定 */
-      margin: auto;
-      /* 中央寄せ */
+      margin-top: 20px;
+      /* Added margin-top for spacing */
+      width: 80%;
+      /* Added width to limit the size */
+      max-width: 400px;
+      /* Added max-width for responsiveness */
+      align-self: center;
+      /* Center the controlArea */
     }
 
     #status {
       color: black;
+      margin-top: 10px;
+      /* Added margin-top for spacing */
+    }
+
+    #problemSelector,
+    #answerTable,
+    #studentList {
+      margin-top: 20px;
+    }
+
+    #answerTable,
+    #studentList {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #answerTable th,
+    #answerTable td,
+    #studentList th,
+    #studentList td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    #answerTable th,
+    #studentList th {
+      background-color: #4caf50;
+      color: white;
     }
   </style>
 </head>
@@ -126,151 +149,185 @@
       問題の終了
     </button>
     <p id="status">現在:1問目開始待ち</p>
+
+    <select id="problemSelector">
+      <option value="1">問題1</option>
+      <option value="2">問題2</option>
+      <option value="3">問題3</option>
+      <!-- Add more options as needed -->
+    </select>
+
+    <table id="answerTable">
+      <thead>
+        <tr>
+          <th>生徒の名前</th>
+          <th>生徒の答え</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically populated based on selected problem -->
+      </tbody>
+    </table>
+
+    <table id="studentList">
+      <thead>
+        <tr>
+          <th>生徒の名前</th>
+          <th>メールアドレス</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically populated based on the list of students -->
+      </tbody>
+    </table>
   </div>
+</body>
 
-  <script>
-    var questionnumber = 1;
-    function startQuestion() {
-      var status = document.getElementById("status").innerHTML;
-      if (status.includes("開始待ち")) {
-        status = "現在:" + questionnumber + "問目実施中";
-        document.getElementById("start-button").disabled = true;
-        document.getElementById("end-button").disabled = false;
-      }
+</html>
+
+<script>
+  var questionnumber = 1;
+  function startQuestion() {
+    var status = document.getElementById("status").innerHTML;
+    if (status.includes("開始待ち")) {
+      status = "現在:" + questionnumber + "問目実施中";
+      document.getElementById("start-button").disabled = true;
+      document.getElementById("end-button").disabled = false;
     }
+  }
 
-    function endQuestion() {
-      var status = document.getElementById("status").innerHTML;
-      if (status.includes("実施中")) {
-        questionnumber++;
-        status = "現在:" + questionnumber + "問目開始待ち";
-        document.getElementById("start-button").disabled = false;
-        document.getElementById("end-button").disabled = true;
-      }
+  function endQuestion() {
+    var status = document.getElementById("status").innerHTML;
+    if (status.includes("実施中")) {
+      questionnumber++;
+      status = "現在:" + questionnumber + "問目開始待ち";
+      document.getElementById("start-button").disabled = false;
+      document.getElementById("end-button").disabled = true;
     }
+  }
 
-    window.onload = function () {
-      const key = 'class_Code';
-      const value = document.cookie.match(
-        new RegExp(key + '\=([^\;]*)\;*')
-      )[1];
-      class_Code = value;
-      if (class_Code == "" || class_Code == undefined) {
-        window.location.href = "/teacher/teacher_start"
-      }
-      redirectMobile();
-      preventOverLogin();
-    };
-
-    function redirectMobile() {
-      if (
-        (navigator.userAgent.indexOf("iPhone") > 0 &&
-          navigator.userAgent.indexOf("iPad") == -1) ||
-        navigator.userAgent.indexOf("iPod") > 0 ||
-        navigator.userAgent.indexOf("Android") > 0
-      ) {
-        location.href = "/mobile.html";
-      }
+  window.onload = function () {
+    const key = 'class_Code';
+    const value = document.cookie.match(
+      new RegExp(key + '\=([^\;]*)\;*')
+    )[1];
+    class_Code = value;
+    if (class_Code == "" || class_Code == undefined) {
+      window.location.href = "/teacher/teacher_start"
     }
+    redirectMobile();
+    preventOverLogin();
+  };
 
-    function preventOverLogin() {
-      let lock_screen = document.createElement("div");
-      lock_screen.id = "screenLock";
-
-      lock_screen.style.height = "100%";
-      lock_screen.style.left = "0px";
-      lock_screen.style.position = "fixed";
-      lock_screen.style.top = "0px";
-      lock_screen.style.width = "100%";
-      lock_screen.style.zIndex = "9999";
-      lock_screen.style.opacity = "0";
-
-      let objBody = document.getElementsByTagName("body").item(0);
-      objBody.appendChild(lock_screen);
+  function redirectMobile() {
+    if (
+      (navigator.userAgent.indexOf("iPhone") > 0 &&
+        navigator.userAgent.indexOf("iPad") == -1) ||
+      navigator.userAgent.indexOf("iPod") > 0 ||
+      navigator.userAgent.indexOf("Android") > 0
+    ) {
+      location.href = "/mobile.html";
     }
-    var userName, userEmail;
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        // ログイン時
-        if (user.email.includes("_")) {
-          window.location.href = "/student/student_start";
-        }
-        // Update the user information display
-        document.getElementById("mail_address").innerHTML =
-          "メールアドレス:" + user.email;
-        document.getElementById("user_name").innerHTML = user.displayName;
-        document.getElementById("class_code").innerHTML = "クラスコード:" + class_Code;
+  }
 
-        let screenLock = document.getElementById("screenLock");
-        screenLock.parentNode.removeChild(screenLock);
-        userName = user.displayName;
-        userEmail = user.email;
-      } else {
-        // 未ログイン時
-        window.location.href = "/login";
+  function preventOverLogin() {
+    let lock_screen = document.createElement("div");
+    lock_screen.id = "screenLock";
+
+    lock_screen.style.height = "100%";
+    lock_screen.style.left = "0px";
+    lock_screen.style.position = "fixed";
+    lock_screen.style.top = "0px";
+    lock_screen.style.width = "100%";
+    lock_screen.style.zIndex = "9999";
+    lock_screen.style.opacity = "0";
+
+    let objBody = document.getElementsByTagName("body").item(0);
+    objBody.appendChild(lock_screen);
+  }
+  var userName, userEmail;
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // ログイン時
+      if (user.email.includes("_")) {
+        window.location.href = "/student/student_start";
       }
-    });
+      // Update the user information display
+      document.getElementById("mail_address").innerHTML =
+        "メールアドレス:" + user.email;
+      document.getElementById("user_name").innerHTML = user.displayName;
+      document.getElementById("class_code").innerHTML = "クラスコード:" + class_Code;
 
-    async function disposeClass() {
-      var confirmation = confirm("この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？");
-      if (confirmation) {
-        var url = "https://api.cla-q.net/teacher/delete_class";
-        var postData = {
-          "class_Code": class_Code,
-          "userEmail": userEmail,
-          "userName": userName
-        };
-        try {
-          await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Origin": "https://app.cla-q.net/",
-              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-            },
-            body: JSON.stringify(postData),
-          })
-            .then(response => response.json())
-            .then(data => {
+      let screenLock = document.getElementById("screenLock");
+      screenLock.parentNode.removeChild(screenLock);
+      userName = user.displayName;
+      userEmail = user.email;
+    } else {
+      // 未ログイン時
+      window.location.href = "/login";
+    }
+  });
+
+  async function disposeClass() {
+    var confirmation = confirm("この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？");
+    if (confirmation) {
+      var url = "https://api.cla-q.net/teacher/delete_class";
+      var postData = {
+        "class_Code": class_Code,
+        "userEmail": userEmail,
+        "userName": userName
+      };
+      try {
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            try {
+              var result = data[1].result;
+              if (result == "success") {
+                console.log("Successfully deleted the class");
+                document.cookie = 'class_Code=';
+                window.location.href = "/teacher/teacher_start";
+              }
+              else {
+                alert("ログインできませんでした。:" + data[1].message);
+              }
+            }
+            catch (error) {
               try {
-                var result = data[1].result;
-                if (result == "success") {
+                var result2 = data.result;
+                if (result2 == "success") {
                   console.log("Successfully deleted the class");
                   document.cookie = 'class_Code=';
                   window.location.href = "/teacher/teacher_start";
                 }
                 else {
-                  alert("ログインできませんでした。:" + data[1].message);
+                  alert("ログインできませんでした。:" + data.message);
                 }
               }
               catch (error) {
-                try {
-                  var result2 = data.result;
-                  if (result2 == "success") {
-                    console.log("Successfully deleted the class");
-                    document.cookie = 'class_Code=';
-                    window.location.href = "/teacher/teacher_start";
-                  }
-                  else {
-                    alert("ログインできませんでした。:" + data.message);
-                  }
-                }
-                catch (error) {
-                  alert("サーバーエラーです。管理者にお問い合わせください。");
-                }
+                alert("サーバーエラーです。管理者にお問い合わせください。");
               }
-              // レスポンスデータの処理
-            })
-            .catch(error => {
-              alert("ログインできませんでした。");
-            });
-        } catch (error) {
-          console.log("エラー発生。")
-          console.log(error)
-        }
+            }
+            // レスポンスデータの処理
+          })
+          .catch(error => {
+            alert("ログインできませんでした。");
+          });
+      } catch (error) {
+        console.log("エラー発生。")
+        console.log(error)
       }
     }
-  </script>
+  }
+</script>
 </body>
 
 </html>
