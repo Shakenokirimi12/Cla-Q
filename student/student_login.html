@@ -220,7 +220,7 @@
         },
         body: JSON.stringify(postData),
       })
-        .then(response => response.json())
+        .then((response) => response.json())
         .then(data => {
           // 結果を処理する
           if (Array.isArray(data) && data.length > 0) {
