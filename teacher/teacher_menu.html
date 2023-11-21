@@ -155,6 +155,9 @@
         new RegExp(key + '\=([^\;]*)\;*')
       )[1];
       class_Code = value;
+      if(class_Code == "" || class_Code == undefined){
+        window.location.href = "/teacher/teacher_start"
+      }
       redirectMobile();
       preventOverLogin();
     };
