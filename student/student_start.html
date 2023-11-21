@@ -112,7 +112,8 @@
 
   <div id="login-form">
     <form id="student-login-form">
-      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true" />
+      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true"
+        onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="student_Join()">
         ログイン
@@ -120,6 +121,14 @@
     </form>
   </div>
   <script>
+    function handleKeyDown(event) {
+      // Enter キーが押された場合に送信処理を行う
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        student_Join();
+      }
+    }
+
     var userName, userEmail;
     async function student_Join() {
       var class_Code = document.getElementById("class-code-input").value;
