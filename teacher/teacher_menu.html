@@ -48,100 +48,54 @@
       color: black;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     #class-info p {
-      margin: 5px 0;
+      margin: 0;
+    }
+
+    #user-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    #user-list table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #user-list th,
+    #user-list td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    #user-list th {
+      background-color: #4caf50;
+      color: white;
     }
 
     #controlArea {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
       background-color: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 20px;
-    }
-
-    #start-button,
-    #end-button,
-    #logout_button {
-      background-color: #4caf50;
-      color: #ffffff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      font-size: 18px;
-      cursor: pointer;
-      margin: 5px;
-    }
-
-    #start-button:hover,
-    #end-button:hover,
-    #logout_button:hover {
-      background-color: #45a049;
+      margin-top: 20px;
+      width: 80%;
     }
 
     #status {
       color: black;
     }
 
-    #student-list {
-      margin-top: 20px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #student-list table {
-      width: 100%;
-      border-collapse: collapse;
+    #date-time {
+      font-size: 12px;
       margin-top: 10px;
     }
-
-    #student-list th,
-    #student-list td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    #student-list th {
-      background-color: #4caf50;
-      color: white;
-    }
-
-    #answers-list {
-      margin-top: 20px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #answers-list table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    #answers-list th,
-    #answers-list td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    #answers-list th {
-      background-color: #4caf50;
-      color: white;
-    }
-
   </style>
 </head>
 
@@ -153,41 +107,32 @@
     <button id="logout_button" onclick="disposeClass()">クラスを終了</button>
   </div>
 
+  <div id="user-list">
+    <h2>参加済み生徒リスト</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>メールアドレス</th>
+          <th>答えた問題番号</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 生徒の情報をここに表示 -->
+      </tbody>
+    </table>
+    <p>参加人数: <span id="participant-count">0</span></p>
+  </div>
+
   <div id="controlArea">
     <button id="start-button" onclick="startQuestion()">問題の開始</button>
     <button id="end-button" onclick="endQuestion()" disabled="true">
       問題の終了
     </button>
     <p id="status">現在:1問目開始待ち</p>
-
-    <div id="student-list">
-      <h2>参加済みの生徒</h2>
-      <p>参加人数: <span id="participant-count">0</span></p>
-      <table>
-        <thead>
-          <tr>
-            <th>名前</th>
-            <th>メールアドレス</th>
-            <th>答えた問題番号</th>
-          </tr>
-        </thead>
-        <tbody id="student-table-body"></tbody>
-      </table>
-    </div>
-
-    <div id="answers-list">
-      <h2>生徒の答え</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>生徒の名前</th>
-            <th>答え</th>
-          </tr>
-        </thead>
-        <tbody id="answers-table-body"></tbody>
-      </table>
-    </div>
   </div>
+
+  <div id="date-time"></div>
 
   <script>
     var questionnumber = 1;
