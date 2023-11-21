@@ -27,34 +27,20 @@
       margin: 0;
       padding: 0;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      align-items: stretch;
       height: 100vh;
-      background-color: #3498db;
-      /* Change background color to blue */
-      color: #fff;
-      /* Change text color to white */
     }
 
     #class-info {
       text-align: left;
-      margin-bottom: 20px;
-      position: relative;
-      /* Changed to relative to prevent overlapping */
       border: 1px solid #ccc;
       border-radius: 4px;
       background-color: white;
       color: black;
       padding: 20px;
       text-align: center;
-      width: 80%;
-      /* Added width to limit the size */
-      max-width: 400px;
-      /* Added max-width for responsiveness */
-      margin-top: 20px;
-      /* Added margin-top for spacing */
+      width: 33.33%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      /* Added box-shadow for a subtle lift */
     }
 
     #start-button,
@@ -90,12 +76,7 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-      /* Added margin-top for spacing */
-      width: 80%;
-      /* Added width to limit the size */
-      max-width: 400px;
-      /* Added max-width for responsiveness */
+      width: 33.33%;
       align-self: center;
       /* Center the controlArea */
     }
@@ -110,10 +91,6 @@
     #answerTable,
     #studentList {
       margin-top: 20px;
-    }
-
-    #answerTable,
-    #studentList {
       width: 100%;
       border-collapse: collapse;
     }
@@ -182,8 +159,6 @@
     </table>
   </div>
 </body>
-
-</html>
 
 <script>
   var questionnumber = 1;
