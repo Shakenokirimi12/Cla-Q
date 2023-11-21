@@ -225,10 +225,8 @@
           .then(response => response.json())
           .then(data => {
             // レスポンスデータの処理
-            console.log(data[1].message, data[0].message, data[1].result, data[0].result)
             if (data[1].result == "success" || data[0].result == "success") {
               console.log("Successfully leaved the class");
-              console.log(data[1].message, data[0].message, data[1].result, data[0].result);
               document.cookie = 'class_Code=' + "";
               window.location.href = "/student/student_login";
             }
@@ -238,11 +236,11 @@
             }
           })
           .catch(error => {
-            console.log("不明なエラー。", error)
+            console.log("不明なエラー1。", error)
             alert("クラスを離脱できませんでした。");
           });
       } catch (error) {
-        console.log("不明なエラー。", error)
+        console.log("不明なエラー2。", error)
         alert("クラスを離脱できませんでした。");
       }
     }
