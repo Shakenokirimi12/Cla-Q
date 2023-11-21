@@ -225,12 +225,7 @@
         .then(data => {
           // レスポンスデータの処理
           console.log(data[1].message, data[0].message, data[1].result, data[0].result)
-          if (data.length > 1 && data[1].result == "success") {
-            console.log("Successfully joined the class");
-            console.log(data[1].message, data[0].message, data[1].result, data[0].result);
-            return true;
-          }
-          else if (data.length > 1 && data[0].result == "success") {
+          if (data[1].result == "success" || data[0].result == "success") {
             console.log("Successfully joined the class");
             console.log(data[1].message, data[0].message, data[1].result, data[0].result);
             return true;
