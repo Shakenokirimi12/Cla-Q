@@ -1,262 +1,239 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClaQ - 生徒ログイン</title>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100vh;
-        background-color: #3498db; /* Change background color to blue */
-        color: #fff; /* Change text color to white */
-      }
 
-      #login-header {
-        margin-top: 20px;
-        font-size: 24px;
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaQ - 生徒ログイン</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      background-color: #3498db;
+      /* Change background color to blue */
+      color: #fff;
+      /* Change text color to white */
+    }
 
-      #login-form {
-        text-align: center;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-      }
+    #login-header {
+      margin-top: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
 
-      .input-field {
-        width: 80%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-      }
+    #login-form {
+      text-align: center;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
 
-      .action-button {
-        background-color: #4caf50;
-        color: #ffffff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        font-size: 18px;
-        cursor: pointer;
-      }
+    .input-field {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
 
-      .action-button:hover {
-        background-color: #45a049;
-      }
+    .action-button {
+      background-color: #4caf50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 18px;
+      cursor: pointer;
+    }
 
-      #class_code_label {
-        color: black;
-      }
+    .action-button:hover {
+      background-color: #45a049;
+    }
 
-      .user-info {
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background-color: white;
-        color: black;
-        padding: 20px;
-        text-align: center;
-      }
+    #class_code_label {
+      color: black;
+    }
 
-      #logout_button {
-        background-color: #4caf50;
-        color: #ffffff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        font-size: 10px;
-        cursor: pointer;
-      }
-    </style>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
-        authDomain: "cla-q-7e2d9.firebaseapp.com",
-        projectId: "cla-q-7e2d9",
-        storageBucket: "cla-q-7e2d9.appspot.com",
-        messagingSenderId: "809026902811",
-        appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+    .user-info {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: white;
+      color: black;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #logout_button {
+      background-color: #4caf50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+      authDomain: "cla-q-7e2d9.firebaseapp.com",
+      projectId: "cla-q-7e2d9",
+      storageBucket: "cla-q-7e2d9.appspot.com",
+      messagingSenderId: "809026902811",
+      appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+</head>
+
+<body>
+  <div class="user-info"></div>
+
+  <div id="login-header">
+    <p>ClaQ - 生徒ログイン</p>
+    <label class="class_code_label">クラスコードを入力して参加</label>
+  </div>
+
+  <div id="login-form">
+    <form id="student-login-form">
+      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true" />
+      <br />
+      <button type="button" class="action-button" onclick="student_Join()">
+        ログイン
+      </button>
+    </form>
+  </div>
+  <script>
+    var userName, userEmail;
+    async function student_Join() {
+      var class_Code = document.getElementById("class-code-input").value;
+      // Add your login logic here
+      var url = "https://api.cla-q.net/student/join";
+      var postData = {
+        class_Code: class_Code,
+        userName: userName,
       };
-      firebase.initializeApp(firebaseConfig);
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-  </head>
+      try {
+        var success = await postToAPI(url, postData);
+      } catch (error) {
+        var success = false;
+      }
+      if (success) {
+        window.location.href = "/student/student_menu.html";
+      } else {
+        alert("ログインできませんでした。");
+      }
+    }
 
-  <body>
-    <div class="user-info"></div>
+    window.onload = function () {
+      mobileRedirect();
+      prevent_Overlogin();
+    };
 
-    <div id="login-header">
-      <p>ClaQ - 生徒ログイン</p>
-      <label class="class_code_label">クラスコードを入力して参加</label>
-    </div>
+    function mobileRedirect() {
+      if (
+        (navigator.userAgent.indexOf("iPhone") > 0 &&
+          navigator.userAgent.indexOf("iPad") == -1) ||
+        navigator.userAgent.indexOf("iPod") > 0 ||
+        navigator.userAgent.indexOf("Android") > 0
+      ) {
+        location.href = "/mobile.html";
+      }
+    }
 
-    <div id="login-form">
-      <form id="student-login-form">
-        <input
-          type="text"
-          id="class-code-input"
-          class="input-field"
-          placeholder="クラスコードを入力"
-          required="true"
-        />
-        <br />
-        <button type="button" class="action-button" onclick="student_Join()">
-          ログイン
-        </button>
-      </form>
-    </div>
-    <script>
-      var userName, userEmail;
-      async function student_Join() {
-        var class_Code = document.getElementById("class-code-input").value;
-        // Add your login logic here
-        var url = "https://api.cla-q.net/student/join";
-        var postData = {
-          class_Code: class_Code,
-          userName: userName,
-        };
-        try {
-          var success = await postToAPI(url, postData);
-        } catch (error) {
-          var success = false;
-        }
-        if (success) {
-          window.location.href = "/student/student_menu.html";
+    function prevent_Overlogin() {
+      let lock_screen = document.createElement("div");
+      lock_screen.id = "screenLock";
+
+      lock_screen.style.height = "100%";
+      lock_screen.style.left = "0px";
+      lock_screen.style.position = "fixed";
+      lock_screen.style.top = "0px";
+      lock_screen.style.width = "100%";
+      lock_screen.style.zIndex = "9999";
+      lock_screen.style.opacity = "0";
+
+      let objBody = document.getElementsByTagName("body").item(0);
+      objBody.appendChild(lock_screen);
+    }
+
+    //以下firebase auth
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // ログイン時
+        if (user.email.includes("-")) {
+          window.location.href = "/teacher/teacher_login";
         } else {
-          alert("ログインできませんでした。");
+          // Update the user information display
+          var userInfoElement = document.querySelector(".user-info");
+          userInfoElement.innerHTML =
+            "<p>ユーザー名: " +
+            user.displayName +
+            "</p><p>メールアドレス: " +
+            user.email +
+            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
         }
+      } else {
+        // 未ログイン時
+        window.location.href = "/login";
       }
+    });
 
-      window.onload = function () {
-        mobileRedirect();
-        prevent_Overlogin();
-      };
+    function logOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(function () {
+          location.reload();
+        });
+    }
+    //以上firebase auth
 
-      function mobileRedirect() {
-        if (
-          (navigator.userAgent.indexOf("iPhone") > 0 &&
-            navigator.userAgent.indexOf("iPad") == -1) ||
-          navigator.userAgent.indexOf("iPod") > 0 ||
-          navigator.userAgent.indexOf("Android") > 0
-        ) {
-          location.href = "/mobile.html";
-        }
-      }
-
-      function prevent_Overlogin() {
-        let lock_screen = document.createElement("div");
-        lock_screen.id = "screenLock";
-
-        lock_screen.style.height = "100%";
-        lock_screen.style.left = "0px";
-        lock_screen.style.position = "fixed";
-        lock_screen.style.top = "0px";
-        lock_screen.style.width = "100%";
-        lock_screen.style.zIndex = "9999";
-        lock_screen.style.opacity = "0";
-
-        let objBody = document.getElementsByTagName("body").item(0);
-        objBody.appendChild(lock_screen);
-      }
-
-      //以下firebase auth
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          // ログイン時
-          if (user.email.includes("-")) {
-            window.location.href = "/teacher/teacher_login";
+    async function postToAPI(url, postData) {
+      await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      })
+        .then((response) => {
+          //ステータスが ok であればレスポンスを JSON として解析
+          if (response.ok) {
+            return response.json();
           } else {
-            // Update the user information display
-            var userInfoElement = document.querySelector(".user-info");
-            userInfoElement.innerHTML =
-              "<p>ユーザー名: " +
-              user.displayName +
-              "</p><p>メールアドレス: " +
-              user.email +
-              "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-
-            let screenLock = document.getElementById("screenLock");
-            screenLock.parentNode.removeChild(screenLock);
-            userName = user.displayName;
-            userEmail = user.email;
+            //ステータスが ok でなければエラーにする
+            throw new Error(`リクエスト失敗:${response.status} ${response.statusText}`);
           }
-        } else {
-          // 未ログイン時
-          window.location.href = "/login";
-        }
-      });
-
-      function logOut() {
-        firebase
-          .auth()
-          .signOut()
-          .then(function () {
-            location.reload();
-          });
-      }
-      //以上firebase auth
-
-     async function postToAPI(url, postData) {
-        await fetch(url, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(postData),
         })
-          .then(response =>   {
-            // status_CodeがEを含んでいる場合にメッセージを表示
-            console.log(response)
-            var servermessage =
-              response.message || (response[0] && response[0].message);
-            var serverstatus_Code =
-              response.status_Code || (response[0] && response[0].status_Code);
-            if (servermessage == undefined && serverstatus_Code == undefined) {
-              servermessage =
-                response.message || (response[1] && response[1].message);
-                serverstatus_Code =
-                response.status_Code ||
-                (response[1] && response[1].status_Code);
-            }
-            console.log(serverstatus_Code);
-            console.log(servermessage)
-            if (status_Code.includes("E")) {
-              alert(response.message);
-              return false;
-            } else if (response.status_Code.includes("J-")) {
-              return true;
-            }
-            else{
-              return false;
-            }
-          })
-          .catch((error) => {
-            // エラーの処理
-            console.error("Fetch error:", error);
-          });
-      }
-    </script>
-  </body>
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+        });
+    }
+  </script>
+</body>
+
 </html>
