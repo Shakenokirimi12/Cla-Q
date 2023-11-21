@@ -233,13 +233,16 @@
               window.location.href = "/student/student_login";
             }
             else {
+              console.log("データエラー。successが返されなかった。")
               alert("クラスを離脱できませんでした。");
             }
           })
           .catch(error => {
+            console.log("不明なエラー。", error)
             alert("クラスを離脱できませんでした。");
           });
       } catch (error) {
+        console.log("不明なエラー。", error)
         alert("クラスを離脱できませんでした。");
       }
     }
