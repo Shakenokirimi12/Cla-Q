@@ -212,38 +212,30 @@
     //以上firebase auth
 
     async function postToAPI(url, postData) {
-      // Create a new XMLHttpRequest object
-      const xhr = new XMLHttpRequest();
-
-      // Set up the request
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      // Set up a callback function to handle the response
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-
-          // Check if the result is success
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+        },
+        body: JSON.stringify(postData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // レスポンスデータの処理
           if (Array.isArray(data) && data.length > 1 && data[1].result === "success" || data[0].result === "success") {
             console.log("Successfully joined the class");
+            console.log(data[1].message,data[0].message);
             return true;
           } else {
             console.error("Failed to join the class");
-            if (data[1].result == undefined) {
-              alert(data[1].message, data[1].status_Code);
-            }
-            else {
-              alert(data[0].message, data[0].status_Code);
-            }
             return false;
           }
-        } else {
-          console.error("Request failed with status:", xhr.status);
-        }
-      };
-
-      // Convert the postData object to JSON and send the request
-      xhr.send(JSON.stringify(postData));
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          return false;
+        });
     }
   </script>
 </body>
