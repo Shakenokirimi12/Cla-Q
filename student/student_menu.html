@@ -267,7 +267,7 @@
               console.log("データエラー。successが返されなかった。")
               if (result1 != undefined) {
                 if (data[0].status_Code == "LE-11") {
-                  alert("クラスが教師によって閉じられています。:" + data.message);
+                  alert("クラスが教師によって閉じられています。");
                   window.location.href = "/student/student_start";
                 }
                 else{
@@ -276,7 +276,7 @@
               }
               else if (result2 != undefined) {
                 if (data[1].status_Code == "LE-11") {
-                  alert("クラスが教師によって閉じられています。:" + data.message);
+                  alert("クラスが教師によって閉じられています。");
                   window.location.href = "/student/student_start";
                 }
                 else{
@@ -285,7 +285,7 @@
               }
               else {
                 if (data.status_Code == "LE-11") {
-                  alert("クラスが教師によって閉じられています。:" + data.message);
+                  alert("クラスが教師によって閉じられています。");
                   window.location.href = "/student/student_start";
                 }
                 else{
