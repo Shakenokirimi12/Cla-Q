@@ -227,8 +227,16 @@
           // Check if the result is success
           if (Array.isArray(data) && data.length > 1 && data[1].result === "success" || data[0].result === "success") {
             console.log("Successfully joined the class");
+            return true;
           } else {
             console.error("Failed to join the class");
+            if(data[1].result == undefined){
+              alert(data[1].message,data[1].status_Code);
+            }
+            else{
+              alert(data[0].message,data[0].status_Code);
+            }
+            return false;
           }
         } else {
           console.error("Request failed with status:", xhr.status);
