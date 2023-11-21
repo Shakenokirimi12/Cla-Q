@@ -189,7 +189,7 @@
               var result = data[1].result;
               if (result == "success") {
                 console.log("Successfully created the class");
-                document.cookie = 'class_Code=' + data[1].class_Code;
+                document.cookie = 'class_Code=' + class_Code;
                 window.location.href = "/teacher/teacher_menu";
               }
               else {
@@ -201,7 +201,7 @@
                 var result2 = data.result;
                 if (result2 == "success") {
                   console.log("Successfully created the class");
-                  document.cookie = 'class_Code=' + data.class_Code;
+                  document.cookie = 'class_Code=' + class_Code;
                   window.location.href = "/teacher/teacher_menu";
                 }
                 else {
