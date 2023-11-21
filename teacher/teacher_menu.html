@@ -117,7 +117,7 @@
     <p id="mail_address"></p>
     <p id="user_name"></p>
     <p id="class_code"></p>
-    <button id="logout_button" onclick="logOut()">ログアウト</button>
+    <button id="logout_button" onclick="disposeClass()">クラスを終了</button>
   </div>
 
   <div id="controlArea">
@@ -151,7 +151,6 @@
 
     window.onload = function () {
       const key = 'class_Code';
-      /// 正規表現でcookie値を取得
       const value = document.cookie.match(
         new RegExp(key + '\=([^\;]*)\;*')
       )[1];
@@ -207,13 +206,64 @@
       }
     });
 
-    function logOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(function () {
-          location.reload();
-        });
+    async function disposeClass() {
+      var confirmation = confirm("この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？");
+      if (confirmation) {
+        var url = "https://api.cla-q.net/teacher/delete_class";
+        var postData = {
+          "class_Code": class_Code,
+          "userEmail": userEmail,
+          "userName": userName
+        };
+        try {
+          await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Origin": "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+            },
+            body: JSON.stringify(postData),
+          })
+            .then(response => response.json())
+            .then(data => {
+              try {
+                var result = data[1].result;
+                if (result == "success") {
+                  console.log("Successfully deleted the class");
+                  document.cookie = 'class_Code=';
+                  window.location.href = "/teacher/teacher_start";
+                }
+                else {
+                  alert("ログインできませんでした。:" + data[1].message);
+                }
+              }
+              catch (error) {
+                try {
+                  var result2 = data.result;
+                  if (result2 == "success") {
+                    console.log("Successfully deleted the class");
+                    document.cookie = 'class_Code=';
+                    window.location.href = "/teacher/teacher_menu";
+                  }
+                  else {
+                    alert("ログインできませんでした。:" + data.message);
+                  }
+                }
+                catch (error) {
+                  alert("サーバーエラーです。管理者にお問い合わせください。");
+                }
+              }
+              // レスポンスデータの処理
+            })
+            .catch(error => {
+              alert("ログインできませんでした。");
+            });
+        } catch (error) {
+          console.log("エラー発生。")
+          console.log(error)
+        }
+      }
     }
   </script>
 </body>

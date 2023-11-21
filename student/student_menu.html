@@ -156,6 +156,11 @@
         new RegExp(key + '\=([^\;]*)\;*')
       )[1];
       class_Code = value;
+      mobileRedirect();
+      prevent_Overlogin();
+    };
+
+    function mobileRedirect() {
       if (
         (navigator.userAgent.indexOf("iPhone") > 0 &&
           navigator.userAgent.indexOf("iPad") == -1) ||
@@ -164,6 +169,9 @@
       ) {
         location.href = "/mobile.html";
       }
+    }
+
+    function prevent_Overlogin() {
       let lock_screen = document.createElement("div");
       lock_screen.id = "screenLock";
 
@@ -177,7 +185,7 @@
 
       let objBody = document.getElementsByTagName("body").item(0);
       objBody.appendChild(lock_screen);
-    };
+    }
 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -205,6 +213,7 @@
       await leaveClass();
     }
     //以上firebase
+
     //以下workers
     async function leaveClass() {
       // Add your login logic here
@@ -225,24 +234,24 @@
           .then(response => response.json())
           .then(data => {
             // レスポンスデータの処理
-            try{
+            try {
               var result1 = data[0].result;
             }
-            catch(error){
+            catch (error) {
               console.log(error)
-              try{
+              try {
                 var result2 = data[1].result;
               }
-              catch(error2){
+              catch (error2) {
                 console.log(error2)
-                try{
-                var result3 = data.result;
-              }
-              catch(error3){
-                console.log(error2)
-                alert("クラスを離脱できませんでした。");
-                return;
-              }
+                try {
+                  var result3 = data.result;
+                }
+                catch (error3) {
+                  console.log(error2)
+                  alert("クラスを離脱できませんでした。");
+                  return;
+                }
               }
             }
             if (result1 == "success" || result2 == "success" || result3 == "success") {
