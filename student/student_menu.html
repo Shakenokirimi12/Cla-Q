@@ -110,7 +110,7 @@
     <p id="mail_address"></p>
     <p id="user_name"></p>
     <p id="class_code"></p>
-    <button id="logout_button" onclick="logOut()">ログアウト</button>
+    <button id="logout_button" onclick="logOut()">クラスを離脱</button>
   </div>
 
   <div id="answerArea">
@@ -203,14 +203,6 @@
 
     async function logOut() {
       await leaveClass();
-      /*
-      firebase
-        .auth()
-        .signOut()
-        .then(function () {
-          location.reload();
-        });
-        */
     }
     //以上firebase
     //以下workers
@@ -221,56 +213,35 @@
         userName: userName,
       };
       try {
-        var success = await postToAPI(url, postData);
-      } catch (error) {
-        var success = false;
-      }
-      if (success) {
-        alert("ログアウトしました。ログイン画面に戻ります。");
-      } else {
-        alert("ログアウトできませんでした。管理者にお問い合わせください。");
-        return;
-      }
-    }
-
-    async function postToAPI(url, postData) {
-      await fetch(url, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
-      })
-        .then((response) => {
-          // status_CodeがEを含んでいる場合にメッセージを表示
-          console.log(response);
-
-          var servermessage =
-            response.message || (response[0] && response[0].message);
-          var serverstatus_Code =
-            response.status_Code || (response[0] && response[0].status_Code);
-          if (servermessage == undefined && serverstatus_Code == undefined) {
-            servermessage =
-              response.message || (response[1] && response[1].message);
-            serverstatus_Code =
-              response.status_Code ||
-              (response[1] && response[1].status_Code);
-          }
-
-          console.log(serverstatus_Code);
-          console.log(servermessage);
-
-          if (status_Code.includes("E")) {
-            alert(response.message);
-          } else if (response.status_Code.includes("J-")) {
-            return true;
-          }
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
         })
-        .catch((error) => {
-          // エラーの処理
-          console.error("Fetch error:", error);
-        });
+          .then(response => response.json())
+          .then(data => {
+            // レスポンスデータの処理
+            console.log(data[1].message, data[0].message, data[1].result, data[0].result)
+            if (data[1].result == "success" || data[0].result == "success") {
+              console.log("Successfully leaved the class");
+              console.log(data[1].message, data[0].message, data[1].result, data[0].result);
+              document.cookie = 'class_Code=' + "";
+              window.location.href = "/student/student_login";
+            }
+            else {
+              alert("クラスを離脱できませんでした。");
+            }
+          })
+          .catch(error => {
+            alert("クラスを離脱できませんでした。");
+          });
+      } catch (error) {
+        alert("クラスを離脱できませんでした。");
+      }
     }
   </script>
 </body>
