@@ -234,7 +234,7 @@
             }
             else {
               console.log("データエラー。successが返されなかった。")
-              alert("クラスを離脱できませんでした。");
+              alert("クラスを離脱できませんでした。:" + data[0].message);
             }
           })
           .catch(error => {
