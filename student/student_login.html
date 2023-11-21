@@ -130,24 +130,10 @@
         "userName": userName
       };
       try {
-        var success = await postToAPI(url, postData);
-        console.log(success);
-        if (success == true) {
-          window.location.href = "/student/student_menu.html";
-        } else {
-          console.log(success)
-          alert("ログインできませんでした。");
-        }
+        await postToAPI(url, postData, "/student/student_menu.html");
       } catch (error) {
         console.log("エラー発生。")
         console.log(error)
-        var success = false;
-        if (success == true) {
-          window.location.href = "/student/student_menu.html";
-        } else {
-          console.log(success)
-          alert("ログインできませんでした。");
-        }
       }
     }
 
@@ -220,7 +206,7 @@
     }
     //以上firebase auth
 
-    async function postToAPI(url, postData) {
+    async function postToAPI(url, postData, destination) {
       await fetch(url, {
         method: "POST",
         headers: {
@@ -237,16 +223,19 @@
           if (data[1].result == "success" || data[0].result == "success") {
             console.log("Successfully joined the class");
             console.log(data[1].message, data[0].message, data[1].result, data[0].result);
-            return true;
+            window.location.href = destination;
           }
           else {
             console.error("Failed to join the class");
-            return false;
+            console.log(success);
+            alert("ログインできませんでした。");
           }
         })
         .catch(error => {
           console.error("Error:", error);
-          return false;
+          console.error("Failed to join the class");
+          console.log(success);
+          alert("ログインできませんでした。");
         });
     }
   </script>
