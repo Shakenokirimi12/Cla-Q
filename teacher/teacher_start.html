@@ -168,7 +168,7 @@
     async function teacher_Rejoin() {
       var class_Code = document.getElementById("class-code-input").value;
       if(class_Code == null || class_Code == undefined || class_Code == ""){
-        alert("クラスコードが入力されていません。";)
+        alert("クラスコードが入力されていません。");
         return;
       }
       var url = "https://api.cla-q.net/teacher/rejoin_class";
