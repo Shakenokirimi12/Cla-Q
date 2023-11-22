@@ -256,14 +256,9 @@
 
   function updateListInterval() {
     var stdList = document.getElementById("stdList");
-
-    // 既存の行を削除
-    while (stdList.firstChild) {
-      stdList.removeChild(stdList.firstChild);
-    }
-
+    stdList.removeChild(stdList.firstChild);
     // 2秒ごとにupdateData関数を呼び出す
-    setInterval(getStudentsList, 2000);
+    setInterval(getStudentsList(), 2000);
   }
 
   async function getStudentsList() {
