@@ -204,8 +204,8 @@
     <table id="stdList">
       <thead>
         <tr>
+          <th>接続日時</th>
           <th>名前</th>
-          <th>メールアドレス</th>
         </tr>
       </thead>
       <tbody>
@@ -376,15 +376,38 @@
           .then(response => response.json())
           .then(data => {
             // レスポンスデータの処理
-            if (data.result == "success") {
-             
+            if (data != undefined) {
+              // HTMLのstdList要素を取得
+              var stdList = document.getElementById("stdList");
+
+              // JSONデータを処理してHTMLに追加
+              data.forEach(function (item) {
+                // UNIX時間を通常の日時形式に変換
+                var connectedTime = new Date(item.connected_Time * 1000); // UNIX時間はミリ秒ではなく秒で提供されているため、1000倍する
+
+                // 新しい行を作成
+                var newRow = document.createElement("tr");
+
+                // 接続日時のセルを作成
+                var connectedTimeCell = document.createElement("td");
+                connectedTimeCell.textContent = connectedTime.toLocaleString(); // 通常の日時形式に変換
+                newRow.appendChild(connectedTimeCell);
+
+                // 名前のセルを作成
+                var nameCell = document.createElement("td");
+                nameCell.textContent = item.connected_User_Name;
+                newRow.appendChild(nameCell);
+
+                // 行をstdListに追加
+                stdList.appendChild(newRow);
+              });
             }
             else {
-              alert("ログインできませんでした。:" + data.message);
+              alert("生徒一覧を取得できませんでした。:" + data.message);
             }
           })
           .catch(error => {
-            alert("ログインできませんでした。");
+            alert("生徒一覧を取得できませんでした。");
           });
       } catch (error) {
         console.log("エラー発生。")
