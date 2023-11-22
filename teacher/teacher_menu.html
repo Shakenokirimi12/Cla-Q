@@ -175,7 +175,7 @@
         問題の終了
       </button>
       <p id="status">現在:1問目開始待ち</p>
-      <p id="student_count">生徒0人接続済み</p>
+      <p id="student_count">生徒接続情報を読み込み中....</p>
       <button id="logout_button" onclick="disposeClass()">クラスを終了</button>
     </div>
 
@@ -297,6 +297,7 @@
               // 行をstdListに追加
               stdList.appendChild(newRow);
             });
+            document.getElementById("student_count").innerHTML = "生徒" + data.length + "人接続済み";
           }
           else {
             alert("生徒一覧を取得できませんでした。:" + data.message);
