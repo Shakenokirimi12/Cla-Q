@@ -250,13 +250,18 @@
     }
     await redirectMobile();
     await preventOverLogin();
-
+    updateListInterval();
 
   };
 
   function updateListInterval() {
     var stdList = document.getElementById("stdList");
-    stdList.removeChild(stdList.firstChild);
+
+    // 既存の行を削除
+    while (stdList.firstChild) {
+      stdList.removeChild(stdList.firstChild);
+    }
+    //これだめなんかな
     // 2秒ごとにupdateData関数を呼び出す
     setInterval(getStudentsList(), 2000);
   }
