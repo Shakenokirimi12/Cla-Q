@@ -248,9 +248,8 @@
     }
     await redirectMobile();
     await preventOverLogin();
-    console.log("aaa");
-    await getStudentsList();
   };
+
   async function getStudentsList() {
     var url = "https://api.cla-q.net/teacher/list_students";
     var postData = {
@@ -353,6 +352,8 @@
       screenLock.parentNode.removeChild(screenLock);
       userName = user.displayName;
       userEmail = user.email;
+      console.log("aaa");
+      getStudentsList();
     } else {
       // 未ログイン時
       window.location.href = "/login";
