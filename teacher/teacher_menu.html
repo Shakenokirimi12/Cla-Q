@@ -195,7 +195,7 @@
           <th>生徒の答え</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="studentsTableBody">
         <!-- Table rows will be dynamically populated based on selected problem -->
       </tbody>
     </table>
@@ -256,18 +256,11 @@
 
   async function executeEveryTwoSeconds() {
     while (true) {
-      // ここに実行したい非同期処理を書く
-      // 例えば、API呼び出しやデータの取得など
-      var stdList = document.getElementById("stdList");
-
-      // 既存の行を削除
-      while (stdList.firstChild) {
-        stdList.removeChild(stdList.firstChild);
-        console.log('処理を実行しました。');
+        var tableBody = document.getElementById("studentsTableBody");
+        tableBody.innerHTML = "";
         await getStudentsList();
-        // 2秒待機
+        console.log('処理を実行しました。');
         await new Promise(resolve => setTimeout(resolve, 2000));
-      }
     }
   }
   async function getStudentsList() {
