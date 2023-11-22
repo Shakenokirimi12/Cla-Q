@@ -258,7 +258,7 @@
     while (true) {
         await getStudentsList();
         console.log('処理を実行しました。');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 10000));
     }
   }
   async function getStudentsList() {
