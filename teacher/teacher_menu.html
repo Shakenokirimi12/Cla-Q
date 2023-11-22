@@ -338,7 +338,7 @@
 
       async function getAnswersList() {
         var comboBox = document.getElementById("problemSelector");
-        var selectedIndex = comboBox.selectedIndex + 1;
+        var selectedIndex = String(comboBox.selectedIndex + 1);
         console.log("答え一覧を取得しています。");
         var url = "https://api.cla-q.net/teacher/get_AnswersList";
         var postData = {
