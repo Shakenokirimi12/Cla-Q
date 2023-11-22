@@ -278,9 +278,9 @@
         console.log("生徒一覧を取得しています。");
         var url = "https://api.cla-q.net/teacher/get_StudentsList";
         var postData = {
-          "userEmail": userEmail,
-          "userName": userName,
-          "class_Code": class_Code
+          userEmail: userEmail,
+          userName: userName,
+          class_Code: class_Code,
         };
         try {
           await fetch(url, {
@@ -341,10 +341,10 @@
         console.log("答え一覧を取得しています。");
         var url = "https://api.cla-q.net/teacher/get_AnswersList";
         var postData = {
-          "userEmail": userEmail,
-          "userName": userName,
-          "class_Code": class_Code,
-          "question_Number": selectedIndex
+          userEmail: userEmail,
+          userName: userName,
+          class_Code: class_Code,
+          question_Number: selectedIndex,
         };
         try {
           await fetch(url, {
@@ -365,22 +365,18 @@
                 tableBody.innerHTML = "";
                 // JSONデータを処理してHTMLに追加
                 data.forEach(function (item) {
-                  // UNIX時間を通常の日時形式に変換
-                  var connectedTime = new Date(item.connected_Time * 1000); // UNIX時間はミリ秒ではなく秒で提供されているため、1000倍する
 
                   // 新しい行を作成
                   var newRow = document.createElement("tr");
+                  // 名前のセルを作成
+                  var nameCell = document.createElement("td");
+                  nameCell.textContent = item.submitted_User_Name;
+                  newRow.appendChild(nameCell);
 
                   // 接続日時のセルを作成
                   var connectedTimeCell = document.createElement("td");
-                  connectedTimeCell.textContent =
-                    connectedTime.toLocaleString(); // 通常の日時形式に変換
+                  connectedTimeCell.textContent = item.answer_Value;
                   newRow.appendChild(connectedTimeCell);
-
-                  // 名前のセルを作成
-                  var nameCell = document.createElement("td");
-                  nameCell.textContent = item.connected_User_Name;
-                  newRow.appendChild(nameCell);
 
                   tableBody.appendChild(newRow);
                 });
