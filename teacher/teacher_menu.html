@@ -279,9 +279,9 @@
         console.log("生徒一覧を取得しています。");
         var url = "https://api.cla-q.net/teacher/get_StudentsList";
         var postData = {
-          userEmail: userEmail,
-          userName: userName,
-          class_Code: class_Code,
+          "userEmail": userEmail,
+          "userName": userName,
+          "class_Code": class_Code
         };
         try {
           await fetch(url, {
@@ -342,10 +342,10 @@
         console.log("答え一覧を取得しています。");
         var url = "https://api.cla-q.net/teacher/get_AnswersList";
         var postData = {
-          userEmail: userEmail,
-          userName: userName,
-          class_Code: class_Code,
-          question_Number: selectedIndex,
+          "userEmail": userEmail,
+          "userName": userName,
+          "class_Code": class_Code,
+          "question_Number": selectedIndex
         };
         try {
           await fetch(url, {
@@ -452,9 +452,9 @@
         if (confirmation) {
           var url = "https://api.cla-q.net/teacher/delete_class";
           var postData = {
-            class_Code: class_Code,
-            userEmail: userEmail,
-            userName: userName,
+            "class_Code": class_Code,
+            "userEmail": userEmail,
+            "userName": userName
           };
           try {
             await fetch(url, {
