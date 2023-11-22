@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClaQ - 生徒ログイン</title>
   <style>
+    .no-spin::-webkit-inner-spin-button,
+    .no-spin::-webkit-outer-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      -moz-appearance: textfield !important;
+    }
+
     body {
       font-family: "Arial", sans-serif;
       margin: 0;
@@ -112,8 +119,8 @@
 
   <div id="login-form">
     <form id="student-login-form">
-      <input type="number" maxlength="6" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true"
-        onkeydown="handleKeyDown(event)" />
+      <input type="number" maxlength="6" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
+        required="true" onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="student_Join()">
         ログイン

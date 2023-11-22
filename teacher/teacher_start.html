@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClaQ - 先生用</title>
   <style>
+    .no-spin::-webkit-inner-spin-button,
+    .no-spin::-webkit-outer-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+      -moz-appearance: textfield !important;
+    }
+
     body {
       font-family: "Arial", sans-serif;
       margin: 0;
@@ -110,7 +117,8 @@
     <h2>ClaQ - クラス参加</h2>
     <form id="class-join-form">
       <label for="class-code-input">再接続はこちら</label>
-      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" maxlength="6" onkeydown="handleKeyDown(event)"/>
+      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" maxlength="6"
+        onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="teacher_Rejoin()">
         開始済みクラスに参加
@@ -167,7 +175,7 @@
 
     async function teacher_Rejoin() {
       var class_Code = document.getElementById("class-code-input").value;
-      if(class_Code == null || class_Code == undefined || class_Code == ""){
+      if (class_Code == null || class_Code == undefined || class_Code == "") {
         alert("クラスコードが入力されていません。");
         return;
       }
