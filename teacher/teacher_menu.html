@@ -254,7 +254,7 @@
 
   };
 
-  function updateListInterval() {
+  async function updateListInterval() {
     var stdList = document.getElementById("stdList");
 
     // 既存の行を削除
@@ -263,7 +263,7 @@
     }
     //これだめなんかな
     // 2秒ごとにupdateData関数を呼び出す
-    setInterval(getStudentsList(), 2000);
+    setInterval(await getStudentsList(), 2000);
   }
 
   async function getStudentsList() {
