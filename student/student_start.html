@@ -118,7 +118,7 @@
 
   <div id="login-form">
     <form id="student-login-form">
-      <input type="number" minlength="6" maxlength="6" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
+      <input type="number" min="100000" max="999999" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
         required="true" onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="student_Join()">
