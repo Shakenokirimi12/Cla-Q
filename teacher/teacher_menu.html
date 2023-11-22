@@ -285,6 +285,7 @@
         .then(data => {
           // レスポンスデータの処理
           if (data != undefined) {
+            var tableBody = document.getElementById("studentsTableBody");
             // HTMLのstdList要素を取得
             var stdList = document.getElementById("stdList");
 
@@ -307,7 +308,7 @@
               newRow.appendChild(nameCell);
 
               // 行をstdListに追加
-              stdList.appendChild(newRow);
+              tableBody.appendChild(newRow);
             });
             document.getElementById("student_count").innerHTML = "生徒" + data.length + "人接続済み";
           }
