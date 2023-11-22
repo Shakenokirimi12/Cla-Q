@@ -144,7 +144,7 @@
       border-radius: 30px;
       border-style: solid;
       box-shadow: 0 12px 12px gray;
-      background-color: #b2ebf2;
+      background-color: #fff59d;
     }
 
     #class_control {
@@ -153,7 +153,7 @@
       border-radius: 30px;
       border-style: solid;
       box-shadow: 0 12px 12px gray;
-      background-color: #b2ebf2;
+      background-color: #fff59d;
       padding-bottom: 15px;
     }
   </style>
@@ -347,6 +347,41 @@
               }
             }
             // レスポンスデータの処理
+          })
+          .catch(error => {
+            alert("ログインできませんでした。");
+          });
+      } catch (error) {
+        console.log("エラー発生。")
+        console.log(error)
+      }
+    }
+
+    async function getStudentList() {
+      var url = "https://api.cla-q.net/teacher/list_students";
+      var postData = {
+        "userEmail": userEmail,
+        "userName": userName
+      };
+      try {
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Origin": "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            // レスポンスデータの処理
+            if (data.result == "success") {
+             
+            }
+            else {
+              alert("ログインできませんでした。:" + data.message);
+            }
           })
           .catch(error => {
             alert("ログインできませんでした。");
