@@ -284,10 +284,9 @@
           // レスポンスデータの処理
           if (data != undefined) {
             var tableBody = document.getElementById("studentsTableBody");
-            tableBody.innerHTML = "";
             // HTMLのstdList要素を取得
             var stdList = document.getElementById("stdList");
-
+            tableBody.innerHTML = "";
             // JSONデータを処理してHTMLに追加
             data.forEach(function (item) {
               // UNIX時間を通常の日時形式に変換
@@ -306,7 +305,6 @@
               nameCell.textContent = item.connected_User_Name;
               newRow.appendChild(nameCell);
 
-              // 行をstdListに追加
               tableBody.appendChild(newRow);
             });
             document.getElementById("student_count").innerHTML = "生徒" + data.length + "人接続済み";
