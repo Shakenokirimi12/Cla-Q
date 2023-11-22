@@ -267,6 +267,7 @@
   }
 
   async function getStudentsList() {
+    console.log("生徒一覧を取得しています。")
     var url = "https://api.cla-q.net/teacher/list_students";
     var postData = {
       "userEmail": userEmail,
@@ -370,7 +371,6 @@
       screenLock.parentNode.removeChild(screenLock);
       userName = user.displayName;
       userEmail = user.email;
-      console.log("aaa");
       getStudentsList();
     } else {
       // 未ログイン時
