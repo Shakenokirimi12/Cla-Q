@@ -265,7 +265,6 @@
         }
         await redirectMobile();
         await preventOverLogin();
-        executeEveryTwoSeconds();
       };
 
       async function executeEveryTwoSeconds() {
@@ -442,7 +441,7 @@
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
           userEmail = user.email;
-          getStudentsList();
+          executeEveryTwoSeconds();
         } else {
           // 未ログイン時
           window.location.href = "/login";
