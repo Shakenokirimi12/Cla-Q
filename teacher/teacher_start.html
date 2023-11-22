@@ -110,7 +110,7 @@
     <h2>ClaQ - クラス参加</h2>
     <form id="class-join-form">
       <label for="class-code-input">再接続はこちら</label>
-      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" onkeydown="handleKeyDown(event)"/>
+      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" maxlength="6" onkeydown="handleKeyDown(event)"/>
       <br />
       <button type="button" class="action-button" onclick="teacher_Rejoin()">
         開始済みクラスに参加

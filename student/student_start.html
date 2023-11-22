@@ -112,7 +112,7 @@
 
   <div id="login-form">
     <form id="student-login-form">
-      <input type="text" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true"
+      <input type="number" maxlength="6" id="class-code-input" class="input-field" placeholder="クラスコードを入力" required="true"
         onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="student_Join()">
