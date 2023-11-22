@@ -249,7 +249,7 @@
     await redirectMobile();
     await preventOverLogin();
     console.log("aaa");
-    await getStudentList();
+    await getStudentsList();  
   };
 
   function redirectMobile() {
@@ -278,6 +278,7 @@
     let objBody = document.getElementsByTagName("body").item(0);
     objBody.appendChild(lock_screen);
   }
+
   var userName, userEmail;
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -359,7 +360,7 @@
       }
     }
 
-    async function getStudentList() {
+    async function getStudentsList() {
       var url = "https://api.cla-q.net/teacher/list_students";
       var postData = {
         "userEmail": userEmail,
