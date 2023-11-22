@@ -237,7 +237,7 @@
     }
   }
 
-  window.onload = function () {
+  window.onload = async function () {
     const key = 'class_Code';
     const value = document.cookie.match(
       new RegExp(key + '\=([^\;]*)\;*')
@@ -246,9 +246,9 @@
     if (class_Code == "" || class_Code == undefined) {
       window.location.href = "/teacher/teacher_start"
     }
-    redirectMobile();
-    preventOverLogin();
-    getStudentList();
+    await redirectMobile();
+    await preventOverLogin();
+    await getStudentList();
   };
 
   function redirectMobile() {
