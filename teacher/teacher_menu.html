@@ -270,6 +270,7 @@
       async function executeEveryTwoSeconds() {
         while (true) {
           await getStudentsList();
+          await getAnswersList();
           console.log("処理を実行しました。");
           await new Promise((resolve) => setTimeout(resolve, 20000));
         }
@@ -335,7 +336,7 @@
         }
       }
 
-      async function getAnswerList() {
+      async function getAnswersList() {
         var comboBox = document.getElementById("problemSelector");
         var selectedIndex = comboBox.selectedIndex + 1;
         console.log("答え一覧を取得しています。");
