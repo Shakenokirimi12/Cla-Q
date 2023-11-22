@@ -138,6 +138,15 @@
       box-shadow: 0 12px 12px gray;
       background-color: #ede7f6;
     }
+
+    #class-control{
+      margin-top: 50px;
+      font-size: 20px;
+      border-radius: 30px;
+      border-style: solid;
+      box-shadow: 0 12px 12px gray;
+      background-color: #ede7f6;
+    }
   </style>
 </head>
 
@@ -150,7 +159,7 @@
     </div>
     <button id="logout_button" onclick="disposeClass()">クラスを終了</button>
 
-    <div>
+    <div id="class_control">
       <button id="start-button" onclick="startQuestion()">問題の開始</button>
       <button id="end-button" onclick="endQuestion()" disabled="true">
         問題の終了
