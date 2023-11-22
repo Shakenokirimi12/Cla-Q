@@ -210,7 +210,7 @@
           <th>名前</th>
         </tr>
       </thead>
-      <tbody  id="studentsTableBody">
+      <tbody id="studentsTableBody">
         <!-- Table rows will be dynamically populated based on selected problem -->
       </tbody>
     </table>
@@ -256,8 +256,6 @@
 
   async function executeEveryTwoSeconds() {
     while (true) {
-        var tableBody = document.getElementById("studentsTableBody");
-        tableBody.innerHTML = "";
         await getStudentsList();
         console.log('処理を実行しました。');
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -286,6 +284,7 @@
           // レスポンスデータの処理
           if (data != undefined) {
             var tableBody = document.getElementById("studentsTableBody");
+            tableBody.innerHTML = "";
             // HTMLのstdList要素を取得
             var stdList = document.getElementById("stdList");
 
