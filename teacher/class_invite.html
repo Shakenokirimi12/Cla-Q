@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>クラスコードとQRコード</title>
+    <title>クラスへ招待</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
@@ -51,7 +51,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="class-code">クラスコード:123456</div>
+      <div class="class-code"></div>
       <div class="qr-container"></div>
       <div class="qr-code">
         <img
@@ -73,7 +73,7 @@
         }
         await redirectMobile();
         await preventOverLogin();
-        document.getElementById("class-code").innerHTML =
+        document.getElementsByClassName("class-code").innerHTML =
           "クラスコード" + class_Code;
       };
 
