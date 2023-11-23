@@ -28,7 +28,7 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       }
 
-      .class-code {
+      #class-code {
         font-size: 50px;
         margin-bottom: 30px;
         color: #333;
@@ -71,7 +71,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="class-code"></div>
+      <p id="class-code"></p>
       <div class="qr-container"></div>
       <div class="qr-code">
         <img
@@ -93,7 +93,7 @@
         }
         await redirectMobile();
         await preventOverLogin();
-        document.getElementsByClassName("class-code").innerHTML =
+        document.getElementsById("class-code").innerHTML =
           "クラスコード" + class_Code;
       };
 
