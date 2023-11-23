@@ -193,7 +193,7 @@
         <button id="end-button" onclick="endQuestion()" disabled="true">
           問題の終了
         </button>
-        <p id="status">現在:1問目開始待ち</p>
+        <p id="status">現在:問題開始待ち</p>
         <p id="student_count">生徒接続情報を読み込み中....</p>
         <button id="logout_button" onclick="disposeClass()">
           クラスを終了
@@ -242,23 +242,106 @@
     </div>
 
     <script>
-      var questionnumber = 1;
-      function startQuestion() {
-        var status = document.getElementById("status").innerHTML;
-        if (status.includes("開始待ち")) {
-          status = "現在:" + questionnumber + "問目実施中";
-          document.getElementById("start-button").disabled = true;
-          document.getElementById("end-button").disabled = false;
+      async function startQuestion() {
+        const key = "class_Code";
+        const value = document.cookie.match(
+          new RegExp(key + "\=([^\;]*)\;*")
+        )[1];
+        var class_Code = value;
+        // Add your login logic here
+        var url = "https://api.cla-q.net/teacher/start_question";
+        var postData = {
+          class_Code: class_Code,
+          userName: userName,
+          userEmail: userEmail,
+        };
+        try {
+          await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Origin: "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+            },
+            body: JSON.stringify(postData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // レスポンスデータの処理
+              console.log(
+                data[1].message,
+                data[0].message,
+                data[1].result,
+                data[0].result
+              );
+              if (dat.result == "success" || data[0].result == "success") {
+                console.log("Successfully started the question");
+                var questionnumber = data.question_Number;
+                var status = document.getElementById("status").innerHTML;
+                status = "現在:" + questionnumber + "問目実施中";
+                document.getElementById("start-button").disabled = true;
+                document.getElementById("end-button").disabled = false;
+              } else {
+                alert("問題を開始できませんでした");
+              }
+            })
+            .catch((error) => {
+              alert("問題を開始できませんでした");
+            });
+        } catch (error) {
+          console.log("エラー発生。");
+          console.log(error);
         }
       }
 
-      function endQuestion() {
-        var status = document.getElementById("status").innerHTML;
-        if (status.includes("実施中")) {
-          questionnumber++;
-          status = "現在:" + questionnumber + "問目開始待ち";
-          document.getElementById("start-button").disabled = false;
-          document.getElementById("end-button").disabled = true;
+      async function endQuestion() {
+        const key = "class_Code";
+        const value = document.cookie.match(
+          new RegExp(key + "\=([^\;]*)\;*")
+        )[1];
+        var class_Code = value;
+        // Add your login logic here
+        var url = "https://api.cla-q.net/teacher/end_question";
+        var postData = {
+          class_Code: class_Code,
+          userName: userName,
+          userEmail: userEmail,
+        };
+        try {
+          await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Origin: "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+            },
+            body: JSON.stringify(postData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // レスポンスデータの処理
+              console.log(
+                data[1].message,
+                data[0].message,
+                data[1].result,
+                data[0].result
+              );
+              if (dat.result == "success" || data[0].result == "success") {
+                console.log("Successfully started the question");
+                var status = document.getElementById("status").innerHTML;
+                status = "現在:問題開始待ち";
+                document.getElementById("start-button").disabled = true;
+                document.getElementById("end-button").disabled = false;
+              } else {
+                alert("問題を開始できませんでした");
+              }
+            })
+            .catch((error) => {
+              alert("問題を開始できませんでした");
+            });
+        } catch (error) {
+          console.log("エラー発生。");
+          console.log(error);
         }
       }
 
