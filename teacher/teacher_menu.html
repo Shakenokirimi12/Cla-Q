@@ -190,7 +190,7 @@
 
       <div id="class_control">
         <button id="start-button" onclick="startQuestion()">問題の開始</button>
-        <button id="end-button" onclick="endQuestion()" disabled="true">
+        <button id="end-button" onclick="endQuestion()">
           問題の終了
         </button>
         <p id="status">現在:問題開始待ち</p>
@@ -281,8 +281,6 @@
                 var questionnumber = data.question_Number;
                 var status = document.getElementById("status").innerHTML;
                 status = "現在:" + questionnumber + "問目実施中";
-                document.getElementById("start-button").disabled = true;
-                document.getElementById("end-button").disabled = false;
               } else {
                 console.log(data.question_Number);
                 console.log(data.result);
@@ -323,19 +321,10 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              // レスポンスデータの処理
-              console.log(
-                data[1].message,
-                data[0].message,
-                data[1].result,
-                data[0].result
-              );
               if (data.result == "success" || data[0].result == "success") {
                 console.log("Successfully started the question");
                 var status = document.getElementById("status").innerHTML;
                 status = "現在:問題開始待ち";
-                document.getElementById("start-button").disabled = true;
-                document.getElementById("end-button").disabled = false;
               } else {
                 alert("問題を開始できませんでした");
               }
