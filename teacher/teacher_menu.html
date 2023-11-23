@@ -254,7 +254,8 @@
             window.open(res, '_blank');
           })
           .catch((error) => {
-            alert("共有リンクを取得できませんでした。もう一度試してください。", error);
+            console.log(error);
+            alert("共有リンクを取得できませんでした。もう一度試してください。");
           });
       } catch (error) {
         console.log("エラー発生。");
