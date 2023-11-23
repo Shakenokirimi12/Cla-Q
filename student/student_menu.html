@@ -164,11 +164,11 @@
                     console.log("Successfully submitted the question");
                     alert("答えが送信されました: " + answer);
                   } else {
-                    alert("回答を提出できませんでした");
+                    alert("回答を提出できませんでした" + data.message);
                   }
                 })
                 .catch((error) => {
-                  alert("回答を提出できませんでした");
+                  alert("回答を提出できませんでした" + data.message);
                 });
             } catch (error) {
               console.log("エラー発生。");
