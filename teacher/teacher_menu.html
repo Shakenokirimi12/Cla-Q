@@ -594,7 +594,7 @@
           "この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？"
         );
         if (confirmation) {
-          var url = "https://api.cla-q.net/teacher/delete_class";
+          var url = "https://api.cla-q.net/teacher/inactivate_class";
           var postData = {
             class_Code: class_Code,
             userEmail: userEmail,
