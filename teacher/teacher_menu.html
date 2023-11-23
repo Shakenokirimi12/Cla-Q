@@ -268,12 +268,6 @@
             .then((response) => response.json())
             .then((data) => {
               // レスポンスデータの処理
-              console.log(
-                data[1].message,
-                data[0].message,
-                data[1].result,
-                data[0].result
-              );
               console.log(data.question_Number);
               if (data.result == "success" || data[0].result == "success") {
                 console.log("Successfully started the question");
