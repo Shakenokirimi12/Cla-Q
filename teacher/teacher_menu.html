@@ -201,15 +201,6 @@
 
     <div id="answersTableZone" onchange="getAnswersList()">
       <select id="problemSelector">
-        <option value="1">問題1</option>
-        <option value="2">問題2</option>
-        <option value="3">問題3</option>
-        <option value="4">問題4</option>
-        <option value="5">問題5</option>
-        <option value="6">問題6</option>
-        <option value="7">問題7</option>
-        <option value="8">問題8</option>
-        <option value="9">問題9</option>
         <!-- Add more options as needed -->
       </select>
       <table id="answerTable">
@@ -273,6 +264,16 @@
                 var questionnumber = data.question_Number;
                 document.getElementById("status").innerHTML =
                   "現在:" + questionnumber + "問目実施中";
+                // selectタグを取得する
+                var select = document.getElementById("problemSelector");
+                // optionタグを作成する
+                var option = document.createElement("option");
+                // optionタグのテキストを4に設定する
+                option.text = questionnumber
+                // optionタグのvalueを4に設定する
+                option.value = "第" + questionnumber + "問目";
+                // selectタグの子要素にoptionタグを追加する
+                select.appendChild(option);
               } else {
                 console.log(data.question_Number);
                 console.log(data.result);
@@ -315,7 +316,8 @@
             .then((data) => {
               if (data.result == "success" || data[0].result == "success") {
                 console.log("Successfully started the question");
-                document.getElementById("status").innerHTML = "現在:問題開始待ち";
+                document.getElementById("status").innerHTML =
+                  "現在:問題開始待ち";
               } else {
                 alert("問題を開始できませんでした");
               }
