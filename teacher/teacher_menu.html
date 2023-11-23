@@ -227,6 +227,40 @@
   </div>
 
   <script>
+    async function sendToGAS() {
+      const key = "class_Code";
+      const value = document.cookie.match(
+        new RegExp(key + "\=([^\;]*)\;*")
+      )[1];
+      var class_Code = value;
+      // Add your login logic here
+      var url = "https://script.google.com/macros/s/AKfycbzJ6EihEAcZM4HkzDvq9tauLOg3A-H8MHnpV5VMHyWjpeKO0pWj_pWx2NxEVM0bUX4/exec";
+      var postData = {
+        class_Code: class_Code,
+        userEmail: userEmail
+      };
+      try {
+        await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Origin: "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            window.open(data, '_blank');
+          })
+          .catch((error) => {
+            alert("共有リンクを取得できませんでした。もう一度試してください。", error);
+          });
+      } catch (error) {
+        console.log("エラー発生。");
+        console.log(error);
+      }
+    }
     async function startQuestion() {
       const key = "class_Code";
       const value = document.cookie.match(
