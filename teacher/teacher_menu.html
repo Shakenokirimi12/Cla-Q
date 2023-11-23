@@ -274,8 +274,10 @@
                 data[1].result,
                 data[0].result
               );
-              if (dat.result == "success" || data[0].result == "success") {
+              console.log(data.question_Number);
+              if (data.result == "success" || data[0].result == "success") {
                 console.log("Successfully started the question");
+                console.log(data.question_Number);
                 var questionnumber = data.question_Number;
                 var status = document.getElementById("status").innerHTML;
                 status = "現在:" + questionnumber + "問目実施中";
