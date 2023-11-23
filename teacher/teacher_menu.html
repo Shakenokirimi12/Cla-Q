@@ -248,7 +248,6 @@
           },
           body: JSON.stringify(postData),
         })
-          .then((response) => response.json())
           .then((res) => {
             console.log(res)
             window.open(res, '_blank');
