@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>クラスコードとQRコード</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+      }
+
+      .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 50px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .class-code {
+        font-size: 50px;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .qr-code {
+        width: 300px;
+        height: 300px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .qr-container {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="class-code">クラスコード:123456</div>
+      <div class="qr-container"></div>
+      <div class="qr-code">
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net"
+          alt="QR Code"
+        />
+      </div>
+    </div>
+
+    <script>
+      window.onload = async function () {
+        const key = "class_Code";
+        const value = document.cookie.match(
+          new RegExp(key + "\=([^\;]*)\;*")
+        )[1];
+        class_Code = value;
+        if (class_Code == "" || class_Code == undefined) {
+          window.location.href = "/teacher/teacher_start";
+        }
+        await redirectMobile();
+        await preventOverLogin();
+        document.getElementById("class-code").innerHTML =
+          "クラスコード" + class_Code;
+      };
+
+      function redirectMobile() {
+        if (
+          (navigator.userAgent.indexOf("iPhone") > 0 &&
+            navigator.userAgent.indexOf("iPad") == -1) ||
+          navigator.userAgent.indexOf("iPod") > 0 ||
+          navigator.userAgent.indexOf("Android") > 0
+        ) {
+          location.href = "/mobile.html";
+        }
+      }
+
+      function preventOverLogin() {
+        let lock_screen = document.createElement("div");
+        lock_screen.id = "screenLock";
+
+        lock_screen.style.height = "100%";
+        lock_screen.style.left = "0px";
+        lock_screen.style.position = "fixed";
+        lock_screen.style.top = "0px";
+        lock_screen.style.width = "100%";
+        lock_screen.style.zIndex = "9999";
+        lock_screen.style.opacity = "0";
+
+        let objBody = document.getElementsByTagName("body").item(0);
+        objBody.appendChild(lock_screen);
+      }
+
+      var userName, userEmail;
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          // ログイン時
+          if (user.email.includes("_")) {
+            window.location.href = "/student/student_start";
+          }
+          // Update the user information display
+          document.getElementById("mail_address").innerHTML = user.email;
+          document.getElementById("user_name").innerHTML = user.displayName;
+          document.getElementById("class_code").innerHTML =
+            "クラスコード:" + class_Code;
+
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
+          executeEveryTwoSeconds();
+        } else {
+          // 未ログイン時
+          window.location.href = "/login";
+        }
+      });
+    </script>
+  </body>
+</html>

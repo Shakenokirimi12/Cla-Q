@@ -33,7 +33,7 @@
         flex-direction: column;
         align-items: center;
         height: 100vh;
-        background-color: #3498db;
+        background: linear-gradient(to bottom, #3498db, #95d3fc);
         /* Change background color to blue */
         color: #fff;
         /* Change text color to white */
@@ -168,7 +168,9 @@
                   }
                 })
                 .catch((error) => {
-                  alert("回答を提出できませんでした。問題が開始されているか確認してください。");
+                  alert(
+                    "回答を提出できませんでした。問題が開始されているか確認してください。"
+                  );
                 });
             } catch (error) {
               console.log("エラー発生。");
