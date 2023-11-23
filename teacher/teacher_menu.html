@@ -249,8 +249,9 @@
           body: JSON.stringify(postData),
         })
           .then((response) => response.json())
-          .then((data) => {
-            window.open(data, '_blank');
+          .then((res) => {
+            console.log(res)
+            window.open(res, '_blank');
           })
           .catch((error) => {
             alert("共有リンクを取得できませんでした。もう一度試してください。", error);
