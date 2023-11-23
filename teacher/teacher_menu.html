@@ -89,7 +89,8 @@
 
       #start-button,
       #end-button,
-      #logout_button {
+      #logout_button,
+      #gas_Link {
         background-color: #4caf50;
         color: #ffffff;
         padding: 10px 20px;
@@ -194,15 +195,16 @@
         <p id="status">現在:問題開始待ち</p>
         <p id="student_count">生徒接続情報を読み込み中....</p>
         <button id="logout_button" onclick="disposeClass()">
-          クラスを終了
+          クラスを終了  
         </button>
+        <button id="gas_Link" onclick="sendToGAS()">答えを書き出し</button>
       </div>
     </div>
 
     <div id="answersTableZone" onchange="getAnswersList()">
-      <select id="problemSelector">
-        <!-- Add more options as needed -->
-      </select>
+        <select id="problemSelector">
+          <!-- Add more options as needed -->
+        </select>
       <table id="answerTable">
         <thead>
           <tr>
