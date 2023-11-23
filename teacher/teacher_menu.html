@@ -190,9 +190,7 @@
 
       <div id="class_control">
         <button id="start-button" onclick="startQuestion()">問題の開始</button>
-        <button id="end-button" onclick="endQuestion()">
-          問題の終了
-        </button>
+        <button id="end-button" onclick="endQuestion()">問題の終了</button>
         <p id="status">現在:問題開始待ち</p>
         <p id="student_count">生徒接続情報を読み込み中....</p>
         <button id="logout_button" onclick="disposeClass()">
@@ -273,8 +271,8 @@
                 console.log("Successfully started the question");
                 console.log(data.question_Number);
                 var questionnumber = data.question_Number;
-                var status = document.getElementById("status").innerHTML;
-                status = "現在:" + questionnumber + "問目実施中";
+                document.getElementById("status").innerHTML =
+                  "現在:" + questionnumber + "問目実施中";
               } else {
                 console.log(data.question_Number);
                 console.log(data.result);
@@ -317,8 +315,7 @@
             .then((data) => {
               if (data.result == "success" || data[0].result == "success") {
                 console.log("Successfully started the question");
-                var status = document.getElementById("status").innerHTML;
-                status = "現在:問題開始待ち";
+                document.getElementById("status").innerHTML = "現在:問題開始待ち";
               } else {
                 alert("問題を開始できませんでした");
               }
