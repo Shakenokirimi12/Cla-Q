@@ -64,6 +64,7 @@ function handleKeyDown(event) {
 
 var class_Code;
 window.onload = function () {
+  console.log(document.cookie)
   const key = "class_Code";
   /// 正規表現でcookie値を取得
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
