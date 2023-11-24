@@ -8,3 +8,5 @@ self.addEventListener("activate", function (e) {
 
 // サービスワーカー有効化に必須
 self.addEventListener("fetch", function (event) {});
+
+//もう意味わからんて
