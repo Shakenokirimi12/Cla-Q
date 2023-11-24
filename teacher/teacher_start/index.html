@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClaQ - 先生用</title>
+
+  <!--firebase authentication javascript area-->
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <!--firebase authentication javascript area-->
+
+  <!--PWA javascript area-->
+  <link rel="manifest" href="../../manifest.json">
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('../../service-worker.js')
+    }
+  </script>
+  <!--PWA javascript area-->
+  
+  <!--normal javascript area-->
+  <script href="script.js"></script>
+  <style href="style.css"></style>
+  <script href="../../firebase_config.js"></script>
+  <!--normal javascript area-->
+</head>
+
+<body>
+  <span class="version">Version: Stable v1.1_PWA</span>
+
+  <div class="user-info"></div>
+
+  <div class="form-container">
+    <h2>ClaQ - 先生用</h2>
+    <form id="teacher-form">
+      <button type="button" class="action-button" onclick="startClass()">
+        授業を開始
+      </button>
+    </form>
+  </div>
+
+  <div class="form-container">
+    <h2>ClaQ - クラス参加</h2>
+    <form id="class-join-form">
+      <label for="class-code-input">再接続はこちら</label>
+      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" min="100000" max="999999"
+        onkeydown="handleKeyDown(event)" />
+      <br />
+      <button type="button" class="action-button" onclick="teacher_Rejoin()">
+        開始済みクラスに参加
+      </button>
+    </form>
+  </div>
+
+</body>
+
+</html>

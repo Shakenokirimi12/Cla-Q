@@ -1,0 +1,90 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #3498db, #95d3fc);
+    color: #fff;
+}
+
+#login-header {
+    margin-top: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#login-form {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 200px;
+}
+
+.input-field {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.action-button {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #45a049;
+}
+
+#class_code_label {
+    color: black;
+}
+
+.user-info {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    text-align: center;
+}
+
+#logout_button {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.version {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+}

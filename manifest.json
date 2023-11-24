@@ -1,14 +1,16 @@
 {
-    "name": "Cla-Q",
-    "short_name": "Cla-Q",
-    "background_color": "#000000",
-    "icons": [{
-        "src": "cla-q_icon.png",
-        "sizes": "256x256",
-        "type": "image/png"
-      }],
-    "start_url": "/login",
-    "scope": "/",
-    "display": "minimal-ui"
-  }
-  
+  "name": "Cla-Q",
+  "short_name": "ClaQ",
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "cla-q_icon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/login",
+  "scope": "/",
+  "display": "minimal-ui",
+  "$comment": "Version:v1.1_PWA"
+}

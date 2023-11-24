@@ -1,3 +1,8 @@
+
+
+//APP_VERSION:v1.1_PWA
+
+
 // バージョン定義
 var CACHE_VERSION = 'ca-v1';
 var DISP_VERSION = 'ca-d-v1';
