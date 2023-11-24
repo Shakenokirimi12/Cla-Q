@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClaQ - 先生メニュー</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClaQ - 先生メニュー</title>
+    <!--firebase authentication javascript area-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <!--firebase authentication javascript area-->
 
-  <!--firebase authentication javascript area-->
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-  <!--firebase authentication javascript area-->
+    <!--PWA javascript area-->
+    <link rel="manifest" href="../../manifest.json" />
+    <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("../../service-worker.js");
+      }
+    </script>
+    <!--PWA javascript area-->
 
-  <!--PWA javascript area-->
-  <link rel="manifest" href="../../manifest.json">
-  <script>
-    if (navigator.serviceWorker) {
-      navigator.serviceWorker.register('../../service-worker.js')
-    }
-  </script>
-  <!--PWA javascript area-->
+    <!--normal javascript area-->
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="../../firebase_config.js"></script>
+    <!--normal javascript area-->
+  </head>
 
-  <!--normal javascript area-->
-  <script src="./script.js"></script>
-  <style href="./style.css"></style>
-  <script src="../../firebase_config.js"></script>
-  <!--normal javascript area-->
-</head>
+  <body>
+    <span class="version">Version: Stable v1.1_PWA</span>
+    <div id="control-area">
+      <div id="class_info">
+        <p id="mail_address"></p>
+        <p id="user_name">クラス情報を読み込み中.....</p>
+        <p id="class_code" onclick="showExpandedCode()"></p>
+      </div>
 
-<body>
-  <span class="version">Version: Stable v1.1_PWA</span>
-  <div id="control-area">
-    <div id="class_info">
-      <p id="mail_address"></p>
-      <p id="user_name">クラス情報を読み込み中.....</p>
-      <p id="class_code" onclick="showExpandedCode()"></p>
+      <div id="class_control">
+        <button id="start-button" onclick="startQuestion()">問題の開始</button>
+        <button id="end-button" onclick="endQuestion()">問題の終了</button>
+        <p id="status">現在:問題開始待ち</p>
+        <p id="student_count">生徒接続情報を読み込み中....</p>
+        <button id="logout_button" onclick="disposeClass()">
+          クラスを終了
+        </button>
+        <button id="gas_Link" onclick="sendToGAS()">答えを書き出し</button>
+      </div>
     </div>
 
-    <div id="class_control">
-      <button id="start-button" onclick="startQuestion()">問題の開始</button>
-      <button id="end-button" onclick="endQuestion()">問題の終了</button>
-      <p id="status">現在:問題開始待ち</p>
-      <p id="student_count">生徒接続情報を読み込み中....</p>
-      <button id="logout_button" onclick="disposeClass()">
-        クラスを終了
-      </button>
-      <button id="gas_Link" onclick="sendToGAS()">答えを書き出し</button>
+    <div id="answersTableZone" onchange="getAnswersList()">
+      <select id="problemSelector">
+        <!-- Add more options as needed -->
+      </select>
+      <table id="answerTable">
+        <thead>
+          <tr>
+            <th>生徒の名前</th>
+            <th>生徒の答え</th>
+          </tr>
+        </thead>
+        <tbody id="answersTableBody">
+          <!-- Table rows will be dynamically populated based on selected problem -->
+        </tbody>
+      </table>
     </div>
-  </div>
 
-  <div id="answersTableZone" onchange="getAnswersList()">
-    <select id="problemSelector">
-      <!-- Add more options as needed -->
-    </select>
-    <table id="answerTable">
-      <thead>
-        <tr>
-          <th>生徒の名前</th>
-          <th>生徒の答え</th>
-        </tr>
-      </thead>
-      <tbody id="answersTableBody">
-        <!-- Table rows will be dynamically populated based on selected problem -->
-      </tbody>
-    </table>
-  </div>
-
-  <div id="studentListZone">
-    <table id="stdList">
-      <thead>
-        <tr>
-          <th>接続日時</th>
-          <th>名前</th>
-        </tr>
-      </thead>
-      <tbody id="studentsTableBody">
-        <!-- Table rows will be dynamically populated based on selected problem -->
-      </tbody>
-    </table>
-  </div>
-</body>
-
+    <div id="studentListZone">
+      <table id="stdList">
+        <thead>
+          <tr>
+            <th>接続日時</th>
+            <th>名前</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+          <!-- Table rows will be dynamically populated based on selected problem -->
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>
