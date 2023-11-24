@@ -49,6 +49,14 @@
     #firebaseui-auth-container {
       margin-top: 20px;
     }
+
+    .version {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+    }
   </style>
 </head>
 
@@ -56,6 +64,7 @@
   <div id="login-header">
     <p>Cla-Qにログイン</p>
   </div>
+  <span class="version">Version: Stable v1.1_PWA</span>
   <div id="firebaseui-auth-container"></div>
   <script>
     firebase.auth().onAuthStateChanged(function (user) {
