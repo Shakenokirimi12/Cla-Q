@@ -98,6 +98,12 @@
   </script>
   <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <link rel="manifest" href="../manifest.json">
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('../service-worker.js')
+    }
+  </script>
 </head>
 
 <body>

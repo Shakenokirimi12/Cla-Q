@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 Not Found - ClaQ</title>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(to bottom, #3498db, #95d3fc);
-        color: #fff; /* Change text color to white */
-      }
 
-      #error-header {
-        margin-top: 20px;
-        font-size: 24px;
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('service-worker.js')
+    }
+  </script>
+  <title>404 Not Found - ClaQ</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom, #3498db, #95d3fc);
+      color: #fff;
+      /* Change text color to white */
+    }
 
-      #error-message {
-        text-align: center;
-        margin-top: 20px;
-      }
+    #error-header {
+      margin-top: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
 
-      #home-link {
-        margin-top: 20px;
-        text-align: center;
-      }
+    #error-message {
+      text-align: center;
+      margin-top: 20px;
+    }
 
-      #home-link a {
-        color: #fff;
-        text-decoration: underline;
-      }
-    </style>
-  </head>
+    #home-link {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-  <body>
-    <div id="error-header">
-      <p>404 Not Found</p>
-    </div>
+    #home-link a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
 
-    <div id="error-message">
-      <p>ページが見つかりません。</p>
-    </div>
+<body>
+  <div id="error-header">
+    <p>404 Not Found</p>
+  </div>
 
-    <div id="home-link">
-      <p><a href="/">ホームに戻る</a></p>
-    </div>
-  </body>
+  <div id="error-message">
+    <p>ページが見つかりません。</p>
+  </div>
+
+  <div id="home-link">
+    <p><a href="/">ホームに戻る</a></p>
+  </div>
+</body>
+
 </html>

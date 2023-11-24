@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('service-worker.js')
+        }
+    </script>
     <title>モバイルデバイスは非対応です。</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f5f9; /* ページ全体の背景色 */
-            color: #333; /* テキストカラー */
+            background-color: #f0f5f9;
+            /* ページ全体の背景色 */
+            color: #333;
+            /* テキストカラー */
         }
 
         header {
-            background-color: #0077cc; /* ヘッダーの背景色 */
+            background-color: #0077cc;
+            /* ヘッダーの背景色 */
             padding: 15px;
             text-align: center;
-            color: #fff; /* ヘッダーテキストのカラー */
+            color: #fff;
+            /* ヘッダーテキストのカラー */
         }
 
         section {
@@ -25,7 +36,8 @@
         }
 
         h1 {
-            color: black; /* ヘッダータイトルのカラー */
+            color: black;
+            /* ヘッダータイトルのカラー */
         }
 
         p {
@@ -34,17 +46,21 @@
 
 
         .cta-button:hover {
-            background-color: #005580; /* ホバー時のボタンの背景色 */
+            background-color: #005580;
+            /* ホバー時のボタンの背景色 */
         }
 
         footer {
-            background-color: #0077cc; /* フッターの背景色 */
+            background-color: #0077cc;
+            /* フッターの背景色 */
             padding: 10px;
             text-align: center;
-            color: #fff; /* フッターテキストのカラー */
+            color: #fff;
+            /* フッターテキストのカラー */
         }
     </style>
 </head>
+
 <body>
     <header>
         <h2>モバイルデバイスは非対応です。</h2>
@@ -67,4 +83,5 @@
         &copy; 2023 Cla-Q. All rights reserved.
     </footer>
 </body>
+
 </html>

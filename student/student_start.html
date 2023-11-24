@@ -5,6 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClaQ - 生徒ログイン</title>
+  <link rel="manifest" href="../manifest.json">
+  <script>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('../service-worker.js')
+    }
+  </script>
   <style>
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
