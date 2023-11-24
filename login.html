@@ -73,6 +73,16 @@
           signInOptions: [
             firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
           ],
+          'callbacks': {
+            'signInSuccess': function (currentUser, credential, redirectUrl) {
+              if (currentUser.email.includes("-")) {
+                window.location.href = "/teacher/teacher_start";
+              } else {
+                window.location.href = "/student/student_start";
+              }
+              return false;
+            }
+          }
         });
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
       }
