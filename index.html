@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html lang="ja">
-
-<head>
-  <link rel="manifest" href="manifest.json">
+  <head>
+    <link rel="manifest" href="manifest.json" />
+    <script>
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("sw.js");
+      }
+    </script>
+  </head>
   <script>
-    if (navigator.serviceWorker) {
-      navigator.serviceWorker.register('sw.js')
+    window.location.href = "/login";
+
+    window.onload = function () {
+      if (
+        (navigator.userAgent.indexOf("iPhone") > 0 &&
+          navigator.userAgent.indexOf("iPad") == -1) ||
+        navigator.userAgent.indexOf("iPod") > 0 ||
+        navigator.userAgent.indexOf("Android") > 0
+      ) {
+        location.href = "/mobile";
+      }
+    };
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("./serviceworker.js")
+        .then((registration) => {
+          // 登録成功
+          registration.onupdatefound = function () {
+            console.log("アップデートがあります！");
+            registration.update();
+          };
+        })
+        .catch((err) => {
+          // 登録失敗
+        });
     }
   </script>
-</head>
-<script>
-  window.location.href = "/login";
 
-  window.onload = function () {
-    if (
-      (navigator.userAgent.indexOf("iPhone") > 0 &&
-        navigator.userAgent.indexOf("iPad") == -1) ||
-      navigator.userAgent.indexOf("iPod") > 0 ||
-      navigator.userAgent.indexOf("Android") > 0
-    ) {
-      location.href = "/mobile";
-    }
-  };
-</script>
-
-<body>
-  <p>Cla-Q</p>
-</body>
-
+  <body>
+    <p>Cla-Q</p>
+  </body>
 </html>
