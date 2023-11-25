@@ -16,8 +16,18 @@ firebase.auth().onAuthStateChanged(function (user) {
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           if (currentUser.email.includes("-")) {
+            swal({
+              text: "ログインしました。教師接続画面に遷移します。",
+              title: "情報",
+              icon: "info",
+            });
             window.location.href = "/teacher/teacher_start";
           } else {
+            swal({
+              text: "ログインしました。生徒接続画面に遷移します。",
+              title: "情報",
+              icon: "info",
+            });
             window.location.href = "/student/student_start";
           }
           return false;

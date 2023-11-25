@@ -5,6 +5,11 @@ firebase.auth().onAuthStateChanged(function (user) {
       .auth()
       .signOut()
       .then(function () {
+        swal({
+          text: "ログアウトしました。",
+          title: "情報",
+          icon: "info",
+        });
         location.reload();
       });
   } else {

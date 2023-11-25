@@ -45,13 +45,26 @@ async function student_Join() {
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           console.log(document.cookie);
           console.log(data[0].class_Code);
+          swal({
+            title: "成功",
+            text: "クラス" + data[0].class_Code + "に参加しました。",
+            icon: "success",
+          });
           window.location.href = "/student/student_menu";
         } else {
-          alert("ログインできませんでした。");
+          swal({
+            title: "エラー",
+            text: "ログインできませんでした。",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        swal({
+          title: "エラー",
+          text: "ログインできませんでした。",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -123,6 +136,11 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      swal({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+      });
       location.reload();
     });
 }

@@ -7,9 +7,11 @@ async function sendToGAS() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  alert(
-    "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。"
-  );
+  swal({
+    title: "通知",
+    text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
+    icon: "info",
+  });
   var url =
     "https://script.google.com/macros/s/AKfycbxGJTMf6kqWsODNhUNYB_QqdENHl28b-y_Y32n5_RijVivPDAQM5Lde7SSJYyOOHGd7/exec";
   var postData = {
@@ -32,7 +34,11 @@ async function sendToGAS() {
       })
       .catch((error) => {
         console.log(error);
-        alert("共有リンクを取得できませんでした。もう一度試してください。");
+        swal({
+          title: "エラー",
+          text: "共有リンクを取得できませんでした。もう一度試してください。",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -104,11 +110,20 @@ async function startQuestion() {
         } else {
           console.log(data.question_Number);
           console.log(data.result);
-          alert("問題を開始できませんでした");
+          swal({
+            text: "問題を開始できませんでした",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("問題を開始できませんでした", error);
+        console.log(data.result);
+        swal({
+          text: "問題を開始できませんでした(" + error + ")",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -143,11 +158,19 @@ async function endQuestion() {
           console.log("Successfully started the question");
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
         } else {
-          alert("問題を開始できませんでした");
+          swal({
+            text: "問題を終了できませんでした",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("問題を開始できませんでした");
+        swal({
+          text: "問題を終了できませんでした",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -222,11 +245,15 @@ async function getStudentsList() {
           document.getElementById("student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
         } else {
-          alert("生徒一覧を取得できませんでした。:" + data.message);
+          swal({
+            text: "生徒一覧を取得できませんでした(" + data.message + "",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        console.log("生徒一覧を取得できませんでした。");
+        console.log("生徒一覧を取得できませんでした。", error);
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -279,7 +306,11 @@ async function getAnswersList() {
             tableBody.appendChild(newRow);
           });
         } else {
-          alert("生徒一覧を取得できませんでした。:" + data.message);
+          swal({
+            text: "答えの一覧を取得できませんでした(" + data.message + ")",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
@@ -372,7 +403,11 @@ async function disposeClass() {
               document.cookie = "class_Code=";
               window.location.href = "/teacher/teacher_start";
             } else {
-              alert("ログインできませんでした。:" + data[1].message);
+              swal({
+                text: "クラスを終了できませんでした",
+                title: "エラー",
+                icon: "error",
+              });
             }
           } catch (error) {
             try {
@@ -382,16 +417,28 @@ async function disposeClass() {
                 document.cookie = "class_Code=";
                 window.location.href = "/teacher/teacher_start";
               } else {
-                alert("ログインできませんでした。:" + data.message);
+                swal({
+                  text: "クラスを終了できませんでした(" + data.mesage + ")",
+                  title: "エラー",
+                  icon: "error",
+                });
               }
             } catch (error) {
-              alert("サーバーエラーです。管理者にお問い合わせください。");
+              swal({
+                text: "サーバーエラーです。サポートにお問い合わせください。",
+                title: "エラー",
+                icon: "error",
+              });
             }
           }
           // レスポンスデータの処理
         })
         .catch((error) => {
-          alert("ログインできませんでした。");
+          swal({
+            text: "ログインできませんでした。",
+            title: "エラー",
+            icon: "error",
+          });
         });
     } catch (error) {
       console.log("エラー発生。");

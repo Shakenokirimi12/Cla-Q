@@ -30,11 +30,19 @@ async function startClass() {
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           window.location.href = "/teacher/teacher_menu";
         } else {
-          alert("ログインできませんでした。:" + data.message);
+          swal({
+            text: "クラスを開始できませんでした。(" + data.message + ")",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        swal({
+          text: "クラスを開始できませんでした。",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -45,7 +53,11 @@ async function startClass() {
 async function teacher_Rejoin() {
   var class_Code = document.getElementById("class-code-input").value;
   if (class_Code == null || class_Code == undefined || class_Code == "") {
-    alert("クラスコードが入力されていません。");
+    swal({
+      text: "クラスコードが入力されていません。",
+      title: "情報",
+      icon: "info",
+    });
     return;
   }
   var url = "https://api.cla-q.net/teacher/rejoin_class";
@@ -73,7 +85,11 @@ async function teacher_Rejoin() {
             document.cookie = "class_Code=" + class_Code + ";path=/;";
             window.location.href = "/teacher/teacher_menu";
           } else {
-            alert("ログインできませんでした。:" + data[1].message);
+            swal({
+              text: "接続できませんでした。(" + data[1].message + ")",
+              title: "エラー",
+              icon: "error",
+            });
           }
         } catch (error) {
           try {
@@ -83,16 +99,28 @@ async function teacher_Rejoin() {
               document.cookie = "class_Code=" + class_Code + ";path=/;";
               window.location.href = "/teacher/teacher_menu";
             } else {
-              alert("ログインできませんでした。:" + data.message);
+              swal({
+                text: "接続できませんでした。(" + data.message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           } catch (error) {
-            alert("サーバーエラーです。管理者にお問い合わせください。");
+            swal({
+              text: "サーバーエラーです。サポートにお問い合わせください。",
+              title: "エラー",
+              icon: "error",
+            });
           }
         }
         // レスポンスデータの処理
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        swal({
+          text: "ログインできませんでした。",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -167,4 +195,3 @@ function logOut() {
       location.reload();
     });
 }
-

@@ -32,15 +32,25 @@ async function submitAnswer() {
           .then((data) => {
             if (data.result == "success" || data[0].result == "success") {
               console.log("Successfully submitted the question");
-              alert("答えが送信されました: " + answer);
+              swal({
+                text: "答えを提出しました。(" + answer + ")",
+                title: "情報",
+                icon: "info",
+              });
             } else {
-              alert("回答を提出できませんでした" + data.message);
+              swal({
+                text: "答えを提出できませんでした。)",
+                title: "エラー",
+                icon: "error",
+              });
             }
           })
           .catch((error) => {
-            alert(
-              "回答を提出できませんでした。問題が開始されているか確認してください。"
-            );
+            swal({
+              text: "回答を提出できませんでした。問題が開始されているか確認してください。",
+              title: "エラー",
+              icon: "error",
+            });
           });
       } catch (error) {
         console.log("エラー発生。");
@@ -50,7 +60,11 @@ async function submitAnswer() {
       answerBox.value = "";
     }
   } else {
-    alert("答えを入力してください。");
+    swal({
+      text: "回答を入力してください。",
+      title: "情報",
+      icon: "info",
+    });
   }
 }
 
@@ -163,7 +177,11 @@ async function leaveClass() {
               var result3 = data.result;
             } catch (error3) {
               console.log(error2);
-              alert("クラスを離脱できませんでした。");
+              swal({
+                text: "クラスを離脱できませんでした。",
+                title: "エラー",
+                icon: "error",
+              });
               return;
             }
           }
@@ -174,41 +192,77 @@ async function leaveClass() {
           result3 == "success"
         ) {
           console.log("Successfully leaved the class");
-          alert("クラスを離脱しました。クラス参加画面に戻ります。");
+          swal({
+            text: "クラスを離脱しました。クラス参加画面に戻ります。",
+            title: "情報",
+            icon: "info",
+          });
           document.cookie = "class_Code=" + "";
           window.location.href = "/student/student_start";
         } else {
           console.log("データエラー。successが返されなかった。");
           if (result1 != undefined) {
             if (data[0].status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
+              swal({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "情報",
+                icon: "info",
+              });
               window.location.href = "/student/student_start";
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              swal({
+                text: "クラスを離脱できませんでした。(" + data[0].message + ")",
+                title: "情報",
+                icon: "info",
+              });
             }
           } else if (result2 != undefined) {
             if (data[1].status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
+              swal({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "エラー",
+                icon: "error",
+              });
               window.location.href = "/student/student_start";
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              swal({
+                text: "クラスを離脱できませんでした。(" + data[1].message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           } else {
             if (data.status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
+              swal({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "情報",
+                icon: "info",
+              });
               window.location.href = "/student/student_start";
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              swal({
+                text: "クラスを離脱できませんでした。(" + data.message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           }
         }
       })
       .catch((error) => {
         console.log("不明なエラー1。", error);
-        alert("クラスを離脱できませんでした。");
+        swal({
+          text: "クラスを離脱できませんでした。(" + data.message + ")",
+          title: "不明なエラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("不明なエラー2。", error);
-    alert("クラスを離脱できませんでした。");
+    swal({
+      text: "クラスを離脱できませんでした。",
+      title: "不明なエラー",
+      icon: "error",
+    });
   }
 }
