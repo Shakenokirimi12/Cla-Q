@@ -27,7 +27,7 @@ async function startClass() {
         // レスポンスデータの処理
         if (data.result == "success") {
           console.log("Successfully created the class");
-          document.cookie = "class_Code=" + data.class_Code;
+          document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           window.location.href = "/teacher/teacher_menu";
         } else {
           alert("ログインできませんでした。:" + data.message);
@@ -70,7 +70,7 @@ async function teacher_Rejoin() {
           var result = data[1].result;
           if (result == "success") {
             console.log("Successfully created the class");
-            document.cookie = "class_Code=" + class_Code;
+            document.cookie = "class_Code=" + class_Code + ";path=/;";
             window.location.href = "/teacher/teacher_menu";
           } else {
             alert("ログインできませんでした。:" + data[1].message);
