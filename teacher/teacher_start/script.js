@@ -30,7 +30,7 @@ async function startClass() {
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           window.location.href = "/teacher/teacher_menu";
         } else {
-          swal({
+          Swal.fire({
             text: "クラスを開始できませんでした。(" + data.message + ")",
             title: "エラー",
             icon: "error",
@@ -38,7 +38,7 @@ async function startClass() {
         }
       })
       .catch((error) => {
-        swal({
+        Swal.fire({
           text: "クラスを開始できませんでした。",
           title: "エラー",
           icon: "error",
@@ -53,7 +53,7 @@ async function startClass() {
 async function teacher_Rejoin() {
   var class_Code = document.getElementById("class-code-input").value;
   if (class_Code == null || class_Code == undefined || class_Code == "") {
-    swal({
+    Swal.fire({
       text: "クラスコードが入力されていません。",
       title: "情報",
       icon: "info",
@@ -85,7 +85,7 @@ async function teacher_Rejoin() {
             document.cookie = "class_Code=" + class_Code + ";path=/;";
             window.location.href = "/teacher/teacher_menu";
           } else {
-            swal({
+            Swal.fire({
               text: "接続できませんでした。(" + data[1].message + ")",
               title: "エラー",
               icon: "error",
@@ -99,14 +99,14 @@ async function teacher_Rejoin() {
               document.cookie = "class_Code=" + class_Code + ";path=/;";
               window.location.href = "/teacher/teacher_menu";
             } else {
-              swal({
+              Swal.fire({
                 text: "接続できませんでした。(" + data.message + ")",
                 title: "エラー",
                 icon: "error",
               });
             }
           } catch (error) {
-            swal({
+            Swal.fire({
               text: "サーバーエラーです。サポートにお問い合わせください。",
               title: "エラー",
               icon: "error",
@@ -116,7 +116,7 @@ async function teacher_Rejoin() {
         // レスポンスデータの処理
       })
       .catch((error) => {
-        swal({
+        Swal.fire({
           text: "ログインできませんでした。",
           title: "エラー",
           icon: "error",

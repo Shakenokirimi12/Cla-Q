@@ -45,14 +45,14 @@ async function student_Join() {
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           console.log(document.cookie);
           console.log(data[0].class_Code);
-          swal({
+          Swal.fire({
             title: "成功",
             text: "クラス" + data[0].class_Code + "に参加しました。",
             icon: "success",
           });
           window.location.href = "/student/student_menu";
         } else {
-          swal({
+          Swal.fire({
             title: "エラー",
             text: "ログインできませんでした。",
             icon: "error",
@@ -60,7 +60,7 @@ async function student_Join() {
         }
       })
       .catch((error) => {
-        swal({
+        Swal.fire({
           title: "エラー",
           text: "ログインできませんでした。",
           icon: "error",
@@ -136,7 +136,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
-      swal({
+      Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",

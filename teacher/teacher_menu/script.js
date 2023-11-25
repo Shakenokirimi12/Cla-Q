@@ -7,7 +7,7 @@ async function sendToGAS() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  swal({
+  Swal.fire({
     title: "通知",
     text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
@@ -34,7 +34,7 @@ async function sendToGAS() {
       })
       .catch((error) => {
         console.log(error);
-        swal({
+        Swal.fire({
           title: "エラー",
           text: "共有リンクを取得できませんでした。もう一度試してください。",
           icon: "error",
@@ -110,7 +110,7 @@ async function startQuestion() {
         } else {
           console.log(data.question_Number);
           console.log(data.result);
-          swal({
+          Swal.fire({
             text: "問題を開始できませんでした",
             title: "エラー",
             icon: "error",
@@ -119,7 +119,7 @@ async function startQuestion() {
       })
       .catch((error) => {
         console.log(data.result);
-        swal({
+        Swal.fire({
           text: "問題を開始できませんでした(" + error + ")",
           title: "エラー",
           icon: "error",
@@ -158,7 +158,7 @@ async function endQuestion() {
           console.log("Successfully started the question");
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
         } else {
-          swal({
+          Swal.fire({
             text: "問題を終了できませんでした",
             title: "エラー",
             icon: "error",
@@ -166,7 +166,7 @@ async function endQuestion() {
         }
       })
       .catch((error) => {
-        swal({
+        Swal.fire({
           text: "問題を終了できませんでした",
           title: "エラー",
           icon: "error",
@@ -246,7 +246,7 @@ async function getStudentsList() {
           document.getElementById("student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
         } else {
-          swal({
+          Swal.fire({
             text: "生徒一覧を取得できませんでした(" + data.message + "",
             title: "エラー",
             icon: "error",
@@ -307,7 +307,7 @@ async function getAnswersList() {
             tableBody.appendChild(newRow);
           });
         } else {
-          swal({
+          Swal.fire({
             text: "答えの一覧を取得できませんでした(" + data.message + ")",
             title: "エラー",
             icon: "error",
@@ -404,7 +404,7 @@ async function disposeClass() {
               document.cookie = "class_Code=";
               window.location.href = "/teacher/teacher_start";
             } else {
-              swal({
+              Swal.fire({
                 text: "クラスを終了できませんでした",
                 title: "エラー",
                 icon: "error",
@@ -418,14 +418,14 @@ async function disposeClass() {
                 document.cookie = "class_Code=";
                 window.location.href = "/teacher/teacher_start";
               } else {
-                swal({
+                Swal.fire({
                   text: "クラスを終了できませんでした(" + data.mesage + ")",
                   title: "エラー",
                   icon: "error",
                 });
               }
             } catch (error) {
-              swal({
+              Swal.fire({
                 text: "サーバーエラーです。サポートにお問い合わせください。",
                 title: "エラー",
                 icon: "error",
@@ -435,7 +435,7 @@ async function disposeClass() {
           // レスポンスデータの処理
         })
         .catch((error) => {
-          swal({
+          Swal.fire({
             text: "ログインできませんでした。",
             title: "エラー",
             icon: "error",

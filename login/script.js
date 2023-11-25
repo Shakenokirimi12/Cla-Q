@@ -16,14 +16,14 @@ firebase.auth().onAuthStateChanged(function (user) {
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           if (currentUser.email.includes("-")) {
-            swal({
+            Swal.fire({
               text: "ログインしました。教師接続画面に遷移します。",
               title: "情報",
               icon: "info",
             });
             window.location.href = "/teacher/teacher_start";
           } else {
-            swal({
+            Swal.fire({
               text: "ログインしました。生徒接続画面に遷移します。",
               title: "情報",
               icon: "info",
