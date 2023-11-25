@@ -43,6 +43,8 @@ async function student_Join() {
             data[0].result
           );
           document.cookie = "class_Code=" + data[0].class_Code;
+          console.log(document.cookie);
+          console.log(data[0].class_Code);
           window.location.href = "/student/student_menu";
         } else {
           alert("ログインできませんでした。");
