@@ -64,7 +64,7 @@ function handleKeyDown(event) {
 
 var class_Code;
 window.onload = function () {
-  console.log(document.cookie)
+  console.log(document.cookie);
   const key = "class_Code";
   /// 正規表現でcookie値を取得
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
@@ -211,19 +211,4 @@ async function leaveClass() {
     console.log("不明なエラー2。", error);
     alert("クラスを離脱できませんでした。");
   }
-}
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("../../serviceworker.js")
-    .then((registration) => {
-      // 登録成功
-      registration.onupdatefound = function () {
-        console.log("アップデートがあります！");
-        registration.update();
-      };
-    })
-    .catch((err) => {
-      // 登録失敗
-    });
 }

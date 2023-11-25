@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <link rel="manifest" href="manifest.json" />
-    <script>
-      if (navigator.serviceWorker) {
-        navigator.serviceWorker.register("sw.js");
-      }
-    </script>
   </head>
   <script>
     window.location.href = "/login";
@@ -21,21 +15,6 @@
         location.href = "/mobile";
       }
     };
-
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("./serviceworker.js")
-        .then((registration) => {
-          // 登録成功
-          registration.onupdatefound = function () {
-            console.log("アップデートがあります！");
-            registration.update();
-          };
-        })
-        .catch((err) => {
-          // 登録失敗
-        });
-    }
   </script>
 
   <body>
