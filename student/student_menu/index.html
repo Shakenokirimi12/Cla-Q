@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClaQ - 生徒メニュー</title>
-    <!--vue javascript area-->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-    <!--vue javascript area-->
 
-    <!--sweet alert area-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!--sweet alert area-->
-    
-    <!--firebase authentication javascript area-->
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-    <!--firebase authentication javascript area-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <title>ClaQ - 生徒メニュー</title>
+  <!--vue javascript area-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <!--vue javascript area-->
 
-    <!--normal javascript area-->
-    <script src="../../firebase_config.js"></script>
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-    <!--normal javascript area-->
-  </head>
+  <!--sweet alert area-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!--sweet alert area-->
 
-  <body>
-    <span class="version">Version: Beta v2.0</span>
-    <div id="class-info">
-      <p id="mail_address"></p>
-      <p id="user_name"></p>
-      <p id="class_code"></p>
-      <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
-    </div>
+  <!--firebase authentication javascript area-->
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <!--firebase authentication javascript area-->
 
-    <div id="answerArea">
-      <textarea
-        id="answer-box"
-        placeholder="答えを入力してください"
-        onkeydown="handleKeyDown(event)"
-      ></textarea>
-      <button id="submit-button" onclick="submitAnswer()">送信</button>
-    </div>
-  </body>
+  <!--normal javascript area-->
+  <script src="../../firebase_config.js"></script>
+  <script src="./script.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+  <!--normal javascript area-->
+</head>
+
+<body>
+  <span class="version">Version: Beta v2.0</span>
+  <div id="class-info">
+    <p id="mail_address"></p>
+    <p id="user_name"></p>
+    <p id="class_code"></p>
+    <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
+  </div>
+
+  <div id="answerArea">
+    <textarea id="answer-box" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
+    <button id="submit-button" onclick="submitAnswer()">送信</button>
+  </div>
+</body>
+
 </html>
