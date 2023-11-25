@@ -37,7 +37,7 @@ async function startClass() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           });
-          await sleep(3000);
+          sleep(3000);
           window.location.href = "/teacher/teacher_menu";
         } else {
           Swal.fire({
@@ -102,7 +102,7 @@ async function teacher_Rejoin() {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             });
-            await sleep(3000);
+            sleep(3000);
             window.location.href = "/teacher/teacher_menu";
           } else {
             Swal.fire({
@@ -126,7 +126,7 @@ async function teacher_Rejoin() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               });
-              await sleep(3000);
+              sleep(3000);
               window.location.href = "/teacher/teacher_menu";
             } else {
               Swal.fire({
@@ -231,11 +231,9 @@ function logOut() {
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
       });
-      await sleep(3000);
+      sleep(3000);
       location.reload();
     });
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

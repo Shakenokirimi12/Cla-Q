@@ -94,7 +94,7 @@ window.onload = function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    await sleep(2000);
+    sleep(2000);
     window.location.href = "/student/student_start";
   }
   mobileRedirect();
@@ -213,7 +213,7 @@ async function leaveClass() {
             timer: 3000, //3秒経過後に閉じる
           });
           document.cookie = "class_Code=; path=/;";
-          await sleep(2000);
+          sleep(2000);
           window.location.href = "/student/student_start";
         } else {
           console.log("データエラー。successが返されなかった。");
@@ -228,7 +228,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               });
-              await sleep(2000);
+              sleep(2000);
               window.location.href = "/student/student_start";
             } else {
               Swal.fire({
@@ -248,7 +248,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               });
-              await sleep(2000);
+              sleep(2000);
               window.location.href = "/student/student_start";
             } else {
               Swal.fire({
@@ -268,7 +268,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               });
-              await sleep(2000);
+              sleep(2000);
               window.location.href = "/student/student_start";
             } else {
               Swal.fire({
@@ -298,6 +298,4 @@ async function leaveClass() {
   }
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
