@@ -14,6 +14,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           showConfirmButton: false,
           timer: 3000, //3秒経過後に閉じる
         });
+        await sleep(3000);
         location.reload();
       });
   } else {
@@ -31,4 +32,9 @@ window.onload = function () {
   ) {
     location.href = "/mobile.html";
   }
+};
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 };

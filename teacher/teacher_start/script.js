@@ -28,6 +28,16 @@ async function startClass() {
         if (data.result == "success") {
           console.log("Successfully created the class");
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
+          Swal.fire({
+            text: "クラスを作成しました。",
+            title: "情報",
+            icon: "success",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          });
+          await sleep(3000);
           window.location.href = "/teacher/teacher_menu";
         } else {
           Swal.fire({
@@ -81,8 +91,18 @@ async function teacher_Rejoin() {
         try {
           var result = data[1].result;
           if (result == "success") {
-            console.log("Successfully created the class");
+            console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + class_Code + ";path=/;";
+            Swal.fire({
+              text: "クラスに再接続しました。",
+              title: "情報",
+              icon: "success",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 3000, //3秒経過後に閉じる
+            });
+            await sleep(3000);
             window.location.href = "/teacher/teacher_menu";
           } else {
             Swal.fire({
@@ -97,6 +117,16 @@ async function teacher_Rejoin() {
             if (result2 == "success") {
               console.log("Successfully created the class");
               document.cookie = "class_Code=" + class_Code + ";path=/;";
+              Swal.fire({
+                text: "クラスに再接続しました。",
+                title: "情報",
+                icon: "success",
+                toast: true,
+                position: "top-end", //画面右上
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
+              });
+              await sleep(3000);
               window.location.href = "/teacher/teacher_menu";
             } else {
               Swal.fire({
@@ -192,6 +222,20 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      Swal.fire({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      });
+      await sleep(3000);
       location.reload();
     });
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};

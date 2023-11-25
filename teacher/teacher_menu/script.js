@@ -429,7 +429,17 @@ async function disposeClass() {
               var result = data[1].result;
               if (result == "success") {
                 console.log("Successfully deleted the class");
-                document.cookie = "class_Code=";
+                document.cookie = "class_Code=; path=/;";
+                Swal.fire({
+                  text: "クラスを閉じました。クラス参加画面に戻ります。",
+                  title: "情報",
+                  icon: "info",
+                  toast: true,
+                  position: "top-end", //画面右上
+                  showConfirmButton: false,
+                  timer: 3000, //3秒経過後に閉じる
+                });
+                await sleep(3000);
                 window.location.href = "/teacher/teacher_start";
               } else {
                 Swal.fire({
@@ -443,7 +453,17 @@ async function disposeClass() {
                 var result2 = data.result;
                 if (result2 == "success") {
                   console.log("Successfully deleted the class");
-                  document.cookie = "class_Code=";
+                  document.cookie = "class_Code=; path=/;";
+                  Swal.fire({
+                    text: "クラスを閉じました。クラス参加画面に戻ります。",
+                    title: "情報",
+                    icon: "info",
+                    toast: true,
+                    position: "top-end", //画面右上
+                    showConfirmButton: false,
+                    timer: 3000, //3秒経過後に閉じる
+                  });
+                  await sleep(3000);
                   window.location.href = "/teacher/teacher_start";
                 } else {
                   Swal.fire({
@@ -476,3 +496,8 @@ async function disposeClass() {
     }
   });
 }
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};

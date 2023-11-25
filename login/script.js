@@ -2,8 +2,30 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("-")) {
+      Swal.fire({
+
+        text: "ログインしました。教師接続画面に遷移します。",
+        title: "情報",
+        icon: "info",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      });
+      await sleep(3000);
       window.location.href = "/teacher/teacher_start";
     } else {
+      Swal.fire({
+
+        text: "ログインしました。生徒接続画面に遷移します。",
+        title: "情報",
+        icon: "info",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      });
+      await sleep(3000);
       window.location.href = "/student/student_start";
     }
   } else {
@@ -17,6 +39,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           if (currentUser.email.includes("-")) {
             Swal.fire({
+
               text: "ログインしました。教師接続画面に遷移します。",
               title: "情報",
               icon: "info",
@@ -25,6 +48,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             });
+            await sleep(3000);
             window.location.href = "/teacher/teacher_start";
           } else {
             Swal.fire({
@@ -36,6 +60,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             });
+            await sleep(3000);
             window.location.href = "/student/student_start";
           }
           return false;
@@ -62,6 +87,20 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      Swal.fire({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      });
+      await sleep(3000);
       location.reload();
     });
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};

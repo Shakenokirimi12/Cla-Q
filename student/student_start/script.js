@@ -52,6 +52,7 @@ async function student_Join() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           });
+          await sleep(3000);
           window.location.href = "/student/student_menu";
         } else {
           Swal.fire({
@@ -147,7 +148,12 @@ function logOut() {
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
       });
+      await sleep(3000);
       location.reload();
     });
 }
 //以上firebase auth
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
