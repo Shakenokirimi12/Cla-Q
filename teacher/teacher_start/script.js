@@ -84,7 +84,7 @@ async function teacher_Rejoin() {
                         var result2 = data.result;
                         if (result2 == "success") {
                             console.log("Successfully created the class");
-                            document.cookie = 'class_Code=' + class_Code;
+                            document.cookie = 'class_Code=' + class_Code +";path=/;";
                             window.location.href = "/teacher/teacher_menu";
                         }
                         else {
