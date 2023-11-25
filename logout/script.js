@@ -9,6 +9,10 @@ firebase.auth().onAuthStateChanged(function (user) {
           text: "ログアウトしました。",
           title: "情報",
           icon: "info",
+          toast: true,
+          position: "top-end", //画面右上
+          showConfirmButton: false,
+          timer: 3000, //3秒経過後に閉じる
         });
         location.reload();
       });

@@ -11,6 +11,10 @@ async function sendToGAS() {
     title: "通知",
     text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
+    toast: true,
+    position: "top-end", //画面右上
+    showConfirmButton: false,
+    timer: 3000, //3秒経過後に閉じる
   });
   var url =
     "https://script.google.com/macros/s/AKfycbxGJTMf6kqWsODNhUNYB_QqdENHl28b-y_Y32n5_RijVivPDAQM5Lde7SSJYyOOHGd7/exec";
@@ -38,6 +42,10 @@ async function sendToGAS() {
           title: "エラー",
           text: "共有リンクを取得できませんでした。もう一度試してください。",
           icon: "error",
+          toast: true,
+          position: "top-end", //画面右上
+          showConfirmButton: false,
+          timer: 3000, //3秒経過後に閉じる
         });
       });
   } catch (error) {
@@ -245,11 +253,24 @@ async function getStudentsList() {
           });
           document.getElementById("student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
+          Swal.fire({
+            text: "生徒接続情報が更新されました。",
+            title: "情報",
+            icon: "info",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 1000, //3秒経過後に閉じる
+          });
         } else {
           Swal.fire({
             text: "生徒一覧を取得できませんでした(" + data.message + "",
             title: "エラー",
             icon: "error",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
           });
         }
       })
@@ -311,6 +332,10 @@ async function getAnswersList() {
             text: "答えの一覧を取得できませんでした(" + data.message + ")",
             title: "エラー",
             icon: "error",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
           });
         }
       })
@@ -375,75 +400,79 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 async function disposeClass() {
-  var confirmation = confirm(
-    "この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？"
-  );
-  if (confirmation) {
-    var url = "https://beta.api.cla-q.net/teacher/inactivate_class";
-    var postData = {
-      class_Code: class_Code,
-      userEmail: userEmail,
-      userName: userName,
-    };
-    try {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Origin: "https://app.cla-q.net/",
-          // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-        },
-        body: JSON.stringify(postData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          try {
-            var result = data[1].result;
-            if (result == "success") {
-              console.log("Successfully deleted the class");
-              document.cookie = "class_Code=";
-              window.location.href = "/teacher/teacher_start";
-            } else {
-              Swal.fire({
-                text: "クラスを終了できませんでした",
-                title: "エラー",
-                icon: "error",
-              });
-            }
-          } catch (error) {
+  Swal.fire({
+    title: "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "続行",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var url = "https://beta.api.cla-q.net/teacher/inactivate_class";
+      var postData = {
+        class_Code: class_Code,
+        userEmail: userEmail,
+        userName: userName,
+      };
+      try {
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Origin: "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
             try {
-              var result2 = data.result;
-              if (result2 == "success") {
+              var result = data[1].result;
+              if (result == "success") {
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=";
                 window.location.href = "/teacher/teacher_start";
               } else {
                 Swal.fire({
-                  text: "クラスを終了できませんでした(" + data.mesage + ")",
+                  text: "クラスを終了できませんでした",
                   title: "エラー",
                   icon: "error",
                 });
               }
             } catch (error) {
-              Swal.fire({
-                text: "サーバーエラーです。サポートにお問い合わせください。",
-                title: "エラー",
-                icon: "error",
-              });
+              try {
+                var result2 = data.result;
+                if (result2 == "success") {
+                  console.log("Successfully deleted the class");
+                  document.cookie = "class_Code=";
+                  window.location.href = "/teacher/teacher_start";
+                } else {
+                  Swal.fire({
+                    text: "クラスを終了できませんでした(" + data.mesage + ")",
+                    title: "エラー",
+                    icon: "error",
+                  });
+                }
+              } catch (error) {
+                Swal.fire({
+                  text: "サーバーエラーです。サポートにお問い合わせください。",
+                  title: "エラー",
+                  icon: "error",
+                });
+              }
             }
-          }
-          // レスポンスデータの処理
-        })
-        .catch((error) => {
-          Swal.fire({
-            text: "ログインできませんでした。",
-            title: "エラー",
-            icon: "error",
+            // レスポンスデータの処理
+          })
+          .catch((error) => {
+            Swal.fire({
+              text: "ログインできませんでした。",
+              title: "エラー",
+              icon: "error",
+            });
           });
-        });
-    } catch (error) {
-      console.log("エラー発生。");
-      console.log(error);
+      } catch (error) {
+        console.log("エラー発生。");
+        console.log(error);
+      }
     }
-  }
+  });
 }

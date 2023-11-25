@@ -43,8 +43,6 @@ async function student_Join() {
             data[0].result
           );
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
-          console.log(document.cookie);
-          console.log(data[0].class_Code);
           Swal.fire({
             title: "成功",
             text: "クラス" + data[0].class_Code + "に参加しました。",

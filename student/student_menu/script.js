@@ -46,7 +46,7 @@ async function submitAnswer() {
                 });
               } else {
                 Swal.fire({
-                  text: "答えを提出できませんでした。)",
+                  text: "答えを提出できませんでした。",
                   title: "エラー",
                   icon: "error",
                 });
@@ -70,8 +70,8 @@ async function submitAnswer() {
   } else {
     Swal.fire({
       text: "回答を入力してください。",
-      title: "情報",
-      icon: "info",
+      title: "エラー",
+      icon: "error",
       toast: true,
       position: "top-end", //画面右上
       showConfirmButton: false,
@@ -208,6 +208,10 @@ async function leaveClass() {
             text: "クラスを離脱しました。クラス参加画面に戻ります。",
             title: "情報",
             icon: "info",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
           });
           document.cookie = "class_Code=" + "";
           window.location.href = "/student/student_start";
@@ -219,6 +223,10 @@ async function leaveClass() {
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
+                toast: true,
+                position: "top-end", //画面右上
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
               });
               window.location.href = "/student/student_start";
             } else {
@@ -234,6 +242,10 @@ async function leaveClass() {
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "エラー",
                 icon: "error",
+                toast: true,
+                position: "top-end", //画面右上
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
               });
               window.location.href = "/student/student_start";
             } else {
@@ -249,6 +261,10 @@ async function leaveClass() {
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
+                toast: true,
+                position: "top-end", //画面右上
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
               });
               window.location.href = "/student/student_start";
             } else {

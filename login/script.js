@@ -20,6 +20,10 @@ firebase.auth().onAuthStateChanged(function (user) {
               text: "ログインしました。教師接続画面に遷移します。",
               title: "情報",
               icon: "info",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 3000, //3秒経過後に閉じる
             });
             window.location.href = "/teacher/teacher_start";
           } else {
@@ -27,6 +31,10 @@ firebase.auth().onAuthStateChanged(function (user) {
               text: "ログインしました。生徒接続画面に遷移します。",
               title: "情報",
               icon: "info",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 3000, //3秒経過後に閉じる
             });
             window.location.href = "/student/student_start";
           }
