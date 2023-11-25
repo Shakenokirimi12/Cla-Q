@@ -327,15 +327,6 @@ async function getAnswersList() {
 
             tableBody.appendChild(newRow);
           });
-          Swal.fire({
-            text: "答えの情報が更新されました。",
-            title: "情報",
-            icon: "info",
-            toast: true,
-            position: "top-end", //画面右上
-            showConfirmButton: false,
-            timer: 1000, //3秒経過後に閉じる
-          });
         } else {
           Swal.fire({
             text: "答えの一覧を取得できませんでした(" + data.message + ")",
