@@ -48,6 +48,7 @@ async function student_Join() {
             text: "クラス" + data[0].class_Code + "に参加しました。",
             icon: "success",
             toast: true,
+            animation: false,
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
@@ -144,6 +145,7 @@ function logOut() {
         title: "情報",
         icon: "success",
         toast: true,
+        animation: false,
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる

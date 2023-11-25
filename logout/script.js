@@ -10,6 +10,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           title: "情報",
           icon: "info",
           toast: true,
+          animation: false,
           position: "top-end", //画面右上
           showConfirmButton: false,
           timer: 3000, //3秒経過後に閉じる
@@ -35,4 +36,4 @@ window.onload = function () {
 };
 
 
-const sleep = waitTime => new Promise( resolve => setTimeout(resolve, waitTime) );
+const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

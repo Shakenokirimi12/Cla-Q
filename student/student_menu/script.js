@@ -208,6 +208,7 @@ async function leaveClass() {
             title: "情報",
             icon: "info",
             toast: true,
+            animation: false,
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
@@ -224,6 +225,7 @@ async function leaveClass() {
                 title: "情報",
                 icon: "info",
                 toast: true,
+                animation: false,
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
@@ -241,9 +243,10 @@ async function leaveClass() {
             if (data[1].status_Code == "LE-11") {
               Swal.fire({
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
-                title: "エラー",
-                icon: "error",
+                title: "情報",
+                icon: "info",
                 toast: true,
+                animation: false,
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
@@ -264,6 +267,7 @@ async function leaveClass() {
                 title: "情報",
                 icon: "info",
                 toast: true,
+                animation: false,
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
