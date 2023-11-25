@@ -6,10 +6,8 @@ async function submitAnswer() {
   if (answer !== "") {
     Swal.fire({
       title: "回答を送信しますか？",
-      showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "送信",
-      denyButtonText: `キャンセル`,
     }).then((result) => {
       if (result.isConfirmed) {
         const key = "class_Code";
