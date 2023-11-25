@@ -39,6 +39,10 @@ async function submitAnswer() {
                   text: "答えを提出しました。(" + answer + ")",
                   title: "情報",
                   icon: "info",
+                  toast: true,
+                  position: "top-end", //画面右上
+                  showConfirmButton: false,
+                  timer: 3000, //3秒経過後に閉じる
                 });
               } else {
                 Swal.fire({
@@ -63,13 +67,17 @@ async function submitAnswer() {
         answerBox.value = "";
       }
     });
-  }else {
-  Swal.fire({
-    text: "回答を入力してください。",
-    title: "情報",
-    icon: "info",
-  });
-}
+  } else {
+    Swal.fire({
+      text: "回答を入力してください。",
+      title: "情報",
+      icon: "info",
+      toast: true,
+      position: "top-end", //画面右上
+      showConfirmButton: false,
+      timer: 3000, //3秒経過後に閉じる
+    });
+  }
 }
 
 function handleKeyDown(event) {
