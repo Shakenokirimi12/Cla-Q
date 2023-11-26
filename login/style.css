@@ -6,8 +6,6 @@ body {
     flex-direction: column;
     align-items: center;
     background: #3498db;
-    color: #fff;
-    /* Change text color to white */
 }
 
 #login-header {
