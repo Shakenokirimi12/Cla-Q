@@ -28,11 +28,11 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    width: 200px;
+    width: 250px;
 }
 
 .input-field {
-    width: 80%;
+    width: 85%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
