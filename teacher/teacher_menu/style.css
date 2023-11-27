@@ -44,6 +44,7 @@ body {
     border-radius: 40px;
     font-size: 18px;
     cursor: pointer;
+    /*背景は移動*/
 }
 
 #start-button:hover,
