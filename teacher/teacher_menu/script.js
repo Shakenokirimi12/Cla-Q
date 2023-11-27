@@ -11,7 +11,7 @@ async function sendToGAS() {
     title: "通知",
     text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
-    toast:true,
+    toast: true,
     position: "top-end", //画面右上
     showConfirmButton: false,
     timer: 3000, //3秒経過後に閉じる
@@ -195,6 +195,7 @@ window.onload = async function () {
   }
   await redirectMobile();
   await preventOverLogin();
+  setInterval('showClock()', 1000);
 };
 
 async function executeEveryTwoSeconds() {
@@ -500,3 +501,13 @@ async function disposeClass() {
 }
 
 const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
+
+
+function showClock() {
+  let nowTime = new Date();
+  let nowHour = nowTime.getHours();
+  let nowMin = nowTime.getMinutes();
+  let nowSec = nowTime.getSeconds();
+  let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
+  document.getElementById("currentTime").innerHTML = msg;
+}

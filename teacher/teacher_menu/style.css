@@ -66,9 +66,7 @@ body {
     font-size: 20px;
 }
 
-#class_info {
-    background-color: #fff59d;
-}
+#class_info {}
 
 #class_control {
     background-color: #fff59d;
@@ -80,4 +78,9 @@ body {
     right: 10px;
     font-size: 12px;
     color: #666;
+}
+
+.bg-yellow {
+    background-color: #fff59d;
+    color: black;
 }
