@@ -67,13 +67,6 @@ body {
     font-size: 20px;
 }
 
-#class_info {
-    font-size: 20px;
-    border-radius: 10px;
-    border-style: solid;
-    box-shadow: 0 12px 12px gray;
-    background-color: #fff59d;
-}
 
 #class_control {
     margin-top: 50px;
