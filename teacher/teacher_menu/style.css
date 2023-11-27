@@ -67,6 +67,9 @@ body {
     font-size: 20px;
 }
 
+#class_info {
+    background-color: #fff59d;
+}
 
 #class_control {
     margin-top: 50px;
