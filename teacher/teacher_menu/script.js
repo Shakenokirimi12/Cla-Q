@@ -442,7 +442,6 @@ async function disposeClass() {
                   title: "情報",
                   icon: "info",
                   toast: true,
-                  animation: false,
                   position: "top-end", //画面右上
                   showConfirmButton: false,
                   timer: 3000, //3秒経過後に閉じる
@@ -467,7 +466,6 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     toast: true,
-                    animation: false,
                     position: "top-end", //画面右上
                     showConfirmButton: false,
                     timer: 3000, //3秒経過後に閉じる
