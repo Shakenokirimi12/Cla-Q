@@ -44,6 +44,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      document.cookie = "class_Code=; path=/;";
       location.reload();
     });
 }

@@ -175,7 +175,7 @@ async function leaveClass() {
         ) {
           console.log("Successfully leaved the class");
           alert("クラスを離脱しました。クラス参加画面に戻ります。");
-          document.cookie = "class_Code=" + "";
+          document.cookie = "class_Code=; path=/;";
           window.location.href = "/student/student_start";
         } else {
           console.log("データエラー。successが返されなかった。");

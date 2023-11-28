@@ -160,6 +160,7 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
+    alert("クラスコードを読み込めませんでした。");
     window.location.href = "/teacher/teacher_start";
   }
   await redirectMobile();
@@ -369,7 +370,7 @@ async function disposeClass() {
             var result = data[1].result;
             if (result == "success") {
               console.log("Successfully deleted the class");
-              document.cookie = "class_Code=";
+              document.cookie = "class_Code=; path=/;";
               window.location.href = "/teacher/teacher_start";
             } else {
               alert("ログインできませんでした。:" + data[1].message);
@@ -379,7 +380,7 @@ async function disposeClass() {
               var result2 = data.result;
               if (result2 == "success") {
                 console.log("Successfully deleted the class");
-                document.cookie = "class_Code=";
+                document.cookie = "class_Code=; path=/;";
                 window.location.href = "/teacher/teacher_start";
               } else {
                 alert("ログインできませんでした。:" + data.message);

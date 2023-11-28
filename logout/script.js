@@ -5,6 +5,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .auth()
       .signOut()
       .then(function () {
+        document.cookie = "class_Code=; path=/;";
         location.reload();
       });
   } else {
