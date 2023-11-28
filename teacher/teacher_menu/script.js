@@ -191,6 +191,7 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
+
     Swal.fire({
       text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
       title: "エラー",
