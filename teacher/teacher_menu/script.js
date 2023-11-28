@@ -160,7 +160,7 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    alert("クラスコードを読み込めませんでした。");
+    alert("クラスコードの読み込みに失敗しました。エラーコード:CSE-01")
     window.location.href = "/teacher/teacher_start";
   }
   await redirectMobile();
