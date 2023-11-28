@@ -5,8 +5,18 @@ firebase.auth().onAuthStateChanged(function (user) {
       .auth()
       .signOut()
       .then(function () {
-        document.cookie = "class_Code=; path=/;";
-        location.reload();
+        Swal.fire({
+          text: "ログアウトしました。",
+          title: "情報",
+          icon: "info",
+          toast: true,
+          position: "top-end", //画面右上
+          showConfirmButton: false,
+          timer: 3000, //3秒経過後に閉じる
+        }).then((result) => {
+          document.cookie = "class_Code=; path=/;";
+          location.reload();
+        });
       });
   } else {
     // 未ログイン時
@@ -24,3 +34,5 @@ window.onload = function () {
     location.href = "/mobile.html";
   }
 };
+
+

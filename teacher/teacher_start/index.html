@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClaQ - 先生用</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <title>ClaQ - 先生用</title>
+  <!--vue javascript area-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <!--vue javascript area-->
 
-    <!--firebase authentication javascript area-->
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-    <!--firebase authentication javascript area-->
+  <!--sweet alert area-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!--sweet alert area-->
 
-    <!--normal javascript area-->
-    <script src="../../firebase_config.js"></script>
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-    <!--normal javascript area-->
-  </head>
+  <!--firebase authentication javascript area-->
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <!--firebase authentication javascript area-->
 
-  <body>
-    <span class="version">Version: Stable v1.1.10</span>
+  <!--normal javascript area-->
+  <script src="../../firebase_config.js"></script>
+  <script src="./script.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+  <!--normal javascript area-->
 
-    <div class="user-info"></div>
+  <!--Bootstrap5 javascript and css area-->
+  <script src="../../bootstrap/bootstrap.js"></script>
+  <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
+  <!--Bootstrap5 javascript and css area-->
+</head>
 
-    <div class="form-container">
-      <h2>ClaQ - 先生用</h2>
-      <form id="teacher-form">
-        <button type="button" class="action-button" onclick="startClass()">
-          授業を開始
-        </button>
-      </form>
-    </div>
+<body>
+  <span class="version">Version: Stable v2.0.2_BootStrap</span>
 
-    <div class="form-container">
-      <h2>ClaQ - クラス参加</h2>
-      <form id="class-join-form">
-        <label for="class-code-input">再接続はこちら</label>
-        <input
-          type="number"
-          id="class-code-input"
-          class="input-field"
-          placeholder="クラスコードを入力"
-          min="100000"
-          max="999999"
-          onkeydown="handleKeyDown(event)"
-        />
-        <br />
-        <button type="button" class="action-button" onclick="teacher_Rejoin()">
-          開始済みクラスに参加
-        </button>
-      </form>
-    </div>
-  </body>
+  <div class="user-info"></div>
+
+  <div class="form-container">
+    <p class="fs-2">ClaQ - 先生用</p>
+    <form id="teacher-form">
+      <button type="button" class="action-button" onclick="startClass()">
+        授業を開始
+      </button>
+    </form>
+  </div>
+
+  <div class="form-container">
+    <p class="fs-2">ClaQ - クラス参加</p>
+    <form id="class-join-form">
+      <p for="class-code-input" class="fs-4">再接続はこちら</p>
+      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" min="100000" max="999999"
+        onkeydown="handleKeyDown(event)" />
+      <br />
+      <button type="button" class="action-button" onclick="teacher_Rejoin()">
+        開始済みクラスに参加
+      </button>
+    </form>
+  </div>
+</body>
+
 </html>

@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <title>Cla-Qにログイン</title>
-    <meta charset="utf-8" />
-    <!--firebase authentication javascript area-->
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-    <!--firebase authentication javascript area-->
 
-    <!--normal javascript area-->
-    <script src="../firebase_config.js"></script>
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-    <!--normal javascript area-->
-  </head>
+<head>
+  <title>Cla-Qにログイン</title>
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta charset="utf-8" />
+  <!--vue javascript area-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <!--vue javascript area-->
 
-  <body>
-    <div id="login-header">
-      <p>Cla-Qにログイン</p>
-    </div>
-    <span class="version">Version: Stable v1.1.10</span>
-    <div id="firebaseui-auth-container"></div>
-  </body>
+  <!--sweet alert area-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!--sweet alert area-->
+
+  <!--firebase authentication javascript area-->
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <!--firebase authentication javascript area-->
+
+  <!--normal javascript area-->
+  <script src="../firebase_config.js"></script>
+  <script src="./script.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+  <!--normal javascript area-->
+
+  <!--Bootstrap5 javascript and css area-->
+  <script src="../bootstrap/bootstrap.js"></script>
+  <link rel="stylesheet" href="../bootstrap/bootstrap.css" />
+  <!--Bootstrap5 javascript and css area-->
+</head>
+
+<body>
+  <div id="login-header">
+    <p class="text-light">Cla-Qにログイン</p>
+  </div>
+  <span class="version" class="text-black-50">Version: Stable v2.0.2_BootStrap</span>
+  <div id="firebaseui-auth-container"></div>
+</body>
+
 </html>

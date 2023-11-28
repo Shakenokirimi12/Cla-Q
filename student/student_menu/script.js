@@ -4,53 +4,79 @@ async function submitAnswer() {
   var answer = answerBox.value.trim();
 
   if (answer !== "") {
-    var confirmation = confirm("本当に答えを送信しますか？");
-
-    if (confirmation) {
-      const key = "class_Code";
-      const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-      var class_Code = value;
-      // Add your login logic here
-      var url = "https://api.cla-q.net/student/submit_answer";
-      var postData = {
-        class_Code: class_Code,
-        userName: userName,
-        userEmail: userEmail,
-        answer_Value: answer,
-      };
-      try {
-        await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Origin: "https://app.cla-q.net/",
-            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-          },
-          body: JSON.stringify(postData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.result == "success" || data[0].result == "success") {
-              console.log("Successfully submitted the question");
-              alert("答えが送信されました: " + answer);
-            } else {
-              alert("回答を提出できませんでした" + data.message);
-            }
+    Swal.fire({
+      title: "回答を送信しますか？",
+      showCancelButton: true,
+      confirmButtonText: "送信",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const key = "class_Code";
+        const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
+        var class_Code = value;
+        // Add your login logic here
+        var url = "https://api.cla-q.net/student/submit_answer";
+        var postData = {
+          class_Code: class_Code,
+          userName: userName,
+          userEmail: userEmail,
+          answer_Value: answer,
+        };
+        try {
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Origin: "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+            },
+            body: JSON.stringify(postData),
           })
-          .catch((error) => {
-            alert(
-              "回答を提出できませんでした。問題が開始されているか確認してください。"
-            );
-          });
-      } catch (error) {
-        console.log("エラー発生。");
-        console.log(error);
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.result == "success" || data[0].result == "success") {
+                console.log("Successfully submitted the question");
+                Swal.fire({
+                  text: "答えを提出しました。(" + answer + ")",
+                  title: "情報",
+                  icon: "info",
+                  toast: true,
+                  position: "top-end", //画面右上
+                  showConfirmButton: false,
+                  timer: 3000, //3秒経過後に閉じる
+                });
+              } else {
+                Swal.fire({
+                  text: "答えを提出できませんでした。",
+                  title: "エラー",
+                  icon: "error",
+                });
+              }
+            })
+            .catch((error) => {
+              Swal.fire({
+                text: "回答を提出できませんでした。問題が開始されているか確認してください。",
+                title: "エラー",
+                icon: "error",
+              });
+            });
+        } catch (error) {
+          console.log("エラー発生。");
+          console.log(error);
+        }
+        // ボックス内をクリア
+        answerBox.value = "";
       }
-      // ボックス内をクリア
-      answerBox.value = "";
-    }
+    });
   } else {
-    alert("答えを入力してください。");
+    Swal.fire({
+      text: "回答を入力してください。",
+      title: "エラー",
+      icon: "error",
+      toast: true,
+      position: "top-end", //画面右上
+      showConfirmButton: false,
+      timer: 3000, //3秒経過後に閉じる
+    });
   }
 }
 
@@ -64,14 +90,17 @@ function handleKeyDown(event) {
 
 var class_Code;
 window.onload = function () {
-  console.log(document.cookie);
   const key = "class_Code";
-  /// 正規表現でcookie値を取得
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    alert("クラスコードの読み込みに失敗しました。エラーコード:CSE-01")
-    window.location.href = "/student/student_start";
+    Swal.fire({
+      text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
+      title: "エラー",
+      icon: "error",
+    }).then((result) => {
+      window.location.href = "/teacher/student_start";
+    });
   }
   mobileRedirect();
   prevent_Overlogin();
@@ -164,7 +193,11 @@ async function leaveClass() {
               var result3 = data.result;
             } catch (error3) {
               console.log(error2);
-              alert("クラスを離脱できませんでした。");
+              Swal.fire({
+                text: "クラスを離脱できませんでした。",
+                title: "エラー",
+                icon: "error",
+              });
               return;
             }
           }
@@ -175,41 +208,90 @@ async function leaveClass() {
           result3 == "success"
         ) {
           console.log("Successfully leaved the class");
-          alert("クラスを離脱しました。クラス参加画面に戻ります。");
-          document.cookie = "class_Code=; path=/;";
-          window.location.href = "/student/student_start";
+          Swal.fire({
+            text: "クラスを離脱しました。クラス参加画面に戻ります。",
+            title: "情報",
+            icon: "info",
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            document.cookie = "class_Code=; path=/;";
+            window.location.href = "/student/student_start";
+          });
         } else {
           console.log("データエラー。successが返されなかった。");
           if (result1 != undefined) {
             if (data[0].status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
-              window.location.href = "/student/student_start";
+              Swal.fire({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "情報",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
+              });
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              Swal.fire({
+                text: "クラスを離脱できませんでした。(" + data[0].message + ")",
+                title: "情報",
+                icon: "info",
+              });
             }
           } else if (result2 != undefined) {
             if (data[1].status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
-              window.location.href = "/student/student_start";
+              Swal.fire({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "情報",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
+              });
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              Swal.fire({
+                text: "クラスを離脱できませんでした。(" + data[1].message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           } else {
             if (data.status_Code == "LE-11") {
-              alert("クラスが教師によって閉じられています。");
-              window.location.href = "/student/student_start";
+              Swal.fire({
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                title: "情報",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
+              });
             } else {
-              alert("クラスを離脱できませんでした。:" + data.message);
+              Swal.fire({
+                text: "クラスを離脱できませんでした。(" + data.message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           }
         }
       })
       .catch((error) => {
         console.log("不明なエラー1。", error);
-        alert("クラスを離脱できませんでした。");
+        Swal.fire({
+          text: "クラスを離脱できませんでした。(" + data.message + ")",
+          title: "不明なエラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("不明なエラー2。", error);
-    alert("クラスを離脱できませんでした。");
+    Swal.fire({
+      text: "クラスを離脱できませんでした。",
+      title: "不明なエラー",
+      icon: "error",
+    });
   }
 }
+

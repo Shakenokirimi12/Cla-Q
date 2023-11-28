@@ -43,15 +43,31 @@ async function student_Join() {
             data[0].result
           );
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
-          console.log(document.cookie);
-          console.log(data[0].class_Code);
-          window.location.href = "/student/student_menu";
+          Swal.fire({
+            title: "成功",
+            text: "クラス" + data[0].class_Code + "に参加しました。",
+            icon: "success",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "/student/student_menu";
+          });
         } else {
-          alert("ログインできませんでした。");
+          Swal.fire({
+            title: "エラー",
+            text: "ログインできませんでした。",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        Swal.fire({
+          title: "エラー",
+          text: "ログインできませんでした。",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -123,7 +139,18 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
-      location.reload();
+      Swal.fire({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        location.reload();
+      });
     });
 }
 //以上firebase auth
+

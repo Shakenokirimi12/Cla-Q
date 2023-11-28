@@ -7,9 +7,15 @@ async function sendToGAS() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  alert(
-    "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。"
-  );
+  Swal.fire({
+    title: "通知",
+    text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
+    icon: "info",
+    toast: true,
+    position: "top-end", //画面右上
+    showConfirmButton: false,
+    timer: 3000, //3秒経過後に閉じる
+  });
   var url =
     "https://script.google.com/macros/s/AKfycbxGJTMf6kqWsODNhUNYB_QqdENHl28b-y_Y32n5_RijVivPDAQM5Lde7SSJYyOOHGd7/exec";
   var postData = {
@@ -32,7 +38,15 @@ async function sendToGAS() {
       })
       .catch((error) => {
         console.log(error);
-        alert("共有リンクを取得できませんでした。もう一度試してください。");
+        Swal.fire({
+          title: "エラー",
+          text: "共有リンクを取得できませんでした。もう一度試してください。",
+          icon: "error",
+          toast: true,
+          position: "top-end", //画面右上
+          showConfirmButton: false,
+          timer: 3000, //3秒経過後に閉じる
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -104,11 +118,20 @@ async function startQuestion() {
         } else {
           console.log(data.question_Number);
           console.log(data.result);
-          alert("問題を開始できませんでした");
+          Swal.fire({
+            text: "問題を開始できませんでした",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("問題を開始できませんでした", error);
+        console.log(data.result);
+        Swal.fire({
+          text: "問題を開始できませんでした(" + error + ")",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -143,11 +166,19 @@ async function endQuestion() {
           console.log("Successfully started the question");
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
         } else {
-          alert("問題を開始できませんでした");
+          Swal.fire({
+            text: "問題を終了できませんでした",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("問題を開始できませんでした");
+        Swal.fire({
+          text: "問題を終了できませんでした",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -160,11 +191,18 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    alert("クラスコードの読み込みに失敗しました。エラーコード:CSE-01")
-    window.location.href = "/teacher/teacher_start";
+
+    Swal.fire({
+      text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
+      title: "エラー",
+      icon: "error",
+    }).then((result) => {
+      window.location.href = "/teacher/teacher_start";
+    });
   }
   await redirectMobile();
   await preventOverLogin();
+  setInterval('showClock()', 1000);
 };
 
 async function executeEveryTwoSeconds() {
@@ -175,6 +213,7 @@ async function executeEveryTwoSeconds() {
     await new Promise((resolve) => setTimeout(resolve, 20000));
   }
 }
+
 async function getStudentsList() {
   console.log("生徒一覧を取得しています。");
   var url = "https://api.cla-q.net/teacher/get_StudentsList";
@@ -222,12 +261,29 @@ async function getStudentsList() {
           });
           document.getElementById("student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
+          Swal.fire({
+            text: "生徒接続情報が更新されました。",
+            title: "情報",
+            icon: "info",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 1000, //3秒経過後に閉じる
+          });
         } else {
-          alert("生徒一覧を取得できませんでした。:" + data.message);
+          Swal.fire({
+            text: "生徒一覧を取得できませんでした(" + data.message + "",
+            title: "エラー",
+            icon: "error",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          });
         }
       })
       .catch((error) => {
-        console.log("生徒一覧を取得できませんでした。");
+        console.log("生徒一覧を取得できませんでした。", error);
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -280,7 +336,15 @@ async function getAnswersList() {
             tableBody.appendChild(newRow);
           });
         } else {
-          alert("生徒一覧を取得できませんでした。:" + data.message);
+          Swal.fire({
+            text: "答えの一覧を取得できませんでした(" + data.message + ")",
+            title: "エラー",
+            icon: "error",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          });
         }
       })
       .catch((error) => {
@@ -344,59 +408,107 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 async function disposeClass() {
-  var confirmation = confirm(
-    "この操作を行うと生徒がクラスに参加できなくなります。よろしいですか？"
-  );
-  if (confirmation) {
-    var url = "https://api.cla-q.net/teacher/inactivate_class";
-    var postData = {
-      class_Code: class_Code,
-      userEmail: userEmail,
-      userName: userName,
-    };
-    try {
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Origin: "https://app.cla-q.net/",
-          // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-        },
-        body: JSON.stringify(postData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          try {
-            var result = data[1].result;
-            if (result == "success") {
-              console.log("Successfully deleted the class");
-              document.cookie = "class_Code=; path=/;";
-              window.location.href = "/teacher/teacher_start";
-            } else {
-              alert("ログインできませんでした。:" + data[1].message);
-            }
-          } catch (error) {
+  Swal.fire({
+    title: "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "続行",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var url = "https://api.cla-q.net/teacher/inactivate_class";
+      var postData = {
+        class_Code: class_Code,
+        userEmail: userEmail,
+        userName: userName,
+      };
+      try {
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Origin: "https://app.cla-q.net/",
+            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
             try {
-              var result2 = data.result;
-              if (result2 == "success") {
+              var result = data[1].result;
+              if (result == "success") {
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=; path=/;";
-                window.location.href = "/teacher/teacher_start";
+                Swal.fire({
+                  text: "クラスを閉じました。クラス参加画面に戻ります。",
+                  title: "情報",
+                  icon: "info",
+                  showConfirmButton: false,
+                  showConfirmButton: false,
+                  timer: 3000, //3秒経過後に閉じる
+                }).then((result) => {
+                  window.location.href = "/teacher/teacher_start";
+                });
               } else {
-                alert("ログインできませんでした。:" + data.message);
+                Swal.fire({
+                  text: "クラスを終了できませんでした",
+                  title: "エラー",
+                  icon: "error",
+                });
               }
             } catch (error) {
-              alert("サーバーエラーです。管理者にお問い合わせください。");
+              try {
+                var result2 = data.result;
+                if (result2 == "success") {
+                  console.log("Successfully deleted the class");
+                  document.cookie = "class_Code=; path=/;";
+                  Swal.fire({
+                    text: "クラスを閉じました。クラス参加画面に戻ります。",
+                    title: "情報",
+                    icon: "info",
+                    showConfirmButton: false,
+                    showConfirmButton: false,
+                    timer: 3000, //3秒経過後に閉じる
+                  }).then((result) => {
+                    window.location.href = "/teacher/teacher_start";
+                  });
+                } else {
+                  Swal.fire({
+                    text: "クラスを終了できませんでした(" + data.mesage + ")",
+                    title: "エラー",
+                    icon: "error",
+                  });
+                }
+              } catch (error) {
+                Swal.fire({
+                  text: "サーバーエラーです。サポートにお問い合わせください。",
+                  title: "エラー",
+                  icon: "error",
+                });
+              }
             }
-          }
-          // レスポンスデータの処理
-        })
-        .catch((error) => {
-          alert("ログインできませんでした。");
-        });
-    } catch (error) {
-      console.log("エラー発生。");
-      console.log(error);
+            // レスポンスデータの処理
+          })
+          .catch((error) => {
+            Swal.fire({
+              text: "ログインできませんでした。",
+              title: "エラー",
+              icon: "error",
+            });
+          });
+      } catch (error) {
+        console.log("エラー発生。");
+        console.log(error);
+      }
     }
-  }
+  });
+}
+
+
+function showClock() {
+  let nowTime = new Date();
+  let nowHour = nowTime.getHours();
+  let nowMin = nowTime.getMinutes();
+  let nowSec = nowTime.getSeconds();
+  let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
+  document.getElementById("currentTime").innerHTML = msg;
 }

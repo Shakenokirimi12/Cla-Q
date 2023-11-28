@@ -28,13 +28,31 @@ async function startClass() {
         if (data.result == "success") {
           console.log("Successfully created the class");
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
-          window.location.href = "/teacher/teacher_menu";
+          Swal.fire({
+            text: "クラスを作成しました。",
+            title: "情報",
+            icon: "success",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "/teacher/teacher_menu";
+          });
         } else {
-          alert("ログインできませんでした。:" + data.message);
+          Swal.fire({
+            text: "クラスを開始できませんでした。(" + data.message + ")",
+            title: "エラー",
+            icon: "error",
+          });
         }
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        Swal.fire({
+          text: "クラスを開始できませんでした。",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -45,7 +63,11 @@ async function startClass() {
 async function teacher_Rejoin() {
   var class_Code = document.getElementById("class-code-input").value;
   if (class_Code == null || class_Code == undefined || class_Code == "") {
-    alert("クラスコードが入力されていません。");
+    Swal.fire({
+      text: "クラスコードが入力されていません。",
+      title: "情報",
+      icon: "info",
+    });
     return;
   }
   var url = "https://api.cla-q.net/teacher/rejoin_class";
@@ -69,11 +91,25 @@ async function teacher_Rejoin() {
         try {
           var result = data[1].result;
           if (result == "success") {
-            console.log("Successfully created the class");
+            console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + class_Code + ";path=/;";
-            window.location.href = "/teacher/teacher_menu";
+            Swal.fire({
+              text: "クラスに再接続しました。",
+              title: "情報",
+              icon: "success",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 3000, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "/teacher/teacher_menu";
+            });
           } else {
-            alert("ログインできませんでした。:" + data[1].message);
+            Swal.fire({
+              text: "接続できませんでした。(" + data[1].message + ")",
+              title: "エラー",
+              icon: "error",
+            });
           }
         } catch (error) {
           try {
@@ -81,18 +117,40 @@ async function teacher_Rejoin() {
             if (result2 == "success") {
               console.log("Successfully created the class");
               document.cookie = "class_Code=" + class_Code + ";path=/;";
-              window.location.href = "/teacher/teacher_menu";
+              Swal.fire({
+                text: "クラスに再接続しました。",
+                title: "情報",
+                icon: "success",
+                toast: true,
+                position: "top-end", //画面右上
+                showConfirmButton: false,
+                timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/teacher/teacher_menu";
+              });
             } else {
-              alert("ログインできませんでした。:" + data.message);
+              Swal.fire({
+                text: "接続できませんでした。(" + data.message + ")",
+                title: "エラー",
+                icon: "error",
+              });
             }
           } catch (error) {
-            alert("サーバーエラーです。管理者にお問い合わせください。");
+            Swal.fire({
+              text: "サーバーエラーです。サポートにお問い合わせください。",
+              title: "エラー",
+              icon: "error",
+            });
           }
         }
         // レスポンスデータの処理
       })
       .catch((error) => {
-        alert("ログインできませんでした。");
+        Swal.fire({
+          text: "ログインできませんでした。",
+          title: "エラー",
+          icon: "error",
+        });
       });
   } catch (error) {
     console.log("エラー発生。");
@@ -164,8 +222,17 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
-      document.cookie = "class_Code=; path=/;";
-      location.reload();
+      Swal.fire({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        document.cookie = "class_Code=; path=/;";
+        location.reload();
+      });
     });
 }
-
