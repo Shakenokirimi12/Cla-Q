@@ -70,6 +70,7 @@ window.onload = function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
+    alert("クラスコードの読み込みに失敗しました。エラーコード:CSE-01")
     window.location.href = "/student/student_start";
   }
   mobileRedirect();
