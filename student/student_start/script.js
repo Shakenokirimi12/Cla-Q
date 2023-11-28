@@ -10,7 +10,7 @@ var userName, userEmail;
 async function student_Join() {
   var class_Code = document.getElementById("class-code-input").value;
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/student/join";
+  var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
