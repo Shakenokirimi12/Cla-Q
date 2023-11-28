@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/student_start";
+              window.location.href = "/student/student_start";
             });
           }
           return false;
