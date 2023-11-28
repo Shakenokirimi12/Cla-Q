@@ -87,6 +87,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
@@ -96,8 +97,8 @@ function logOut() {
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
       }).then((result) => {
+        document.cookie = "class_Code=; path=/;";
         location.reload();
       });
     });
 }
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
