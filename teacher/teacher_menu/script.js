@@ -441,8 +441,7 @@ async function disposeClass() {
                   text: "クラスを閉じました。クラス参加画面に戻ります。",
                   title: "情報",
                   icon: "info",
-                  toast: true,
-                  position: "top-end", //画面右上
+                  showConfirmButton: false,
                   showConfirmButton: false,
                   timer: 3000, //3秒経過後に閉じる
                 }).then((result) => {
@@ -465,8 +464,7 @@ async function disposeClass() {
                     text: "クラスを閉じました。クラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
-                    toast: true,
-                    position: "top-end", //画面右上
+                    showConfirmButton: false,
                     showConfirmButton: false,
                     timer: 3000, //3秒経過後に閉じる
                   }).then((result) => {
