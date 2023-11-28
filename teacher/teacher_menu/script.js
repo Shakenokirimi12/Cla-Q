@@ -191,7 +191,13 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    window.location.href = "/teacher/teacher_start";
+    Swal.fire({
+      text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
+      title: "エラー",
+      icon: "error",
+    }).then((result) => {
+      window.location.href = "/teacher/teacher_start";
+    });
   }
   await redirectMobile();
   await preventOverLogin();
@@ -440,9 +446,9 @@ async function disposeClass() {
                   position: "top-end", //画面右上
                   showConfirmButton: false,
                   timer: 3000, //3秒経過後に閉じる
+                }).then((result) => {
+                  window.location.href = "/teacher/teacher_start";
                 });
-                sleep(3000);
-                window.location.href = "/teacher/teacher_start";
               } else {
                 Swal.fire({
                   text: "クラスを終了できませんでした",
@@ -465,9 +471,9 @@ async function disposeClass() {
                     position: "top-end", //画面右上
                     showConfirmButton: false,
                     timer: 3000, //3秒経過後に閉じる
+                  }).then((result) => {
+                    window.location.href = "/teacher/teacher_start";
                   });
-                  sleep(3000);
-                  window.location.href = "/teacher/teacher_start";
                 } else {
                   Swal.fire({
                     text: "クラスを終了できませんでした(" + data.mesage + ")",
@@ -499,8 +505,6 @@ async function disposeClass() {
     }
   });
 }
-
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
 
 
 function showClock() {

@@ -12,9 +12,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        window.location.href = "/teacher/teacher_start";
       });
-      sleep(3000);
-      window.location.href = "/teacher/teacher_start";
     } else {
       Swal.fire({
 
@@ -26,9 +26,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        window.location.href = "/student/student_start";
       });
-      sleep(3000);
-      window.location.href = "/student/student_start";
     }
   } else {
     // 未ログイン時
@@ -50,9 +50,9 @@ firebase.auth().onAuthStateChanged(function (user) {
               position: "top-end", //画面右上
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "/teacher/teacher_start";
             });
-            sleep(3000);
-            window.location.href = "/teacher/teacher_start";
           } else {
             Swal.fire({
               text: "ログインしました。生徒接続画面に遷移します。",
@@ -63,9 +63,9 @@ firebase.auth().onAuthStateChanged(function (user) {
               position: "top-end", //画面右上
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "/teacher/student_start";
             });
-            sleep(3000);
-            window.location.href = "/student/student_start";
           }
           return false;
         },
@@ -100,9 +100,9 @@ function logOut() {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        location.reload();
       });
-      sleep(3000);
-      location.reload();
     });
 }
 const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

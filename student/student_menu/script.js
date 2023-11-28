@@ -94,8 +94,13 @@ window.onload = function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
-    sleep(2000);
-    window.location.href = "/student/student_start";
+    Swal.fire({
+      text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
+      title: "エラー",
+      icon: "error",
+    }).then((result) => {
+      window.location.href = "/teacher/student_start";
+    });
   }
   mobileRedirect();
   prevent_Overlogin();
@@ -212,10 +217,10 @@ async function leaveClass() {
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            document.cookie = "class_Code=; path=/;";
+            window.location.href = "/student/student_start";
           });
-          document.cookie = "class_Code=; path=/;";
-          sleep(2000);
-          window.location.href = "/student/student_start";
         } else {
           console.log("データエラー。successが返されなかった。");
           if (result1 != undefined) {
@@ -229,9 +234,9 @@ async function leaveClass() {
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
               });
-              sleep(2000);
-              window.location.href = "/student/student_start";
             } else {
               Swal.fire({
                 text: "クラスを離脱できませんでした。(" + data[0].message + ")",
@@ -250,9 +255,9 @@ async function leaveClass() {
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
               });
-              sleep(2000);
-              window.location.href = "/student/student_start";
             } else {
               Swal.fire({
                 text: "クラスを離脱できませんでした。(" + data[1].message + ")",
@@ -271,9 +276,9 @@ async function leaveClass() {
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/student/student_start";
               });
-              sleep(2000);
-              window.location.href = "/student/student_start";
             } else {
               Swal.fire({
                 text: "クラスを離脱できませんでした。(" + data.message + ")",
@@ -302,4 +307,3 @@ async function leaveClass() {
   }
 }
 
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

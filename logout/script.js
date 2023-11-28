@@ -14,9 +14,9 @@ firebase.auth().onAuthStateChanged(function (user) {
           position: "top-end", //画面右上
           showConfirmButton: false,
           timer: 3000, //3秒経過後に閉じる
+        }).then((result) => {
+          location.reload();
         });
-        sleep(3000);
-        location.reload();
       });
   } else {
     // 未ログイン時
@@ -36,4 +36,3 @@ window.onload = function () {
 };
 
 
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

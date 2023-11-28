@@ -37,9 +37,9 @@ async function startClass() {
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "/teacher/teacher_menu";
           });
-          sleep(3000);
-          window.location.href = "/teacher/teacher_menu";
         } else {
           Swal.fire({
             text: "クラスを開始できませんでした。(" + data.message + ")",
@@ -103,9 +103,9 @@ async function teacher_Rejoin() {
               position: "top-end", //画面右上
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "/teacher/teacher_menu";
             });
-            sleep(3000);
-            window.location.href = "/teacher/teacher_menu";
           } else {
             Swal.fire({
               text: "接続できませんでした。(" + data[1].message + ")",
@@ -128,9 +128,9 @@ async function teacher_Rejoin() {
                 position: "top-end", //画面右上
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
+              }).then((result) => {
+                window.location.href = "/teacher/teacher_menu";
               });
-              sleep(3000);
-              window.location.href = "/teacher/teacher_menu";
             } else {
               Swal.fire({
                 text: "接続できませんでした。(" + data.message + ")",
@@ -234,10 +234,8 @@ function logOut() {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        location.reload();
       });
-      sleep(3000);
-      location.reload();
     });
 }
-
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));

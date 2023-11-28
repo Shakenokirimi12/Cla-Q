@@ -52,9 +52,9 @@ async function student_Join() {
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "/student/student_menu";
           });
-          sleep(3000);
-          window.location.href = "/student/student_menu";
         } else {
           Swal.fire({
             title: "エラー",
@@ -149,11 +149,10 @@ function logOut() {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
+      }).then((result) => {
+        location.reload();
       });
-      sleep(3000);
-      location.reload();
     });
 }
 //以上firebase auth
 
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
