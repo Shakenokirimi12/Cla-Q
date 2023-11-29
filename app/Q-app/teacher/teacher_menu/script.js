@@ -508,6 +508,15 @@ function showClock() {
   let nowHour = nowTime.getHours();
   let nowMin = nowTime.getMinutes();
   let nowSec = nowTime.getSeconds();
+  if(nowHour.startsWith("0")){
+    nowHour = Number("0" + String(nowHour));
+  }
+  if(nowMin.startsWith("0")){
+    nowMin = Number("0" + String(nowMin));
+  }
+  if(nowSec.startsWith("0")){
+    nowSec = Number("0" + String(nowSec));
+  }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
   document.getElementById("currentTime").innerHTML = msg;
 }
