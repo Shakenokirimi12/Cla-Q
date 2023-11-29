@@ -52,8 +52,8 @@
     <p class="fs-2">ClaQ - クラス参加</p>
     <form id="class-join-form">
       <p for="class-code-input" class="fs-4">再接続はこちら</p>
-      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" min="100000" max="999999"
-        onkeydown="handleKeyDown(event)" />
+      <input type="number" autocomplete="off" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
+        min="100000" max="999999" onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="teacher_Rejoin()">
         開始済みクラスに参加
