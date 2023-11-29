@@ -505,16 +505,16 @@ async function disposeClass() {
 
 function showClock() {
   let nowTime = new Date();
-  let nowHour = nowTime.getHours();
-  let nowMin = nowTime.getMinutes();
-  let nowSec = nowTime.getSeconds();
-  if(nowHour.startsWith("0")){
+  var nowHour = nowTime.getHours();
+  var nowMin = nowTime.getMinutes();
+  var nowSec = nowTime.getSeconds();
+  if(String(nowHour).startsWith("0")){
     nowHour = Number("0" + String(nowHour));
   }
-  if(nowMin.startsWith("0")){
+  if(String(nowMin).startsWith("0")){
     nowMin = Number("0" + String(nowMin));
   }
-  if(nowSec.startsWith("0")){
+  if(String(nowSec).startsWith("0")){
     nowSec = Number("0" + String(nowSec));
   }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
