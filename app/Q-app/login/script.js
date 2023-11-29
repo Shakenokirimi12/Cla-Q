@@ -12,7 +12,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
       }).then((result) => {
-        window.location.href = "/teacher/teacher_start";
+        window.location.href = "../teacher/teacher_start";
       });
     } else {
       Swal.fire({
@@ -25,7 +25,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         showConfirmButton: false,
         timer: 3000, //3秒経過後に閉じる
       }).then((result) => {
-        window.location.href = "/student/student_start";
+        window.location.href = "../student/student_start";
       });
     }
   } else {
@@ -48,7 +48,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/teacher_start";
+              window.location.href = "../teacher/teacher_start";
             });
           } else {
             Swal.fire({
@@ -60,7 +60,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/student_start";
+              window.location.href = "../teacher/student_start";
             });
           }
           return false;
@@ -78,7 +78,7 @@ window.onload = function () {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 };
 

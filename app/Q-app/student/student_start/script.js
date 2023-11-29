@@ -52,7 +52,7 @@ async function student_Join() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "/student/student_menu";
+            window.location.href = "../student/student_menu";
           });
         } else {
           Swal.fire({
@@ -87,7 +87,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 }
 
@@ -112,7 +112,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("-")) {
-      window.location.href = "/teacher/teacher_start";
+      window.location.href = "../teacher/teacher_start";
     } else {
       // Update the user information display
       var userInfoElement = document.querySelector(".user-info");
@@ -130,7 +130,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../login";
   }
 });
 

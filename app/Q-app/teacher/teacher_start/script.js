@@ -37,7 +37,7 @@ async function startClass() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "/teacher/teacher_menu";
+            window.location.href = "../teacher/teacher_menu";
           });
         } else {
           Swal.fire({
@@ -102,7 +102,7 @@ async function teacher_Rejoin() {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/teacher_menu";
+              window.location.href = "../teacher/teacher_menu";
             });
           } else {
             Swal.fire({
@@ -126,7 +126,7 @@ async function teacher_Rejoin() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "/teacher/teacher_menu";
+                window.location.href = "../teacher/teacher_menu";
               });
             } else {
               Swal.fire({
@@ -170,7 +170,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 }
 
@@ -195,7 +195,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("_")) {
-      window.location.href = "/student/student_start";
+      window.location.href = "../student/student_start";
     } else {
       // Update the user information display
       var userInfoElement = document.querySelector(".user-info");
@@ -213,7 +213,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../login";
   }
 });
 

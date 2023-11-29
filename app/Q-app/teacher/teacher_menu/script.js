@@ -196,7 +196,7 @@ window.onload = async function () {
       title: "エラー",
       icon: "error",
     }).then((result) => {
-      window.location.href = "/teacher/teacher_start";
+      window.location.href = "../teacher/teacher_start";
     });
   }
   await redirectMobile();
@@ -362,7 +362,7 @@ function redirectMobile() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 }
 
@@ -387,7 +387,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("_")) {
-      window.location.href = "/student/student_start";
+      window.location.href = "../student/student_start";
     }
     // Update the user information display
     document.getElementById("mail_address").innerHTML = user.email;
@@ -402,7 +402,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     executeEveryTwoSeconds();
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../login";
   }
 });
 
@@ -445,7 +445,7 @@ async function disposeClass() {
                   showConfirmButton: false,
                   timer: 3000, //3秒経過後に閉じる
                 }).then((result) => {
-                  window.location.href = "/teacher/teacher_start";
+                  window.location.href = "../teacher/teacher_start";
                 });
               } else {
                 Swal.fire({
@@ -468,7 +468,7 @@ async function disposeClass() {
                     showConfirmButton: false,
                     timer: 3000, //3秒経過後に閉じる
                   }).then((result) => {
-                    window.location.href = "/teacher/teacher_start";
+                    window.location.href = "../teacher/teacher_start";
                   });
                 } else {
                   Swal.fire({
