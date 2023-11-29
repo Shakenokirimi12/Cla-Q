@@ -1,154 +1,147 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <title>クラスへ招待</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
-    />
-    <style>
-      body {
-        font-family: "Montserrat", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(to right, #4e54c8, #8f94fb);
-      }
 
-      .container {
-        text-align: center;
-        background-color: #fff;
-        padding: 50px;
-        border-radius: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <title>クラスへ招待</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" />
+  <style>
+    body {
+      font-family: "Montserrat", sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+    }
 
-      #class-code {
-        font-size: 50px;
-        margin-bottom: 30px;
-        color: #333;
-      }
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 50px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
 
-      .qr-code {
-        width: 300px;
-        height: 300px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    #class-code {
+      font-size: 50px;
+      margin-bottom: 30px;
+      color: #333;
+    }
 
-      .qr-container {
-        display: flex;
-        justify-content: center;
-      }
-    </style>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
-        authDomain: "cla-q-7e2d9.firebaseapp.com",
-        projectId: "cla-q-7e2d9",
-        storageBucket: "cla-q-7e2d9.appspot.com",
-        messagingSenderId: "809026902811",
-        appId: "1:809026902811:web:eb91e5c91d1020e15311be",
-      };
-      firebase.initializeApp(firebaseConfig);
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-  </head>
+    .qr-code {
+      width: 300px;
+      height: 300px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  <body>
-    <div class="container">
-      <p id="class-code"></p>
-      <div class="qr-container"></div>
-      <div class="qr-code">
-        <img
-          src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net"
-          alt="QR Code"
-        />
-      </div>
+    .qr-container {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBnl2GIjQ-CMZ44tXmSxgYVcz_iRB10SYM",
+      authDomain: "cla-q-7e2d9.firebaseapp.com",
+      projectId: "cla-q-7e2d9",
+      storageBucket: "cla-q-7e2d9.appspot.com",
+      messagingSenderId: "809026902811",
+      appId: "1:809026902811:web:eb91e5c91d1020e15311be",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+</head>
+
+<body>
+  <div class="container">
+    <p id="class-code"></p>
+    <div class="qr-container"></div>
+    <div class="qr-code">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net" alt="QR Code" />
     </div>
+  </div>
 
-    <script>
-      window.onload = async function () {
-        const key = "class_Code";
-        const value = document.cookie.match(
-          new RegExp(key + "\=([^\;]*)\;*")
-        )[1];
-        class_Code = value;
-        if (class_Code == "" || class_Code == undefined) {
-          window.location.href = "/teacher/teacher_start";
+  <script>
+    window.onload = async function () {
+      const key = "class_Code";
+      const value = document.cookie.match(
+        new RegExp(key + "\=([^\;]*)\;*")
+      )[1];
+      class_Code = value;
+      if (class_Code == "" || class_Code == undefined) {
+        window.location.href = "/teacher/teacher_start";
+      }
+      await redirectMobile();
+      await preventOverLogin();
+      document.getElementById("class-code").innerHTML =
+        "クラスコード:" + class_Code;
+    };
+
+    function redirectMobile() {
+      if (
+        (navigator.userAgent.indexOf("iPhone") > 0 &&
+          navigator.userAgent.indexOf("iPad") == -1) ||
+        navigator.userAgent.indexOf("iPod") > 0 ||
+        navigator.userAgent.indexOf("Android") > 0
+      ) {
+        location.href = "/mobile.html";
+      }
+    }
+
+    function preventOverLogin() {
+      let lock_screen = document.createElement("div");
+      lock_screen.id = "screenLock";
+
+      lock_screen.style.height = "100%";
+      lock_screen.style.left = "0px";
+      lock_screen.style.position = "fixed";
+      lock_screen.style.top = "0px";
+      lock_screen.style.width = "100%";
+      lock_screen.style.zIndex = "9999";
+      lock_screen.style.opacity = "0";
+
+      let objBody = document.getElementsByTagName("body").item(0);
+      objBody.appendChild(lock_screen);
+    }
+
+    var userName, userEmail;
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // ログイン時
+        if (user.email.includes("_")) {
+          window.location.href = "/student/student_start";
         }
-        await redirectMobile();
-        await preventOverLogin();
-        document.getElementById("class-code").innerHTML =
+        // Update the user information display
+        document.getElementById("mail_address").innerHTML = user.email;
+        document.getElementById("user_name").innerHTML = user.displayName;
+        document.getElementById("class_code").innerHTML =
           "クラスコード:" + class_Code;
-      };
 
-      function redirectMobile() {
-        if (
-          (navigator.userAgent.indexOf("iPhone") > 0 &&
-            navigator.userAgent.indexOf("iPad") == -1) ||
-          navigator.userAgent.indexOf("iPod") > 0 ||
-          navigator.userAgent.indexOf("Android") > 0
-        ) {
-          location.href = "/mobile.html";
-        }
+        let screenLock = document.getElementById("screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+        executeEveryTwoSeconds();
+      } else {
+        // 未ログイン時
+        window.location.href = "/login";
       }
+    });
+  </script>
+</body>
 
-      function preventOverLogin() {
-        let lock_screen = document.createElement("div");
-        lock_screen.id = "screenLock";
-
-        lock_screen.style.height = "100%";
-        lock_screen.style.left = "0px";
-        lock_screen.style.position = "fixed";
-        lock_screen.style.top = "0px";
-        lock_screen.style.width = "100%";
-        lock_screen.style.zIndex = "9999";
-        lock_screen.style.opacity = "0";
-
-        let objBody = document.getElementsByTagName("body").item(0);
-        objBody.appendChild(lock_screen);
-      }
-
-      var userName, userEmail;
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          // ログイン時
-          if (user.email.includes("_")) {
-            window.location.href = "/student/student_start";
-          }
-          // Update the user information display
-          document.getElementById("mail_address").innerHTML = user.email;
-          document.getElementById("user_name").innerHTML = user.displayName;
-          document.getElementById("class_code").innerHTML =
-            "クラスコード:" + class_Code;
-
-          let screenLock = document.getElementById("screenLock");
-          screenLock.parentNode.removeChild(screenLock);
-          userName = user.displayName;
-          userEmail = user.email;
-          executeEveryTwoSeconds();
-        } else {
-          // 未ログイン時
-          window.location.href = "/login";
-        }
-      });
-    </script>
-  </body>
 </html>
