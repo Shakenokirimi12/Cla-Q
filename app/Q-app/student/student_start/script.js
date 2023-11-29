@@ -52,7 +52,7 @@ async function student_Join() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "../student/student_menu";
+            window.location.href = "../student_menu";
           });
         } else {
           Swal.fire({

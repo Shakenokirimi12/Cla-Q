@@ -99,7 +99,7 @@ window.onload = function () {
       title: "エラー",
       icon: "error",
     }).then((result) => {
-      window.location.href = "../teacher/student_start";
+      window.location.href = "../student_start";
     });
   }
   mobileRedirect();
@@ -136,7 +136,7 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     if (user.email.includes("-")) {
-      window.location.href = "../teacher/teacher_start";
+      window.location.href = "../../teacher/teacher_start";
     }
     // ログイン時
     // Update the user information display
@@ -152,7 +152,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     userEmail = user.email;
   } else {
     // 未ログイン時
-    window.location.href = "../login";
+    window.location.href = "../../login";
   }
 });
 
@@ -216,7 +216,7 @@ async function leaveClass() {
             timer: 3000, //3秒経過後に閉じる
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
-            window.location.href = "../student/student_start";
+            window.location.href = "../student_start";
           });
         } else {
           console.log("データエラー。successが返されなかった。");
@@ -229,7 +229,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({
@@ -247,7 +247,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({
@@ -265,7 +265,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({

@@ -37,7 +37,7 @@ async function startClass() {
             showConfirmButton: false,
             timer: 3000, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "../teacher/teacher_menu";
+            window.location.href = "../teacher_menu";
           });
         } else {
           Swal.fire({
@@ -102,7 +102,7 @@ async function teacher_Rejoin() {
               showConfirmButton: false,
               timer: 3000, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "../teacher/teacher_menu";
+              window.location.href = "../teacher_menu";
             });
           } else {
             Swal.fire({
@@ -126,7 +126,7 @@ async function teacher_Rejoin() {
                 showConfirmButton: false,
                 timer: 3000, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../teacher/teacher_menu";
+                window.location.href = "../teacher_menu";
               });
             } else {
               Swal.fire({
@@ -170,7 +170,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "../mobile";
+    location.href = "../../mobile";
   }
 }
 
