@@ -126,12 +126,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       screenLock.parentNode.removeChild(screenLock);
       userName = user.displayName;
       userEmail = user.email;
-      const key = "class_Code";
-      const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-      class_Code = value;
-      if (class_Code.length == 6) {
-        qrcodeLogin(class_Code,userName);
-      }
     }
   } else {
     // 未ログイン時
@@ -157,68 +151,3 @@ function logOut() {
     });
 }
 //以上firebase auth
-
-async function qrcodeLogin(class_Code,userName) {
-  var url = "https://beta.api.cla-q.net/student/join";
-  var postData = {
-    class_Code: class_Code,
-    userName: userName,
-  };
-  try {
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-      },
-      body: JSON.stringify(postData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // レスポンスデータの処理
-        console.log(
-          data[1].message,
-          data[0].message,
-          data[1].result,
-          data[0].result
-        );
-        if (data[1].result == "success" || data[0].result == "success") {
-          console.log("Successfully joined the class");
-          console.log(
-            data[1].message,
-            data[0].message,
-            data[1].result,
-            data[0].result
-          );
-          prevent_Overlogin();
-          document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
-          Swal.fire({
-            title: "成功",
-            text: "クラス" + data[0].class_Code + "に参加しました。",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
-          }).then((result) => {
-            window.location.href = "../student_menu";
-          });
-        } else {
-          Swal.fire({
-            title: "エラー",
-            text: "ログインできませんでした。",
-            icon: "error",
-          });
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: "エラー",
-          text: "ログインできませんでした。(" + error + ")",
-          icon: "error",
-        });
-      });
-  } catch (error) {
-    console.log("エラー発生。");
-    console.log(error);
-  }
-}
