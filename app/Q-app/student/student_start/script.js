@@ -213,7 +213,7 @@ async function qrcodeLogin(class_Code) {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          text: "ログインできませんでした。",
+          text: "ログインできませんでした。(" + error + ")",
           icon: "error",
         });
       });
