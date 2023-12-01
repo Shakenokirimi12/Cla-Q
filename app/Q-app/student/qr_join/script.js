@@ -22,7 +22,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     window.location.href = "../../login";
   }
 });
-
+//反映されないので再コミット
 async function qrcodeLogin(class_Code, userName) {
   var url = "https://beta.api.cla-q.net/student/join";
   var postData = {
