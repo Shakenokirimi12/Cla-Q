@@ -479,7 +479,7 @@ async function disposeClass() {
                 }
               } catch (error) {
                 Swal.fire({
-                  text: "サーバーエラーです。サポートにお問い合わせください。",
+                  text: "サーバーエラーです。サポートにお問い合わせください。(" + error + ")",
                   title: "エラー",
                   icon: "error",
                 });
