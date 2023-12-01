@@ -50,7 +50,6 @@ async function qrcodeLogin(class_Code, userName) {
             data[1].result,
             data[0].result
           );
-          prevent_Overlogin();
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           Swal.fire({
             title: "成功",
