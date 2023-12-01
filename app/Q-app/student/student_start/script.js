@@ -78,7 +78,7 @@ window.onload = async function () {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
-  if (class_Code != null || class_Code != undefined) {
+  if (class_Code != null || class_Code != undefined || class_Code != "") {
     await qrcodeLogin(class_Code);
   }
   mobileRedirect();
