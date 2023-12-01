@@ -42,6 +42,7 @@ async function student_Join() {
             data[1].result,
             data[0].result
           );
+          prevent_Overlogin();
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           Swal.fire({
             title: "成功",
@@ -137,6 +138,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      prevent_Overlogin();
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
