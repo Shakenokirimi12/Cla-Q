@@ -129,7 +129,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "../login";
+    window.location.href = "../../login";
   }
 });
 
