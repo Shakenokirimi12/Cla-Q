@@ -71,7 +71,7 @@
     <p id="class-code"></p>
     <div class="qr-container"></div>
     <div class="qr-code">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net" alt="QR Code" />
+      <img id="qr" src="" alt="QR Code"/>
     </div>
   </div>
 
@@ -89,6 +89,7 @@
       await preventOverLogin();
       document.getElementById("class-code").innerHTML =
         "クラスコード:" + class_Code;
+      document.getElementById("qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://beta.cla-q.net/app/Q-app/student/qr_join?class_Code=" + class_Code;
     };
 
     function redirectMobile() {
