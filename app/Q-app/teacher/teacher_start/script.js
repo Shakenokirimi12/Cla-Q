@@ -30,7 +30,7 @@ async function startClass() {
           prevent_Overlogin();
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
-            text: "クラスを作成しました。クラスコードは" + deta.class_Code + "です。",
+            text: "クラスを作成しました。クラスコードは" + data.class_Code + "です。",
             title: "情報",
             icon: "success",
             showConfirmButton: false,
