@@ -74,13 +74,7 @@ async function student_Join() {
   }
 }
 
-window.onload = async function () {
-  const key = "class_Code";
-  const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-  class_Code = value;
-  if (class_Code.length == 6) {
-    await qrcodeLogin(class_Code);
-  }
+window.onload = function () {
   mobileRedirect();
   prevent_Overlogin();
 };
@@ -132,6 +126,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       screenLock.parentNode.removeChild(screenLock);
       userName = user.displayName;
       userEmail = user.email;
+      const key = "class_Code";
+      const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
+      class_Code = value;
+      if (class_Code.length == 6) {
+        qrcodeLogin(class_Code);
+      }
     }
   } else {
     // 未ログイン時
