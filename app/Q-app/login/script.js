@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         title: "情報",
         icon: "info",
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         window.location.href = "../teacher/teacher_start";
       });
@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         title: "情報",
         icon: "info",
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         window.location.href = "../student/student_start";
       });
@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               title: "情報",
               icon: "info",
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
               window.location.href = "../teacher/teacher_start";
             });
@@ -48,7 +48,7 @@ firebase.auth().onAuthStateChanged(function (user) {
               title: "情報",
               icon: "info",
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
               window.location.href = "../student/student_start";
             });
@@ -82,7 +82,7 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         location.reload();
       });
