@@ -130,7 +130,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
       class_Code = value;
       if (class_Code.length == 6) {
-        qrcodeLogin(class_Code);
+        qrcodeLogin(class_Code,userName);
       }
     }
   } else {
@@ -158,7 +158,7 @@ function logOut() {
 }
 //以上firebase auth
 
-async function qrcodeLogin(class_Code) {
+async function qrcodeLogin(class_Code,userName) {
   var url = "https://beta.api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
