@@ -48,7 +48,7 @@ async function startClass() {
       })
       .catch((error) => {
         Swal.fire({
-          text: "クラスを開始できませんでした。",
+          text: "クラスを開始できませんでした。(" + error + ")",
           title: "エラー",
           icon: "error",
         });
