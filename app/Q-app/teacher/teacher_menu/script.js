@@ -267,7 +267,7 @@ async function getStudentsList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 1000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         } else {
           Swal.fire({
@@ -277,7 +277,7 @@ async function getStudentsList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         }
       })
@@ -342,7 +342,7 @@ async function getAnswersList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         }
       })
@@ -442,8 +442,7 @@ async function disposeClass() {
                   title: "情報",
                   icon: "info",
                   showConfirmButton: false,
-                  showConfirmButton: false,
-                  timer: 3000, //3秒経過後に閉じる
+                  timer: 1500, //3秒経過後に閉じる
                 }).then((result) => {
                   window.location.href = "../teacher_start";
                 });
@@ -465,8 +464,7 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
-                    showConfirmButton: false,
-                    timer: 3000, //3秒経過後に閉じる
+                    timer: 1500, //3秒経過後に閉じる
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });

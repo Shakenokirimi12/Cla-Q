@@ -47,10 +47,8 @@ async function student_Join() {
             title: "成功",
             text: "クラス" + data[0].class_Code + "に参加しました。",
             icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             window.location.href = "../student_menu";
           });
@@ -143,10 +141,8 @@ function logOut() {
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         location.reload();
       });

@@ -29,13 +29,11 @@ async function startClass() {
           console.log("Successfully created the class");
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
-            text: "クラスを作成しました。",
+            text: "クラスを作成しました。クラスコードは" + deta.class_Code + "です。",
             title: "情報",
             icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             window.location.href = "../teacher_menu";
           });
@@ -97,10 +95,8 @@ async function teacher_Rejoin() {
               text: "クラスに再接続しました。",
               title: "情報",
               icon: "success",
-              toast: true,
-              position: "top-end", //画面右上
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
               window.location.href = "../teacher_menu";
             });
@@ -121,10 +117,8 @@ async function teacher_Rejoin() {
                 text: "クラスに再接続しました。",
                 title: "情報",
                 icon: "success",
-                toast: true,
-                position: "top-end", //画面右上
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
                 window.location.href = "../teacher_menu";
               });
@@ -226,10 +220,8 @@ function logOut() {
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         location.reload();
       });

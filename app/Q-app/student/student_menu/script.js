@@ -213,7 +213,7 @@ async function leaveClass() {
             title: "情報",
             icon: "info",
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
             window.location.href = "../student_start";
@@ -227,7 +227,7 @@ async function leaveClass() {
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
                 window.location.href = "../student_start";
               });
@@ -245,7 +245,7 @@ async function leaveClass() {
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
                 window.location.href = "../student_start";
               });
@@ -263,7 +263,7 @@ async function leaveClass() {
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
                 window.location.href = "../student_start";
               });
