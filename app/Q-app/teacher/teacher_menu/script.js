@@ -195,13 +195,14 @@ window.onload = async function () {
       text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
       title: "エラー",
       icon: "error",
+      timer: 1500,
     }).then((result) => {
       window.location.href = "../teacher_start";
     });
   }
   await redirectMobile();
   await preventOverLogin();
-  setInterval('showClock()', 1000);
+  setInterval("showClock()", 1000);
 };
 
 async function executeEveryTwoSeconds() {
@@ -408,7 +409,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 async function disposeClass() {
   Swal.fire({
-    title: "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
+    title:
+      "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "続行",
@@ -479,7 +481,10 @@ async function disposeClass() {
                 }
               } catch (error) {
                 Swal.fire({
-                  text: "サーバーエラーです。サポートにお問い合わせください。(" + error + ")",
+                  text:
+                    "サーバーエラーです。サポートにお問い合わせください。(" +
+                    error +
+                    ")",
                   title: "エラー",
                   icon: "error",
                 });
@@ -501,7 +506,6 @@ async function disposeClass() {
     }
   });
 }
-
 
 function showClock() {
   let nowTime = new Date();

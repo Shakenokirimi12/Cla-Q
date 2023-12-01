@@ -99,6 +99,7 @@ window.onload = function () {
       text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
       title: "エラー",
       icon: "error",
+      timer: 1500, 
     }).then((result) => {
       window.location.href = "../student_start";
     });
