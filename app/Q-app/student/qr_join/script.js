@@ -3,16 +3,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user.email.includes("-")) {
       window.location.href = "../../teacher/teacher_start";
     }
-    // ログイン時
-    // Update the user information display
-    document.getElementById("mail_address").innerHTML =
-      "メールアドレス:" + user.email;
-    document.getElementById("user_name").innerHTML = user.displayName;
-    document.getElementById("class_code").innerHTML =
-      "参加中のクラス:" + class_Code;
-
-    let screenLock = document.getElementById("screenLock");
-    screenLock.parentNode.removeChild(screenLock);
     userName = user.displayName;
     userEmail = user.email;
     let url_string = window.location.href;
@@ -52,12 +42,6 @@ async function qrcodeLogin(class_Code, userName) {
       .then((response) => response.json())
       .then((data) => {
         // レスポンスデータの処理
-        console.log(
-          data[1].message,
-          data[0].message,
-          data[1].result,
-          data[0].result
-        );
         if (data[1].result == "success" || data[0].result == "success") {
           console.log("Successfully joined the class");
           console.log(
