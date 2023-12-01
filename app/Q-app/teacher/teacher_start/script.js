@@ -27,6 +27,7 @@ async function startClass() {
         // レスポンスデータの処理
         if (data.result == "success") {
           console.log("Successfully created the class");
+          prevent_Overlogin();
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
             text: "クラスを作成しました。クラスコードは" + deta.class_Code + "です。",
@@ -89,6 +90,7 @@ async function teacher_Rejoin() {
         try {
           var result = data[1].result;
           if (result == "success") {
+            prevent_Overlogin();
             console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + class_Code + ";path=/;";
             Swal.fire({
@@ -112,6 +114,7 @@ async function teacher_Rejoin() {
             var result2 = data.result;
             if (result2 == "success") {
               console.log("Successfully created the class");
+              prevent_Overlogin();
               document.cookie = "class_Code=" + class_Code + ";path=/;";
               Swal.fire({
                 text: "クラスに再接続しました。",
@@ -207,7 +210,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "../../login";
+    window.location.href = "../login";
   }
 });
 
@@ -216,6 +219,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      prevent_Overlogin();
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",

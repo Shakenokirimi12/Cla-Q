@@ -435,6 +435,7 @@ async function disposeClass() {
             try {
               var result = data[1].result;
               if (result == "success") {
+                prevent_Overlogin();
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=; path=/;";
                 Swal.fire({
@@ -457,6 +458,7 @@ async function disposeClass() {
               try {
                 var result2 = data.result;
                 if (result2 == "success") {
+                  prevent_Overlogin();
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
@@ -506,13 +508,13 @@ function showClock() {
   var nowHour = nowTime.getHours();
   var nowMin = nowTime.getMinutes();
   var nowSec = nowTime.getSeconds();
-  if(String(nowHour).startsWith("0")){
+  if (String(nowHour).startsWith("0")) {
     nowHour = Number("0" + String(nowHour));
   }
-  if(String(nowMin).startsWith("0")){
+  if (String(nowMin).startsWith("0")) {
     nowMin = Number("0" + String(nowMin));
   }
-  if(String(nowSec).startsWith("0")){
+  if (String(nowSec).startsWith("0")) {
     nowSec = Number("0" + String(nowSec));
   }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
