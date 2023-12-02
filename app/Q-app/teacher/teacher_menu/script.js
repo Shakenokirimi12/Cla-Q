@@ -1,5 +1,5 @@
 function showExpandedCode() {
-  window.open("/teacher/teacher_menu/class_invite.html", "_blank");
+  window.open("./class_invite.html", "_blank");
 }
 
 async function sendToGAS() {
@@ -196,13 +196,14 @@ window.onload = async function () {
       text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
       title: "エラー",
       icon: "error",
+      timer: 1500,
     }).then((result) => {
-      window.location.href = "/teacher/teacher_start";
+      window.location.href = "../teacher_start";
     });
   }
   await redirectMobile();
   await preventOverLogin();
-  setInterval('showClock()', 1000);
+  setInterval("showClock()", 1000);
 };
 
 async function executeEveryTwoSeconds() {
@@ -268,7 +269,7 @@ async function getStudentsList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 1000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         } else {
           Swal.fire({
@@ -278,7 +279,7 @@ async function getStudentsList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         }
       })
@@ -343,7 +344,7 @@ async function getAnswersList() {
             toast: true,
             position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           });
         }
       })
@@ -363,7 +364,7 @@ function redirectMobile() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../../mobile";
   }
 }
 
@@ -388,7 +389,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("_")) {
-      window.location.href = "/student/student_start";
+      window.location.href = "../../student/student_start";
     }
     // Update the user information display
     document.getElementById("mail_address").innerHTML = user.email;
@@ -403,13 +404,14 @@ firebase.auth().onAuthStateChanged(function (user) {
     executeEveryTwoSeconds();
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../../login";
   }
 });
 
 async function disposeClass() {
   Swal.fire({
-    title: "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
+    title:
+      "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
     icon: "warning",
     showCancelButton: true,
     confirmButtonText: "続行",
@@ -436,6 +438,7 @@ async function disposeClass() {
             try {
               var result = data[1].result;
               if (result == "success") {
+                prevent_Overlogin();
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=; path=/;";
                 Swal.fire({
@@ -443,10 +446,9 @@ async function disposeClass() {
                   title: "情報",
                   icon: "info",
                   showConfirmButton: false,
-                  showConfirmButton: false,
-                  timer: 3000, //3秒経過後に閉じる
+                  timer: 1500, //3秒経過後に閉じる
                 }).then((result) => {
-                  window.location.href = "/teacher/teacher_start";
+                  window.location.href = "../teacher_start";
                 });
               } else {
                 Swal.fire({
@@ -459,6 +461,7 @@ async function disposeClass() {
               try {
                 var result2 = data.result;
                 if (result2 == "success") {
+                  prevent_Overlogin();
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
@@ -466,10 +469,9 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
-                    showConfirmButton: false,
-                    timer: 3000, //3秒経過後に閉じる
+                    timer: 1500, //3秒経過後に閉じる
                   }).then((result) => {
-                    window.location.href = "/teacher/teacher_start";
+                    window.location.href = "../teacher_start";
                   });
                 } else {
                   Swal.fire({
@@ -480,7 +482,10 @@ async function disposeClass() {
                 }
               } catch (error) {
                 Swal.fire({
-                  text: "サーバーエラーです。サポートにお問い合わせください。",
+                  text:
+                    "サーバーエラーです。サポートにお問い合わせください。(" +
+                    error +
+                    ")",
                   title: "エラー",
                   icon: "error",
                 });
@@ -503,12 +508,20 @@ async function disposeClass() {
   });
 }
 
-
 function showClock() {
   let nowTime = new Date();
-  let nowHour = nowTime.getHours();
-  let nowMin = nowTime.getMinutes();
-  let nowSec = nowTime.getSeconds();
+  var nowHour = nowTime.getHours();
+  var nowMin = nowTime.getMinutes();
+  var nowSec = nowTime.getSeconds();
+  if (String(nowHour).startsWith("0")) {
+    nowHour = Number("0" + String(nowHour));
+  }
+  if (String(nowMin).startsWith("0")) {
+    nowMin = Number("0" + String(nowMin));
+  }
+  if (String(nowSec).startsWith("0")) {
+    nowSec = Number("0" + String(nowSec));
+  }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
   document.getElementById("currentTime").innerHTML = msg;
 }

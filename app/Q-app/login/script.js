@@ -3,29 +3,23 @@ firebase.auth().onAuthStateChanged(function (user) {
     // ログイン時
     if (user.email.includes("-")) {
       Swal.fire({
-
         text: "ログインしました。教師接続画面に遷移します。",
         title: "情報",
         icon: "info",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
-        window.location.href = "/teacher/teacher_start";
+        window.location.href = "../teacher/teacher_start";
       });
     } else {
       Swal.fire({
-
         text: "ログインしました。生徒接続画面に遷移します。",
         title: "情報",
         icon: "info",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
-        window.location.href = "/student/student_start";
+        window.location.href = "../student/student_start";
       });
     }
   } else {
@@ -43,24 +37,20 @@ firebase.auth().onAuthStateChanged(function (user) {
               text: "ログインしました。教師接続画面に遷移します。",
               title: "情報",
               icon: "info",
-              toast: true,
-              position: "top-end", //画面右上
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/teacher_start";
+              window.location.href = "../teacher/teacher_start";
             });
           } else {
             Swal.fire({
               text: "ログインしました。生徒接続画面に遷移します。",
               title: "情報",
               icon: "info",
-              toast: true,
-              position: "top-end", //画面右上
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/student/student_start";
+              window.location.href = "../student/student_start";
             });
           }
           return false;
@@ -78,7 +68,7 @@ window.onload = function () {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 };
 
@@ -91,12 +81,9 @@ function logOut() {
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
-        document.cookie = "class_Code=; path=/;";
         location.reload();
       });
     });

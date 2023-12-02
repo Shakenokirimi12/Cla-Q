@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
   <title>ClaQ - 生徒ログイン</title>
   <!--vue javascript area-->
@@ -33,7 +35,7 @@
 </head>
 
 <body>
-  <span class="version">Version: Stable v2.0.2_BootStrap</span>
+  <span class="version">Version: Stable v2.1.0_BootStrap</span>
 
   <div class="user-info"></div>
 
@@ -44,7 +46,7 @@
   <div id="login-form">
     <form id="student-login-form">
       <label>クラスコードを入力して参加</label>
-      <input type="number" min="100000" max="999999" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
+      <input type="number" autocomplete="off" min="100000" max="999999" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
         required="true" onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="student_Join()">

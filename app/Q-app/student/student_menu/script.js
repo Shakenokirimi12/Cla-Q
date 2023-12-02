@@ -94,12 +94,14 @@ window.onload = function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
+    prevent_Overlogin();
     Swal.fire({
       text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
       title: "エラー",
       icon: "error",
+      timer: 1500, 
     }).then((result) => {
-      window.location.href = "/teacher/student_start";
+      window.location.href = "../student_start";
     });
   }
   mobileRedirect();
@@ -113,7 +115,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 }
 
@@ -136,7 +138,7 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     if (user.email.includes("-")) {
-      window.location.href = "/teacher/teacher_start";
+      window.location.href = "../../teacher/teacher_start";
     }
     // ログイン時
     // Update the user information display
@@ -152,7 +154,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     userEmail = user.email;
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../../login";
   }
 });
 
@@ -208,28 +210,30 @@ async function leaveClass() {
           result3 == "success"
         ) {
           console.log("Successfully leaved the class");
+          prevent_Overlogin();
           Swal.fire({
             text: "クラスを離脱しました。クラス参加画面に戻ります。",
             title: "情報",
             icon: "info",
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
-            window.location.href = "/student/student_start";
+            window.location.href = "../student_start";
           });
         } else {
           console.log("データエラー。successが返されなかった。");
           if (result1 != undefined) {
             if (data[0].status_Code == "LE-11") {
+              prevent_Overlogin();
               Swal.fire({
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "/student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({
@@ -240,14 +244,15 @@ async function leaveClass() {
             }
           } else if (result2 != undefined) {
             if (data[1].status_Code == "LE-11") {
+              prevent_Overlogin();
               Swal.fire({
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "/student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({
@@ -258,14 +263,15 @@ async function leaveClass() {
             }
           } else {
             if (data.status_Code == "LE-11") {
+              prevent_Overlogin();
               Swal.fire({
                 text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "/student/student_start";
+                window.location.href = "../student_start";
               });
             } else {
               Swal.fire({

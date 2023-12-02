@@ -27,17 +27,16 @@ async function startClass() {
         // レスポンスデータの処理
         if (data.result == "success") {
           console.log("Successfully created the class");
+          prevent_Overlogin();
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
-            text: "クラスを作成しました。",
+            text: "クラスを作成しました。クラスコードは" + data.class_Code + "です。",
             title: "情報",
             icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "/teacher/teacher_menu";
+            window.location.href = "../teacher_menu";
           });
         } else {
           Swal.fire({
@@ -49,7 +48,7 @@ async function startClass() {
       })
       .catch((error) => {
         Swal.fire({
-          text: "クラスを開始できませんでした。",
+          text: "クラスを開始できませんでした。(" + error + ")",
           title: "エラー",
           icon: "error",
         });
@@ -91,18 +90,17 @@ async function teacher_Rejoin() {
         try {
           var result = data[1].result;
           if (result == "success") {
+            prevent_Overlogin();
             console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + class_Code + ";path=/;";
             Swal.fire({
               text: "クラスに再接続しました。",
               title: "情報",
               icon: "success",
-              toast: true,
-              position: "top-end", //画面右上
               showConfirmButton: false,
-              timer: 3000, //3秒経過後に閉じる
+              timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "/teacher/teacher_menu";
+              window.location.href = "../teacher_menu";
             });
           } else {
             Swal.fire({
@@ -116,17 +114,16 @@ async function teacher_Rejoin() {
             var result2 = data.result;
             if (result2 == "success") {
               console.log("Successfully created the class");
+              prevent_Overlogin();
               document.cookie = "class_Code=" + class_Code + ";path=/;";
               Swal.fire({
                 text: "クラスに再接続しました。",
                 title: "情報",
                 icon: "success",
-                toast: true,
-                position: "top-end", //画面右上
                 showConfirmButton: false,
-                timer: 3000, //3秒経過後に閉じる
+                timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "/teacher/teacher_menu";
+                window.location.href = "../teacher_menu";
               });
             } else {
               Swal.fire({
@@ -170,7 +167,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../../mobile";
   }
 }
 
@@ -195,7 +192,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("_")) {
-      window.location.href = "/student/student_start";
+      window.location.href = "../student/student_start";
     } else {
       // Update the user information display
       var userInfoElement = document.querySelector(".user-info");
@@ -213,7 +210,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../../login";
   }
 });
 
@@ -222,14 +219,13 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      prevent_Overlogin();
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         document.cookie = "class_Code=; path=/;";
         location.reload();

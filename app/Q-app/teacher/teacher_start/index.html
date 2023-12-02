@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
   <title>ClaQ - 先生用</title>
   <!--vue javascript area-->
@@ -33,7 +35,7 @@
 </head>
 
 <body>
-  <span class="version">Version: Stable v2.0.2_BootStrap</span>
+  <span class="version">Version: Stable v2.1.0_BootStrap</span>
 
   <div class="user-info"></div>
 
@@ -50,8 +52,8 @@
     <p class="fs-2">ClaQ - クラス参加</p>
     <form id="class-join-form">
       <p for="class-code-input" class="fs-4">再接続はこちら</p>
-      <input type="number" id="class-code-input" class="input-field" placeholder="クラスコードを入力" min="100000" max="999999"
-        onkeydown="handleKeyDown(event)" />
+      <input type="number" autocomplete="off" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
+        min="100000" max="999999" onkeydown="handleKeyDown(event)" />
       <br />
       <button type="button" class="action-button" onclick="teacher_Rejoin()">
         開始済みクラスに参加

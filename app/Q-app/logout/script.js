@@ -20,7 +20,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../login";
   }
 });
 
@@ -31,7 +31,7 @@ window.onload = function () {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 };
 

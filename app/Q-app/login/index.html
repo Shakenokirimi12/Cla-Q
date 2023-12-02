@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cla-Qにログイン</title>
+  <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
-  <title>ClaQ - 生徒メニュー</title>
+  <meta charset="utf-8" />
   <!--vue javascript area-->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
   <!--vue javascript area-->
@@ -21,30 +22,23 @@
   <!--firebase authentication javascript area-->
 
   <!--normal javascript area-->
-  <script src="../../firebase_config.js"></script>
+  <script src="../firebase_config.js"></script>
   <script src="./script.js"></script>
   <link rel="stylesheet" href="./style.css" />
   <!--normal javascript area-->
 
   <!--Bootstrap5 javascript and css area-->
-  <script src="../../bootstrap/bootstrap.js"></script>
-  <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
+  <script src="../bootstrap/bootstrap.js"></script>
+  <link rel="stylesheet" href="../bootstrap/bootstrap.css" />
   <!--Bootstrap5 javascript and css area-->
 </head>
 
 <body>
-  <span class="version">Version: Stable v2.0.2_BootStrap</span>
-  <div id="class-info">
-    <p id="mail_address"></p>
-    <p id="user_name"></p>
-    <p id="class_code"></p>
-    <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
+  <div id="login-header">
+    <p class="text-light">Cla-Qにログイン</p>
   </div>
-
-  <div id="answerArea">
-    <textarea id="answer-box" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
-    <button id="submit-button" onclick="submitAnswer()">送信</button>
-  </div>
+  <span class="version" class="text-black-50">Version: Stable v2.1.0_BootStrap</span>
+  <div id="firebaseui-auth-container"></div>
 </body>
 
 </html>

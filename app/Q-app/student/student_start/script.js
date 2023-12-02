@@ -42,17 +42,16 @@ async function student_Join() {
             data[1].result,
             data[0].result
           );
+          prevent_Overlogin();
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           Swal.fire({
             title: "成功",
             text: "クラス" + data[0].class_Code + "に参加しました。",
             icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
             showConfirmButton: false,
-            timer: 3000, //3秒経過後に閉じる
+            timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = "/student/student_menu";
+            window.location.href = "../student_menu";
           });
         } else {
           Swal.fire({
@@ -87,7 +86,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "/mobile.html";
+    location.href = "../mobile";
   }
 }
 
@@ -112,7 +111,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     if (user.email.includes("-")) {
-      window.location.href = "/teacher/teacher_start";
+      window.location.href = "../teacher/teacher_start";
     } else {
       // Update the user information display
       var userInfoElement = document.querySelector(".user-info");
@@ -130,7 +129,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
   } else {
     // 未ログイン時
-    window.location.href = "/login";
+    window.location.href = "../../login";
   }
 });
 
@@ -139,18 +138,16 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
+      prevent_Overlogin();
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
-        toast: true,
-        position: "top-end", //画面右上
         showConfirmButton: false,
-        timer: 3000, //3秒経過後に閉じる
+        timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
         location.reload();
       });
     });
 }
 //以上firebase auth
-
