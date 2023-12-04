@@ -394,7 +394,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     document.getElementById("user_info").innerHTML = user.displayName + "(" + user.email + ")";
     document.getElementById("class_code").innerHTML =
       "クラスコード:" + class_Code;
-
     let screenLock = document.getElementById("screenLock");
     screenLock.parentNode.removeChild(screenLock);
     userName = user.displayName;
