@@ -524,3 +524,25 @@ function showClock() {
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
   document.getElementById("currentTime").innerHTML = msg;
 }
+
+
+async function uploadFile(file) {
+  fetch('https://pdf.api.cla-q.net', {
+      method: 'POST',
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': file.type
+      },
+      body: file
+  })
+      .then((response) => response.text())
+      .then((data) => {
+          console.log(data)
+          location.href = "success.html";
+      })
+      .catch((error) => console.error(error));
+}
+
+const filePicker = document.getElementById('filePicker');
+const onSelectFile = () => uploadFile(filePicker.files[0]);
+filePicker.addEventListener('change', onSelectFile, false);

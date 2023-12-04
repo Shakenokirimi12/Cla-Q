@@ -40,10 +40,12 @@
   <!-- version -->
   <div class="row h-100 w-100">
     <div id="control-area" class="col-md-4">
-      <div id="class_info" class="m-3 p-3 rounded border shadow rounded bg-yellow">
-        <p id="mail_address" class="fs-4"></p>
-        <p id="user_name" class="fs-4">クラス情報を読み込み中.....</p>
-        <p id="class_code" onclick="showExpandedCode()" class="fs-4"></p>
+      <div id="class_info" class="m-2 p-3 rounded border shadow rounded bg-yellow">
+        <p id="mail_address" class="fs-5"></p>
+        <p id="user_name" class="fs-5">クラス情報を読み込み中.....</p>
+        <p id="class_code" onclick="showExpandedCode()" class="fs-5"></p>
+        <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
+
       </div>
 
       <div id="class_control" class="p-3 rounded border shadow rounded m-3 bg-yellow">
@@ -56,8 +58,12 @@
         </button>
         <button id="gas_Link" onclick="sendToGAS()">答えを書き出し</button>
       </div>
-      <div id="time-keeper" class="p-3 rounded border shadow rounded m-3 bg-yellow">
-        <p class="fs-4 bg-yellow m-1" id="currentTime"></p>
+      <div id="fileShare" class="p-3 rounded border shadow rounded m-3 bg-yellow position-relative">
+        <p class="fs-8 bg-yellow m-1 position-absolute top-0 start-0" for="filePicker">共有ファイルをアップロード</p>
+        <form method="POST" enctype="multipart/form-data" class="m-2 p-1">
+          <input type="file" class="custom-file-input" id="filePicker">
+          <input type="submit" value="Upload">
+        </form>
       </div>
     </div>
 
