@@ -391,8 +391,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       window.location.href = "../../student/student_start";
     }
     // Update the user information display
-    document.getElementById("mail_address").innerHTML = user.email;
-    document.getElementById("user_name").innerHTML = user.displayName;
+    document.getElementById("user_info").innerHTML = user.displayName + "(" + user.email + ")";
     document.getElementById("class_code").innerHTML =
       "クラスコード:" + class_Code;
 
