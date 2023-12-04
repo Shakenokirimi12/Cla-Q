@@ -528,21 +528,29 @@ function showClock() {
 
 async function uploadFile(file) {
   fetch('https://pdf.api.cla-q.net', {
-      method: 'POST',
-      headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': file.type
-      },
-      body: file
+    method: 'POST',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': file.type
+    },
+    body: file
   })
-      .then((response) => response.text())
-      .then((data) => {
-          console.log(data)
-          location.href = "success.html";
-      })
-      .catch((error) => console.error(error));
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data)
+      Swal.fire({
+        text: "ファイルを共有しました。",
+        title: "成功",
+        icon: "success",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 1500, //3秒経過後に閉じる
+      }).then((result) => {
+        location.href = "success.html";
+      }).catch((error) => {
+        console.error(error)
+      });
+    })
+    .catch((error) => console.error(error));
 }
-
-const filePicker = document.getElementById('filePicker');
-const onSelectFile = () => uploadFile(filePicker.files[0]);
-filePicker.addEventListener('change', onSelectFile, false);
