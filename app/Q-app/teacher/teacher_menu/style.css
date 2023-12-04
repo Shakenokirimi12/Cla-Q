@@ -36,13 +36,14 @@ body {
 #start-button,
 #end-button,
 #logout_button,
+#file-submit-button,
 #gas_Link {
     background-color: #4caf50;
     color: #ffffff;
     padding: 10px 20px;
     border: none;
     border-radius: 40px;
-    font-size: 18px;
+    font-size: 13px;
     cursor: pointer;
     /*背景は移動*/
 }
