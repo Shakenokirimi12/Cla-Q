@@ -36,24 +36,41 @@
     <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
     <!--Bootstrap5 javascript and css area-->
   </head>
-
   <body>
     <span class="version">Version: Beta v2.0.2_BootStrap</span>
-    <div id="class-info" class="bg-yellow">
-      <p id="user_info" class="fs-5">クラス情報を読み込み中.....</p>
-      <p id="class_code" class="fs-5"></p>
-      <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
-      <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
-    </div>
+    <div class="row h-100 w-100">
+      <div id="control-and-answer-Zone" class="border shadow col-md-4">
+        <div id="control-area">
+          <div
+            id="class_info"
+            class="m-2 p-3 rounded border shadow rounded bg-yellow text-center"
+          >
+            <p id="user_info" class="fs-5">クラス情報を読み込み中.....</p>
+            <p id="class_code" class="fs-5"></p>
+            <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
+            <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
+          </div>
+        </div> 
+        <div id="answerArea">
+          <textarea
+            id="answer-box"
+            autocomplete="off"
+            placeholder="答えを入力"
+            onkeydown="handleKeyDown(event)"
+          ></textarea>
+          <button id="submit-button" onclick="submitAnswer()">送信</button>
+        </div>
+      </div>
 
-    <div id="answerArea">
-      <textarea
-        id="answer-box"
-        autocomplete="off"
-        placeholder="答えを入力してください"
-        onkeydown="handleKeyDown(event)"
-      ></textarea>
-      <button id="submit-button" onclick="submitAnswer()">送信</button>
+      <div id="PDF-Zone" class="col-md-8 border shadow">
+      <embed src="https://r2-pdf.cla-q.net/1701694957468" type="application/pdf" width="100%" height="100%">
+        <noembed>
+            <p>
+                Your browser does not support PDF files.
+            </p>
+        </noembed>
+    </embed>
+      </div>
     </div>
   </body>
 </html>

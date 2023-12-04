@@ -89,7 +89,7 @@ function handleKeyDown(event) {
 }
 
 var class_Code;
-window.onload = function () {
+window.onload = async function () {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
@@ -104,8 +104,9 @@ window.onload = function () {
       window.location.href = "../student_start";
     });
   }
-  mobileRedirect();
-  prevent_Overlogin();
+  await mobileRedirect();
+  await prevent_Overlogin();
+  setInterval("showClock()", 1000);
 };
 
 function mobileRedirect() {
@@ -142,9 +143,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
     // ログイン時
     // Update the user information display
-    document.getElementById("mail_address").innerHTML =
-      "メールアドレス:" + user.email;
-    document.getElementById("user_name").innerHTML = user.displayName;
+    document.getElementById("user_info").innerHTML = user.displayName + "(" + user.email + ")";
     document.getElementById("class_code").innerHTML =
       "参加中のクラス:" + class_Code;
 
@@ -301,3 +300,20 @@ async function leaveClass() {
   }
 }
 
+function showClock() {
+  let nowTime = new Date();
+  var nowHour = nowTime.getHours();
+  var nowMin = nowTime.getMinutes();
+  var nowSec = nowTime.getSeconds();
+  if (String(nowHour).startsWith("0")) {
+    nowHour = Number("0" + String(nowHour));
+  }
+  if (String(nowMin).startsWith("0")) {
+    nowMin = Number("0" + String(nowMin));
+  }
+  if (String(nowSec).startsWith("0")) {
+    nowSec = Number("0" + String(nowSec));
+  }
+  let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
+  document.getElementById("currentTime").innerHTML = msg;
+}
