@@ -143,7 +143,8 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
     // ログイン時
     // Update the user information display
-    document.getElementById("user_info").innerHTML = user.displayName + "(" + user.email + ")";
+    document.getElementById("user_Name").innerHTML = user.displayName;
+    document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
     document.getElementById("class_code").innerHTML =
       "参加中のクラス:" + class_Code;
 
