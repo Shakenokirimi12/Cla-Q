@@ -552,5 +552,16 @@ async function uploadFile(file) {
         console.error(error)
       });
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error)
+      Swal.fire({
+        text: "ファイルが選択されていません。",
+        title: "エラー",
+        icon: "error",
+        toast: true,
+        position: "top-end", //画面右上
+        showConfirmButton: false,
+        timer: 1000, //3秒経過後に閉じる
+      })
+    });
 }
