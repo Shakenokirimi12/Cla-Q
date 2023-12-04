@@ -47,15 +47,15 @@ async function main() {
       parameter.setValueAtTime(0, audioContext.currentTime); // <10>
 
       const blob = encodeAudio(buffers, settings); // <11>
-      const url = URL.createObjectURL(blob);
-      fetch(url, {
-        method: "GET",
+      
+      fetch("https://wisper.api.cla-q.net/", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Origin: "https://app.cla-q.net/",
           // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
         },
-        body: JSON.stringify(postData),
+        body: blob,
       })
         .then((response) => response.json())
         .then((data) => {
