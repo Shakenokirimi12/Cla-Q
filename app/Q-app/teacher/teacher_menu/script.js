@@ -115,6 +115,15 @@ async function startQuestion() {
             option.text = "第" + questionnumber + "問";
             select.appendChild(option);
           }
+          Swal.fire({
+            text: "問題を開始しました。現在" + questionnumber + "問目です。",
+            title: "成功",
+            icon: "success",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 1000, //3秒経過後に閉じる
+          })
         } else {
           console.log(data.question_Number);
           console.log(data.result);
@@ -165,6 +174,15 @@ async function endQuestion() {
         if (data.result == "success" || data[0].result == "success") {
           console.log("Successfully started the question");
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
+          Swal.fire({
+            text: "問題を開始しました。",
+            title: "成功",
+            icon: "success",
+            toast: true,
+            position: "top-end", //画面右上
+            showConfirmButton: false,
+            timer: 1000, //3秒経過後に閉じる
+          })
         } else {
           Swal.fire({
             text: "問題を終了できませんでした",
@@ -545,7 +563,7 @@ async function uploadFile(file) {
         showConfirmButton: false,
         timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
-        document.getElementById("filePicker").value="";
+        document.getElementById("filePicker").value = "";
       }).catch((error) => {
         console.error(error)
       });
