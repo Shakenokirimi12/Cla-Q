@@ -1,1 +1,33 @@
-PDF sharing service is under construction....
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upload Images with Cloudflare R2</title>
+  </head>
+  <body>
+    <form method="POST" enctype="multipart/form-data">
+      <label for="image">Select file to upload:</label>
+      <input type="file" name="image" id="image" /><br /><br />
+      <input type="submit" value="Upload" />
+    </form>
+
+    <script>
+      async function uploadImage(file) {
+        fetch('https://pdf.api.cla-q.net', {
+          method: 'POST',
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': file.type
+          },
+          body: file
+        })
+          .then((response) => response.text())
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
+      }
+
+      const image = document.getElementById('image');
+      const onSelectFile = () => uploadImage(image.files[0]);
+      image.addEventListener('change', onSelectFile, false);
+    </script>
+  </body>
+</html>
