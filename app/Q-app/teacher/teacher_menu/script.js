@@ -115,6 +115,7 @@ async function startQuestion() {
             option.text = "第" + questionnumber + "問";
             select.appendChild(option);
           }
+          document.getElementById("problemSelector").value = questionnumber
           Swal.fire({
             text: "問題を開始しました。現在" + questionnumber + "問目です。",
             title: "成功",
