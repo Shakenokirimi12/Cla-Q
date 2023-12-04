@@ -60,10 +60,10 @@
       </div>
       <div id="fileShare" class="p-3 rounded border shadow rounded m-3 bg-yellow position-relative">
         <p class="fs-8 bg-yellow m-1 position-absolute top-0 start-0" for="filePicker">共有ファイルをアップロード</p>
-        <form method="POST" enctype="multipart/form-data" class="m-2 p-1">
-          <input type="file" class="custom-file-input" id="filePicker">
-          <input type="submit" value="Upload">
-        </form>
+        <div class="mb-3">
+          <label for="formFile" class="form-label">ファイルを選択</label>
+          <input type="file" class="form-control form-control-sm" id="filePicker">
+        </div>
       </div>
     </div>
 
