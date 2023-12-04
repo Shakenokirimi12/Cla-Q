@@ -547,7 +547,7 @@ async function uploadFile(file) {
         showConfirmButton: false,
         timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
-        location.href = "success.html";
+        document.getElementById("filePicker").value="";
       }).catch((error) => {
         console.error(error)
       });
