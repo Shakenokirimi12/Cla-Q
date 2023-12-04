@@ -176,7 +176,7 @@ async function endQuestion() {
           console.log("Successfully started the question");
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
           Swal.fire({
-            text: "問題を開始しました。",
+            text: "問題を終了しました。",
             title: "成功",
             icon: "success",
             toast: true,
