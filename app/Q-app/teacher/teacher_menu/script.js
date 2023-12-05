@@ -489,7 +489,19 @@ async function disposeClass() {
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
-                } else {
+                }
+                else if (data.status_Code == "IAE-13") {
+                  Swal.fire({
+                    text: "クラスはすでに閉じられています。クラス参加画面に戻ります。",
+                    title: "情報",
+                    icon: "info",
+                    showConfirmButton: false,
+                    timer: 1500, //3秒経過後に閉じる
+                  }).then((result) => {
+                    window.location.href = "../teacher_start";
+                  });
+                }
+                else {
                   Swal.fire({
                     text: "クラスを終了できませんでした(" + data.mesage + ")",
                     title: "エラー",
