@@ -556,13 +556,18 @@ function showClock() {
 
 
 async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('class_Code', class_Code);
+  formData.append('fileName', file.name);
+  formData.append('file', file);  // ファイルデータを追加
+
   fetch('https://pdf.api.cla-q.net', {
     method: 'POST',
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': file.type
     },
-    body: file
+    body: formData, // FormDataオブジェクトをbodyに追加
   })
     .then((response) => response.text())
     .then((data) => {
