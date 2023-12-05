@@ -90,6 +90,7 @@ function handleKeyDown(event) {
 
 var class_Code;
 window.onload = async function () {
+  await checkPDFExist();
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
@@ -99,7 +100,7 @@ window.onload = async function () {
       text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
       title: "エラー",
       icon: "error",
-      timer: 1500, 
+      timer: 1500,
     }).then((result) => {
       window.location.href = "../student_start";
     });
@@ -317,4 +318,67 @@ function showClock() {
   }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
   document.getElementById("currentTime").innerHTML = msg;
+}
+
+function checkPDFExist() {
+  var url = "https://beta.api.cla-q.net/class_info/pdf";
+  var postData = {
+    class_Code: class_Code,
+  };
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://app.cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // レスポンスデータの処理
+      console.log(
+        data[1].message,
+        data[0].message,
+        data[1].result,
+        data[0].result
+      );
+      if (data[1].result == "success" || data[0].result == "success") {
+        if (data[1].pdf == "exist") {
+          console.log("Successfully fetched pdf info.");
+          console.log(
+            data[1].message,
+            data[0].message,
+            data[1].result,
+            data[0].result
+          );
+          Swal.fire({
+            title: "成功",
+            text: "このクラスにはPDF資料があります。PDFを表示しますか？",
+            showDenyButton: true,
+            timer: 1500, //3秒経過後に閉じる
+            icon: "info",
+            confirmButtonText: "はい",
+            denyButtonText: "いいえ"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./pdf.html";
+            }
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "エラー",
+          text: "サーバーでエラーが発生しました。",
+          icon: "error",
+        });
+      }
+    })
+    .catch((error) => {
+      Swal.fire({
+        title: "エラー",
+        text: "サーバーでエラーが発生しました。",
+        icon: "error",
+      });
+    });
 }
