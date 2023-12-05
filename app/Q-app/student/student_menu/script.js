@@ -195,9 +195,9 @@ async function leaveClass() {
             try {
               var result3 = data.result;
             } catch (error3) {
-              console.log(error2);
+              console.log(error3);
               Swal.fire({
-                text: "クラスを離脱できませんでした。",
+                text: "クラスを離脱できませんでした。(" + error3 +")",
                 title: "エラー",
                 icon: "error",
               });
@@ -367,11 +367,27 @@ function checkPDFExist() {
           });
         }
       } else {
-        Swal.fire({
-          title: "エラー",
-          text: "サーバーでエラーが発生しました。",
-          icon: "error",
-        });
+        if (!(data[1].message == "")) {
+          Swal.fire({
+            title: "エラー",
+            text: "サーバーでエラーが発生しました(" + data[1].message + ")",
+            icon: "error",
+          });
+        }
+        else if (!(data[0].message == "")) {
+          Swal.fire({
+            title: "エラー",
+            text: "サーバーでエラーが発生しました(" + data[0].message + ")",
+            icon: "error",
+          });
+        }
+        else{
+          Swal.fire({
+            title: "エラー",
+            text: "サーバーでエラーが発生しました",
+            icon: "error",
+          });
+        }
       }
     })
     .catch((error) => {
