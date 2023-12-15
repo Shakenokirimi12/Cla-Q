@@ -320,7 +320,7 @@ function showClock() {
   document.getElementById("currentTime").innerHTML = msg;
 }
 
-function checkPDFExist() {
+async function checkPDFExist() {
   var url = "https://beta.api.cla-q.net/class_info/pdf";
   var postData = {
     class_Code: class_Code,
