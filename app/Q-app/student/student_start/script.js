@@ -110,7 +110,9 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
-    if (detectTeacher(user.email,user.displayName)) {
+    var isTeacher = detectTeacher(user.email,user.displayName);
+    console.log(isTeacher);
+    if (isTeacher) {
       window.location.href = "../teacher/teacher_start";
     } else {
       // Update the user information display

@@ -406,7 +406,9 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
-    if (!(detectTeacher(user.email,user.displayName))) {
+    var isTeacher = detectTeacher(user.email,user.displayName);
+    console.log(isTeacher);
+    if (!isTeacher) {
       window.location.href = "../../student/student_start";
     }
     // Update the user information display

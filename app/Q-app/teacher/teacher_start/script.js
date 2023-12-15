@@ -30,7 +30,10 @@ async function startClass() {
           prevent_Overlogin();
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
-            text: "クラスを作成しました。クラスコードは" + data.class_Code + "です。",
+            text:
+              "クラスを作成しました。クラスコードは" +
+              data.class_Code +
+              "です。",
             title: "情報",
             icon: "success",
             showConfirmButton: false,
@@ -191,7 +194,9 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
-    if (!(detectTeacher(user.email,user.displayName))) {
+    var isTeacher = detectTeacher(user.email, user.displayName);
+    console.log(isTeacher);
+    if (isTeacher) {
       window.location.href = "../../student/student_start";
     } else {
       // Update the user information display
@@ -232,32 +237,31 @@ function logOut() {
     });
 }
 
-
-function detectTeacher(email,name){
+function detectTeacher(email, name) {
   var url = "https://beta.api.cla-q.net/detect_role";
-    var postData = {
-      userEmail: email,
-      userName: name,
-    };
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-      },
-      body: JSON.stringify(postData),
+  var postData = {
+    userEmail: email,
+    userName: name,
+  };
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://app.cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      var isTeacher; //boolean
+      console.log(data);
+      if (data.status_Code == "DR-01") {
+        isTeacher = true;
+      } else if (data.status_Code == "DR-02") {
+        isTeacher = false;
+      }
+      return isTeacher;
     })
-      .then((response) => response.json())
-      .then((data) => {
-        var isTeacher; //boolean
-        console.log(data);
-        if (data.status_Code == "DR-01") {
-          isTeacher = true;
-        } else if (data.status_Code == "DR-02") {
-          isTeacher = false;
-        } 
-        return isTeacher
-      })
-      .catch((error) => {});
+    .catch((error) => {});
 }
