@@ -154,13 +154,13 @@ function logOut() {
 }
 //以上firebase auth
 
-function detectTeacher(email, name) {
+async function detectTeacher(email, name) {
   var url = "https://beta.api.cla-q.net/detect_role";
   var postData = {
     userEmail: email,
     userName: name,
   };
-  fetch(url, {
+  await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
