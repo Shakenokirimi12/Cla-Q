@@ -191,7 +191,7 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
-    if (user.email.includes("_")) {
+    if (!detectTeacher(user.email,user.displayName)) {
       window.location.href = "../student/student_start";
     } else {
       // Update the user information display
@@ -230,4 +230,34 @@ function logOut() {
         location.reload();
       });
     });
+}
+
+
+function detectTeacher(email,name){
+  var url = "https://beta.api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: email,
+      userName: name,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var isTeacher; //boolean
+        console.log(data);
+        if (data.status_Code == "DR-01") {
+          isTeacher = true;
+        } else if (data.status_Code == "DR-02") {
+          isTeacher = false;
+        } 
+        return isTeacher
+      })
+      .catch((error) => {});
 }
