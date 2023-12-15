@@ -1,6 +1,8 @@
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    if (detectTeacher(user.email,user.displayName)) {
+    var isTeacher = await detectTeacher(user.email, user.displayName);
+    console.log(isTeacher);
+    if (isTeacher) {
       window.location.href = "../../teacher/teacher_start";
     }
     userName = user.displayName;

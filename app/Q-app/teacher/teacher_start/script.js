@@ -191,10 +191,10 @@ function prevent_Overlogin() {
 }
 
 var userName, userEmail;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
-    var isTeacher = detectTeacher(user.email, user.displayName);
+    var isTeacher = await detectTeacher(user.email, user.displayName);
     console.log(isTeacher);
     if (isTeacher) {
       window.location.href = "../../student/student_start";

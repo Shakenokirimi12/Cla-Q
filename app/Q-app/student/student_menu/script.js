@@ -140,9 +140,9 @@ function prevent_Overlogin() {
   objBody.appendChild(lock_screen);
 }
 
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var isTeacher = detectTeacher(user.email, user.displayName);
+    var isTeacher = await detectTeacher(user.email, user.displayName);
     console.log(isTeacher);
     if (isTeacher) {
       window.location.href = "../../teacher/teacher_start";

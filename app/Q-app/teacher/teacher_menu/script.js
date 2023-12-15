@@ -115,7 +115,7 @@ async function startQuestion() {
             option.text = "第" + questionnumber + "問";
             select.appendChild(option);
           }
-          document.getElementById("problemSelector").value = questionnumber
+          document.getElementById("problemSelector").value = questionnumber;
           Swal.fire({
             text: "問題を開始しました。現在" + questionnumber + "問目です。",
             title: "成功",
@@ -124,7 +124,7 @@ async function startQuestion() {
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 1000, //3秒経過後に閉じる
-          })
+          });
         } else {
           console.log(data.question_Number);
           console.log(data.result);
@@ -183,7 +183,7 @@ async function endQuestion() {
             position: "top-end", //画面右上
             showConfirmButton: false,
             timer: 1000, //3秒経過後に閉じる
-          })
+          });
         } else {
           Swal.fire({
             text: "問題を終了できませんでした",
@@ -291,7 +291,12 @@ async function getStudentsList() {
           });
         } else {
           Swal.fire({
-            text: "生徒一覧を取得できませんでした(" + data.message + ":" + data.status_Code + ")",
+            text:
+              "生徒一覧を取得できませんでした(" +
+              data.message +
+              ":" +
+              data.status_Code +
+              ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -356,7 +361,12 @@ async function getAnswersList() {
           });
         } else {
           Swal.fire({
-            text: "答えの一覧を取得できませんでした(" + data.message + ":" + data.status_Code + ")",
+            text:
+              "答えの一覧を取得できませんでした(" +
+              data.message +
+              ":" +
+              data.status_Code +
+              ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -403,16 +413,17 @@ function preventOverLogin() {
 }
 
 var userName, userEmail;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
-    var isTeacher = detectTeacher(user.email,user.displayName);
+    var isTeacher = await detectTeacher(user.email, user.displayName);
     console.log(isTeacher);
     if (!isTeacher) {
       window.location.href = "../../student/student_start";
     }
     // Update the user information display
-    document.getElementById("user_info").innerHTML = user.displayName + "(" + user.email + ")";
+    document.getElementById("user_info").innerHTML =
+      user.displayName + "(" + user.email + ")";
     document.getElementById("class_code").innerHTML =
       "クラスコード:" + class_Code;
     let screenLock = document.getElementById("screenLock");
@@ -491,10 +502,12 @@ async function disposeClass() {
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
-                }
-                else if (data.status_Code == "IAE-13") {
+                } else if (data.status_Code == "IAE-13") {
                   Swal.fire({
-                    text: "クラスはすでに閉じられています。クラス参加画面に戻ります。" + ":" + data.status_Code,
+                    text:
+                      "クラスはすでに閉じられています。クラス参加画面に戻ります。" +
+                      ":" +
+                      data.status_Code,
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -502,10 +515,14 @@ async function disposeClass() {
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
-                }
-                else {
+                } else {
                   Swal.fire({
-                    text: "クラスを終了できませんでした(" + data.mesage + ":" + data.status_Code + ")",
+                    text:
+                      "クラスを終了できませんでした(" +
+                      data.mesage +
+                      ":" +
+                      data.status_Code +
+                      ")",
                     title: "エラー",
                     icon: "error",
                   });
@@ -556,24 +573,23 @@ function showClock() {
   document.getElementById("currentTime").innerHTML = msg;
 }
 
-
 async function uploadFile(file) {
   const formData = new FormData();
-  formData.append('class_Code', class_Code);
-  formData.append('fileName', file.name);
-  formData.append('file', file);  // ファイルデータを追加
+  formData.append("class_Code", class_Code);
+  formData.append("fileName", file.name);
+  formData.append("file", file); // ファイルデータを追加
 
-  fetch('https://pdf.api.cla-q.net', {
-    method: 'POST',
+  fetch("https://pdf.api.cla-q.net", {
+    method: "POST",
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': file.type
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": file.type,
     },
     body: formData, // FormDataオブジェクトをbodyに追加
   })
     .then((response) => response.text())
     .then((data) => {
-      console.log(data)
+      console.log(data);
       Swal.fire({
         text: "ファイルを共有しました。",
         title: "成功",
@@ -582,14 +598,16 @@ async function uploadFile(file) {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 1500, //3秒経過後に閉じる
-      }).then((result) => {
-        document.getElementById("filePicker").value = "";
-      }).catch((error) => {
-        console.error(error)
-      });
+      })
+        .then((result) => {
+          document.getElementById("filePicker").value = "";
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
       Swal.fire({
         text: "ファイルが選択されていません。",
         title: "エラー",
@@ -598,10 +616,9 @@ async function uploadFile(file) {
         position: "top-end", //画面右上
         showConfirmButton: false,
         timer: 1000, //3秒経過後に閉じる
-      })
+      });
     });
 }
-
 
 async function detectTeacher(email, name) {
   var url = "https://beta.api.cla-q.net/detect_role";

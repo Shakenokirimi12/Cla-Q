@@ -1,11 +1,11 @@
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
     };
-    fetch(url, {
+    await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
