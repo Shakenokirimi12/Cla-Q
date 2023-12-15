@@ -31,28 +31,64 @@ firebase.auth().onAuthStateChanged(function (user) {
       ],
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
-          if (currentUser.email.includes("-")) {
-            Swal.fire({
+          var url = "https://beta.api.cla-q.net/detect_role";
+          var postData = {
+            userEmail: userEmail,
+            userName: userName,
+          };
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Origin: "https://app.cla-q.net/",
+              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+            },
+            body: JSON.stringify(postData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              var isTeacher; //boolean
+              if (data.status_Code == "DR-01") {
+                isTeacher = true;
+              } else if (data.status_Code == "DR-02") {
+                isTeacher = false;
+              }
+              else{//先生でも生徒でもない場合
+                Swal.fire({
+                  text: "ログインできませんでした。再度お試しください。",
+                  title: "エラー",
+                  icon: "error",
+                  showConfirmButton: false,
+                  timer: 1500, //3秒経過後に閉じる
+                }).then((result) => {
+                  logOut();
+                });
+              }
 
-              text: "ログインしました。教師接続画面に遷移します。",
-              title: "情報",
-              icon: "info",
-              showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
-            }).then((result) => {
-              window.location.href = "../teacher/teacher_start";
-            });
-          } else {
-            Swal.fire({
-              text: "ログインしました。生徒接続画面に遷移します。",
-              title: "情報",
-              icon: "info",
-              showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
-            }).then((result) => {
-              window.location.href = "../student/student_start";
-            });
-          }
+              if (isTeacher) {
+                Swal.fire({
+                  text: "ログインしました。教師接続画面に遷移します。",
+                  title: "情報",
+                  icon: "info",
+                  showConfirmButton: false,
+                  timer: 1500, //3秒経過後に閉じる
+                }).then((result) => {
+                  window.location.href = "../teacher/teacher_start";
+                });
+              } else {
+                Swal.fire({
+                  text: "ログインしました。生徒接続画面に遷移します。",
+                  title: "情報",
+                  icon: "info",
+                  showConfirmButton: false,
+                  timer: 1500, //3秒経過後に閉じる
+                }).then((result) => {
+                  window.location.href = "../student/student_start";
+                });
+              }
+            })
+            .catch((error) => {});
+
           return false;
         },
       },
@@ -88,4 +124,5 @@ function logOut() {
       });
     });
 }
-const sleep = waitTime => new Promise(resolve => setTimeout(resolve, waitTime));
+const sleep = (waitTime) =>
+  new Promise((resolve) => setTimeout(resolve, waitTime));
