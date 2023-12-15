@@ -119,7 +119,7 @@ async function startQuestion() {
           console.log(data.question_Number);
           console.log(data.result);
           Swal.fire({
-            text: "問題を開始できませんでした",
+            text: "問題を開始できませんでした" + data.status_Code,
             title: "エラー",
             icon: "error",
           });
@@ -167,7 +167,7 @@ async function endQuestion() {
           document.getElementById("status").innerHTML = "現在:問題開始待ち";
         } else {
           Swal.fire({
-            text: "問題を終了できませんでした",
+            text: "問題を終了できませんでした" + data.status_Code,
             title: "エラー",
             icon: "error",
           });
@@ -273,7 +273,7 @@ async function getStudentsList() {
           });
         } else {
           Swal.fire({
-            text: "生徒一覧を取得できませんでした(" + data.message + "",
+            text: "生徒一覧を取得できませんでした(" + data.message + data.status_Code + ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -338,7 +338,7 @@ async function getAnswersList() {
           });
         } else {
           Swal.fire({
-            text: "答えの一覧を取得できませんでした(" + data.message + ")",
+            text: "答えの一覧を取得できませんでした(" + data.message + ":" + data.status_Code + ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -486,7 +486,7 @@ async function disposeClass() {
                   });
                 } else {
                   Swal.fire({
-                    text: "クラスを終了できませんでした(" + data.mesage + ")",
+                    text: "クラスを終了できませんでした(" + data.mesage + data.status_Code + ")",
                     title: "エラー",
                     icon: "error",
                   });
@@ -494,7 +494,7 @@ async function disposeClass() {
               } catch (error) {
                 Swal.fire({
                   text:
-                    "サーバーエラーです。サポートにお問い合わせください。(" +
+                    "サーバーエラーです。サポートにお問い合わせください。" +
                     error +
                     ")",
                   title: "エラー",

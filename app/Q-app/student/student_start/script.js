@@ -56,7 +56,7 @@ async function student_Join() {
         } else {
           Swal.fire({
             title: "エラー",
-            text: "ログインできませんでした。",
+            text: "ログインできませんでした。" +  data.status_Code,
             icon: "error",
           });
         }

@@ -46,7 +46,7 @@ async function submitAnswer() {
                 });
               } else {
                 Swal.fire({
-                  text: "答えを提出できませんでした。",
+                  text: "答えを提出できませんでした。" + data.status_Code,
                   title: "エラー",
                   icon: "error",
                 });
@@ -54,7 +54,7 @@ async function submitAnswer() {
             })
             .catch((error) => {
               Swal.fire({
-                text: "回答を提出できませんでした。問題が開始されているか確認してください。",
+                text: "回答を提出できませんでした。問題が開始されているか確認してください。" + data.status_Code,
                 title: "エラー",
                 icon: "error",
               });
@@ -99,7 +99,7 @@ window.onload = function () {
       text: "クラス情報が読み込めませんでした。(Code:CSE-01)",
       title: "エラー",
       icon: "error",
-      timer: 1500, 
+      timer: 1500,
     }).then((result) => {
       window.location.href = "../student_start";
     });
@@ -196,7 +196,7 @@ async function leaveClass() {
             } catch (error3) {
               console.log(error2);
               Swal.fire({
-                text: "クラスを離脱できませんでした。",
+                text: "クラスを離脱できませんでした。" + data.status_Code + +  data[1].status_Code + +  data[0].status_Code,
                 title: "エラー",
                 icon: "error",
               });
@@ -227,7 +227,7 @@ async function leaveClass() {
             if (data[0].status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。" + data[0].status_Code,
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
@@ -237,7 +237,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[0].message + ")",
+                text: "クラスを離脱できませんでした。(" + data[0].message + data[0].status_Code + ")",
                 title: "情報",
                 icon: "info",
               });
@@ -256,7 +256,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[1].message + ")",
+                text: "クラスを離脱できませんでした。(" + data[1].message + data[1].status_Code + ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -275,7 +275,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data.message + ")",
+                text: "クラスを離脱できませんでした。(" + data.message + data.status_Code + ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -286,7 +286,7 @@ async function leaveClass() {
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          text: "クラスを離脱できませんでした。(" + data.message + ")",
+          text: "クラスを離脱できませんでした。(" + data.message + data.status_Code + ")",
           title: "不明なエラー",
           icon: "error",
         });
@@ -294,7 +294,7 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      text: "クラスを離脱できませんでした。",
+      text: "クラスを離脱できませんでした。" + error,
       title: "不明なエラー",
       icon: "error",
     });

@@ -15,7 +15,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     // "d"というIDが定義されていない場合はnullが入る
     if (class_Code != null) {
       document.cookie = "class_Code = " + data + "; path=/;";
-      qrcodeLogin(class_Code,userName);
+      qrcodeLogin(class_Code, userName);
     }
   } else {
     // 未ログイン時
@@ -63,7 +63,7 @@ async function qrcodeLogin(class_Code, userName) {
         } else {
           Swal.fire({
             title: "エラー",
-            text: "ログインできませんでした。",
+            text: "ログインできませんでした。" + data.status_Code,
             icon: "error",
           });
         }
