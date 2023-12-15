@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .then((response) => response.json())
       .then((data) => {
         var isTeacher; //boolean
-        console.log(data)
+        console.log(data);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
         } else if (data.status_Code == "DR-02") {
@@ -31,7 +31,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             showConfirmButton: false,
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
-            logOut();
+            firebase.auth().signOut();
           });
         }
 
