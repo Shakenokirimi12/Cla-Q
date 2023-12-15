@@ -17,6 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .then((response) => response.json())
       .then((data) => {
         var isTeacher; //boolean
+        console.log(data)
         if (data.status_Code == "DR-01") {
           isTeacher = true;
         } else if (data.status_Code == "DR-02") {
