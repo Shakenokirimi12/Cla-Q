@@ -191,7 +191,7 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
-    if (!detectTeacher(user.email,user.displayName)) {
+    if (!(detectTeacher(user.email,user.displayName))) {
       window.location.href = "../../student/student_start";
     } else {
       // Update the user information display
