@@ -622,6 +622,7 @@ function detectTeacher(email,name){
       .then((data) => {
         var isTeacher; //boolean
         console.log(data);
+        console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
         } else if (data.status_Code == "DR-02") {
