@@ -46,7 +46,7 @@ async function submitAnswer() {
                 });
               } else {
                 Swal.fire({
-                  text: "答えを提出できませんでした。",
+                  text: "答えを提出できませんでした。:" + data.status_Code + "",
                   title: "エラー",
                   icon: "error",
                 });
@@ -54,7 +54,7 @@ async function submitAnswer() {
             })
             .catch((error) => {
               Swal.fire({
-                text: "回答を提出できませんでした。問題が開始されているか確認してください。",
+                text: "回答を提出できませんでした。問題が開始されているか確認してください。:" + data.status_Code + "",
                 title: "エラー",
                 icon: "error",
               });
@@ -238,7 +238,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[0].message + ")",
+                text: "クラスを離脱できませんでした。(" + data[0].message + ":" + data[0].status_Code + ")",
                 title: "情報",
                 icon: "info",
               });
@@ -266,7 +266,7 @@ async function leaveClass() {
             if (data.status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。:" + data.status_Code + "",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
@@ -287,7 +287,7 @@ async function leaveClass() {
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          text: "クラスを離脱できませんでした。(" + data.message + ")",
+          text: "クラスを離脱できませんでした。(" + data.message + ":" + data.status_Code + ")",
           title: "不明なエラー",
           icon: "error",
         });
@@ -370,14 +370,14 @@ function checkPDFExist() {
         if (!(data[1].message == "")) {
           Swal.fire({
             title: "エラー",
-            text: "サーバーでエラーが発生しました(" + data[1].message + ")",
+            text: "サーバーでエラーが発生しました(" + data[1].message + ":" + data[1].status_Code + ")",
             icon: "error",
           });
         }
         else if (!(data[0].message == "")) {
           Swal.fire({
             title: "エラー",
-            text: "サーバーでエラーが発生しました(" + data[0].message + ")",
+            text: "サーバーでエラーが発生しました(" + data[0].message + ":" + data[0].status_Code + ")",
             icon: "error",
           });
         }
