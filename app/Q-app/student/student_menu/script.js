@@ -54,7 +54,7 @@ async function submitAnswer() {
             })
             .catch((error) => {
               Swal.fire({
-                text: "回答を提出できませんでした。問題が開始されているか確認してください。" + data.status_Code,
+                text: "回答を提出できませんでした。問題が開始されているか確認してください。:" + error,
                 title: "エラー",
                 icon: "error",
               });
