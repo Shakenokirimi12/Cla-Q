@@ -129,7 +129,7 @@ async function startQuestion() {
           console.log(data.question_Number);
           console.log(data.result);
           Swal.fire({
-            text: "問題を開始できませんでした",
+            text: "問題を開始できませんでした:" + data.status_Code + "",
             title: "エラー",
             icon: "error",
           });
@@ -291,7 +291,7 @@ async function getStudentsList() {
           });
         } else {
           Swal.fire({
-            text: "生徒一覧を取得できませんでした(" + data.message + "",
+            text: "生徒一覧を取得できませんでした(" + data.message + ":" + data.status_Code + ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -356,7 +356,7 @@ async function getAnswersList() {
           });
         } else {
           Swal.fire({
-            text: "答えの一覧を取得できませんでした(" + data.message + ")",
+            text: "答えの一覧を取得できませんでした(" + data.message + ":" + data.status_Code + ")",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -492,7 +492,7 @@ async function disposeClass() {
                 }
                 else if (data.status_Code == "IAE-13") {
                   Swal.fire({
-                    text: "クラスはすでに閉じられています。クラス参加画面に戻ります。",
+                    text: "クラスはすでに閉じられています。クラス参加画面に戻ります。" + ":" + data.status_Code,
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -503,7 +503,7 @@ async function disposeClass() {
                 }
                 else {
                   Swal.fire({
-                    text: "クラスを終了できませんでした(" + data.mesage + ")",
+                    text: "クラスを終了できませんでした(" + data.mesage + ":" + data.status_Code + ")",
                     title: "エラー",
                     icon: "error",
                   });

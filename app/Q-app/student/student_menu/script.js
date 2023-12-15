@@ -276,7 +276,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data.message + ")",
+                text: "クラスを離脱できませんでした。(" + data.message + ":" + data.status_Code + ")",
                 title: "エラー",
                 icon: "error",
               });
