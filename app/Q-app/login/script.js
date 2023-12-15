@@ -1,27 +1,62 @@
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    // ログイン時
-    if (user.email.includes("-")) {
-      Swal.fire({
-        text: "ログインしました。教師接続画面に遷移します。",
-        title: "情報",
-        icon: "info",
-        showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
-      }).then((result) => {
-        window.location.href = "../teacher/teacher_start";
-      });
-    } else {
-      Swal.fire({
-        text: "ログインしました。生徒接続画面に遷移します。",
-        title: "情報",
-        icon: "info",
-        showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
-      }).then((result) => {
-        window.location.href = "../student/student_start";
-      });
-    }
+    var url = "https://beta.api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var isTeacher; //boolean
+        if (data.status_Code == "DR-01") {
+          isTeacher = true;
+        } else if (data.status_Code == "DR-02") {
+          isTeacher = false;
+        } else {
+          //先生でも生徒でもない場合
+          Swal.fire({
+            text: "ログインできませんでした。再度お試しください。",
+            title: "エラー",
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500, //3秒経過後に閉じる
+          }).then((result) => {
+            logOut();
+          });
+        }
+
+        if (isTeacher) {
+          Swal.fire({
+            text: "ログインしました。教師接続画面に遷移します。",
+            title: "情報",
+            icon: "info",
+            showConfirmButton: false,
+            timer: 1500, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "../teacher/teacher_start";
+          });
+        } else {
+          Swal.fire({
+            text: "ログインしました。生徒接続画面に遷移します。",
+            title: "情報",
+            icon: "info",
+            showConfirmButton: false,
+            timer: 1500, //3秒経過後に閉じる
+          }).then((result) => {
+            window.location.href = "../student/student_start";
+          });
+        }
+      })
+      .catch((error) => {});
   } else {
     // 未ログイン時
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -33,8 +68,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           var url = "https://beta.api.cla-q.net/detect_role";
           var postData = {
-            userEmail: userEmail,
-            userName: userName,
+            userEmail: currentUser.email,
+            userName: currentUser.displayName,
           };
           fetch(url, {
             method: "POST",
@@ -52,8 +87,8 @@ firebase.auth().onAuthStateChanged(function (user) {
                 isTeacher = true;
               } else if (data.status_Code == "DR-02") {
                 isTeacher = false;
-              }
-              else{//先生でも生徒でもない場合
+              } else {
+                //先生でも生徒でもない場合
                 Swal.fire({
                   text: "ログインできませんでした。再度お試しください。",
                   title: "エラー",
