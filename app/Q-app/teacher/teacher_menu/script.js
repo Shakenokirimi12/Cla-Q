@@ -58,7 +58,7 @@ async function startQuestion() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/teacher/start_question";
+  var url = "https://api.cla-q.net/teacher/start_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -154,7 +154,7 @@ async function endQuestion() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/teacher/end_question";
+  var url = "https://api.cla-q.net/teacher/end_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -235,7 +235,7 @@ async function executeEveryTwoSeconds() {
 
 async function getStudentsList() {
   console.log("生徒一覧を取得しています。");
-  var url = "https://beta.api.cla-q.net/teacher/get_StudentsList";
+  var url = "https://api.cla-q.net/teacher/get_StudentsList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -319,7 +319,7 @@ async function getAnswersList() {
   var comboBox = document.getElementById("problemSelector");
   var selectedIndex = String(comboBox.selectedIndex + 1);
   console.log("答え一覧を取得しています。");
-  var url = "https://beta.api.cla-q.net/teacher/get_AnswersList";
+  var url = "https://api.cla-q.net/teacher/get_AnswersList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -418,7 +418,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     var isStudent; //boolean
     // ログイン時
     //生徒か検知
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -476,7 +476,7 @@ async function disposeClass() {
     confirmButtonText: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
-      var url = "https://beta.api.cla-q.net/teacher/inactivate_class";
+      var url = "https://api.cla-q.net/teacher/inactivate_class";
       var postData = {
         class_Code: class_Code,
         userEmail: userEmail,

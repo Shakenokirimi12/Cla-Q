@@ -1,6 +1,6 @@
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -67,7 +67,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       ],
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
-          var url = "https://beta.api.cla-q.net/detect_role";
+          var url = "https://api.cla-q.net/detect_role";
           var postData = {
             userEmail: currentUser.email,
             userName: currentUser.displayName,

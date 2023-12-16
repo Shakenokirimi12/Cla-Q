@@ -7,7 +7,7 @@ function handleKeyDown(event) {
 }
 
 async function startClass() {
-  var url = "https://beta.api.cla-q.net/teacher/create_class";
+  var url = "https://api.cla-q.net/teacher/create_class";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -72,7 +72,7 @@ async function teacher_Rejoin() {
     });
     return;
   }
-  var url = "https://beta.api.cla-q.net/teacher/rejoin_class";
+  var url = "https://api.cla-q.net/teacher/rejoin_class";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -196,7 +196,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
     //生徒か検知
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,

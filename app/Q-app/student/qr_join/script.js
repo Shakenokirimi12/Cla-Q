@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 });
 //反映されないので再コミット
 async function qrcodeLogin(class_Code, userName) {
-  var url = "https://beta.api.cla-q.net/student/join";
+  var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -85,7 +85,7 @@ async function qrcodeLogin(class_Code, userName) {
 
 
 async function detectTeacher(email, name) {
-  var url = "https://beta.api.cla-q.net/detect_role";
+  var url = "https://api.cla-q.net/detect_role";
   var postData = {
     userEmail: email,
     userName: name,

@@ -14,7 +14,7 @@ async function submitAnswer() {
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
         // Add your login logic here
-        var url = "https://beta.api.cla-q.net/student/submit_answer";
+        var url = "https://api.cla-q.net/student/submit_answer";
         var postData = {
           class_Code: class_Code,
           userName: userName,
@@ -144,7 +144,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     var isTeacher; //boolean
     //教師か検知
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -203,7 +203,7 @@ async function logOut() {
 //以下workers
 async function leaveClass() {
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/student/leave";
+  var url = "https://api.cla-q.net/student/leave";
   var postData = {
     userName: userName,
   };
@@ -376,7 +376,7 @@ function showClock() {
 
 async function checkPDFExistance() {
   /*
-  var url = "https://beta.api.cla-q.net/class_info/pdf";
+  var url = "https://api.cla-q.net/class_info/pdf";
   var postData = {
     class_Code: class_Code,
   };
