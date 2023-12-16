@@ -109,7 +109,7 @@ window.onload = async function () {
   }
   await mobileRedirect();
   await prevent_Overlogin();
-  await checkPDFExist();
+  await checkPDFExistance();
   setInterval("showClock()", 1000);
 };
 
@@ -374,7 +374,8 @@ function showClock() {
   document.getElementById("currentTime").innerHTML = msg;
 }
 
-async function checkPDFExist() {
+async function checkPDFExistance() {
+  /*
   var url = "https://beta.api.cla-q.net/class_info/pdf";
   var postData = {
     class_Code: class_Code,
@@ -391,21 +392,9 @@ async function checkPDFExist() {
     .then((response) => response.json())
     .then((data) => {
       // レスポンスデータの処理
-      console.log(
-        data[1].message,
-        data[0].message,
-        data[1].result,
-        data[0].result
-      );
       if (data[1].result == "success" || data[0].result == "success") {
         if (data[1].pdf == "exist") {
           console.log("Successfully fetched pdf info.");
-          console.log(
-            data[1].message,
-            data[0].message,
-            data[1].result,
-            data[0].result
-          );
           Swal.fire({
             title: "成功",
             text: "このクラスにはPDF資料があります。PDFを表示しますか？",
@@ -459,4 +448,5 @@ async function checkPDFExist() {
         icon: "error",
       });
     });
+    */
 }

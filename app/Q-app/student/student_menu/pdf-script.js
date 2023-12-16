@@ -390,18 +390,10 @@ async function submitAnswer() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
-        console.log(
-          data[1].message,
-          data[0].message,
-          data[1].result,
-          data[0].result
-        );
         if (data[1].result == "success" || data[0].result == "success") {
           if (data[1].pdf == "exist") {
             console.log("Successfully fetched pdf info.");
             console.log(data);
-            
           }
         } else {
           if (!(data[1].message == "")) {
