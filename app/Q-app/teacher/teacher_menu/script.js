@@ -532,7 +532,7 @@ async function disposeClass() {
               try {
                 var result2 = data.result;
                 if (result2 == "success") {
-                  prevent_Overlogin();
+                  preventOverlogin();
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
@@ -668,7 +668,7 @@ function logOut() {
     .auth()
     .signOut()
     .then(function () {
-      prevent_Overlogin();
+      preventOverlogin();
       Swal.fire({
         text: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
