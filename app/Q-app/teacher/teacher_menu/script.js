@@ -649,3 +649,24 @@ async function uploadFile(file) {
       });
     });
 }
+
+
+function logOut() {
+  firebase
+    .auth()
+    .signOut()
+    .then(function () {
+      prevent_Overlogin();
+      Swal.fire({
+        text: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500, //3秒経過後に閉じる
+      }).then((result) => {
+        location.reload();
+      });
+    });
+}
+//以上firebase auth
+
