@@ -498,7 +498,6 @@ async function disposeClass() {
             try {
               var result = data[1].result;
               if (result == "success") {
-                preventOverlogin();
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=; path=/;";
                 Swal.fire({
@@ -532,7 +531,6 @@ async function disposeClass() {
               try {
                 var result2 = data.result;
                 if (result2 == "success") {
-                  preventOverlogin();
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
