@@ -416,9 +416,9 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
-    var isTeacher = await detectTeacher(user.email, user.displayName);
-    console.log(isTeacher);
-    if (!isTeacher) {
+    var isStudent = await detectStudent(user.email, user.displayName);
+    console.log(isStudent);
+    if (isStudent) {
       window.location.href = "../../student/student_start";
     }
     // Update the user information display
@@ -620,7 +620,7 @@ async function uploadFile(file) {
     });
 }
 
-async function detectTeacher(email, name) {
+async function detectStudent(email, name) {
   var url = "https://beta.api.cla-q.net/detect_role";
   var postData = {
     userEmail: email,
@@ -637,15 +637,15 @@ async function detectTeacher(email, name) {
   })
     .then((response) => response.json())
     .then((data) => {
-      var isTeacher; //boolean
+      var isStudent; //boolean
       console.log(data);
       console.log(data.status_Code);
       if (data.status_Code == "DR-01") {
-        isTeacher = true;
+        isStudent = false;
       } else if (data.status_Code == "DR-02") {
-        isTeacher = false;
+        isStudent = true;
       }
-      return isTeacher;
+      return isStudent;
     })
     .catch((error) => {});
 }
