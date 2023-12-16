@@ -107,7 +107,7 @@ function prevent_Overlogin() {
 }
 
 //以下firebase auth
-firebase.auth().onAuthStateChanged(async function (user) {
+firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     // ログイン時
     //教師か検知
@@ -116,7 +116,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       userEmail: user.email,
       userName: user.displayName,
     };
-    await fetch(url, {
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,26 +137,24 @@ firebase.auth().onAuthStateChanged(async function (user) {
         }
         return isTeacher;
       })
-      .catch((error) => { });
-    //教師か検知
-    console.log(isTeacher);
-    if (isTeacher) {
-      window.location.href = "../teacher/teacher_start";
-    } else {
-      // Update the user information display
-      var userInfoElement = document.querySelector(".user-info");
-      userInfoElement.innerHTML =
-        "<p>ユーザー名: " +
-        user.displayName +
-        "</p><p>メールアドレス: " +
-        user.email +
-        "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+      .catch((error) => { })
+      .finally(() => {
+        console.log(isTeacher);
+        if (isTeacher) {
+          window.location.href = "../../teacher/teacher_start";
+        }
+        // ログイン時
+        // Update the user information display
+        document.getElementById("user_Name").innerHTML = user.displayName;
+        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
+        document.getElementById("class_code").innerHTML =
+          "参加中のクラス:" + class_Code;
 
-      let screenLock = document.getElementById("screenLock");
-      screenLock.parentNode.removeChild(screenLock);
-      userName = user.displayName;
-      userEmail = user.email;
-    }
+        let screenLock = document.getElementById("screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+      });
   } else {
     // 未ログイン時
     window.location.href = "../../login";

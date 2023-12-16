@@ -221,26 +221,28 @@ firebase.auth().onAuthStateChanged(async function (user) {
         }
         return isStudent;
       })
-      .catch((error) => { });
-    //生徒か検知
-    console.log(isStudent);
-    if (isStudent) {
-      window.location.href = "../../student/student_start";
-    } else {
-      // Update the user information display
-      var userInfoElement = document.querySelector(".user-info");
-      userInfoElement.innerHTML =
-        "<p>ユーザー名: " +
-        user.displayName +
-        "</p><p>メールアドレス: " +
-        user.email +
-        "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-      //ログイン越え回避解除
-      let screenLock = document.getElementById("screenLock");
-      screenLock.parentNode.removeChild(screenLock);
-      userName = user.displayName;
-      userEmail = user.email;
-    }
+      .catch((error) => { })
+      .finally(() => {
+        //生徒か検知
+        console.log(isStudent);
+        if (isStudent) {
+          window.location.href = "../../student/student_start";
+        } else {
+          // Update the user information display
+          var userInfoElement = document.querySelector(".user-info");
+          userInfoElement.innerHTML =
+            "<p>ユーザー名: " +
+            user.displayName +
+            "</p><p>メールアドレス: " +
+            user.email +
+            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+          //ログイン越え回避解除
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
+        }
+      });
   } else {
     // 未ログイン時
     window.location.href = "../../login";

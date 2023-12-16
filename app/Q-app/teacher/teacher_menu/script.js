@@ -443,21 +443,24 @@ firebase.auth().onAuthStateChanged(async function (user) {
         }
         return isStudent;
       })
-      .catch((error) => { });
-    //生徒か検知
-    console.log(isStudent);
-    if (isStudent) {
-      window.location.href = "../../student/student_start";
-    }
-    // Update the user information display
-    document.getElementById("user_info").innerHTML =
-      user.displayName + "(" + user.email + ")";
-    document.getElementById("class_code").innerHTML =
-      "クラスコード:" + class_Code;
-    let screenLock = document.getElementById("screenLock");
-    screenLock.parentNode.removeChild(screenLock);
-    userName = user.displayName;
-    userEmail = user.email;
+      .catch((error) => { })
+      .finally(() => {
+
+        //生徒か検知
+        console.log(isStudent);
+        if (isStudent) {
+          window.location.href = "../../student/student_start";
+        }
+        // Update the user information display
+        document.getElementById("user_info").innerHTML =
+          user.displayName + "(" + user.email + ")";
+        document.getElementById("class_code").innerHTML =
+          "クラスコード:" + class_Code;
+        let screenLock = document.getElementById("screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+      });
     executeEveryTwoSeconds();
   } else {
     // 未ログイン時
