@@ -194,7 +194,35 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
-    var isStudent = await detectStudent(user.email, user.displayName);
+    //生徒か検知
+    var url = "https://beta.api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var isStudent; //boolean
+        console.log(data);
+        console.log(data.status_Code);
+        if (data.status_Code == "DR-01") {
+          isStudent = false;
+        } else if (data.status_Code == "DR-02") {
+          isStudent = true;
+        }
+        return isStudent;
+      })
+      .catch((error) => { });
+    //生徒か検知
     console.log(isStudent);
     if (isStudent) {
       window.location.href = "../../student/student_start";
@@ -219,50 +247,3 @@ firebase.auth().onAuthStateChanged(async function (user) {
   }
 });
 
-function logOut() {
-  firebase
-    .auth()
-    .signOut()
-    .then(function () {
-      prevent_Overlogin();
-      Swal.fire({
-        text: "ログアウトしました。ログイン画面に戻ります。",
-        title: "情報",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
-      }).then((result) => {
-        location.reload();
-      });
-    });
-}
-
-async function detectStudent(email, name) {
-  var url = "https://beta.api.cla-q.net/detect_role";
-  var postData = {
-    userEmail: email,
-    userName: name,
-  };
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Origin: "https://app.cla-q.net/",
-      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-    },
-    body: JSON.stringify(postData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      var isStudent; //boolean
-      console.log(data);
-      console.log(data.status_Code);
-      if (data.status_Code == "DR-01") {
-        isStudent = false;
-      } else if (data.status_Code == "DR-02") {
-        isStudent = true;
-      }
-      return isStudent;
-    })
-    .catch((error) => {});
-}

@@ -110,7 +110,35 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
-    var isTeacher = await detectTeacher(user.email, user.displayName);
+    //教師か検知
+    var url = "https://beta.api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        var isTeacher; //boolean
+        console.log(data);
+        console.log(data.status_Code);
+        if (data.status_Code == "DR-01") {
+          isTeacher = true;
+        } else if (data.status_Code == "DR-02") {
+          isTeacher = false;
+        }
+        return isTeacher;
+      })
+      .catch((error) => { });
+    //教師か検知
     console.log(isTeacher);
     if (isTeacher) {
       window.location.href = "../teacher/teacher_start";
@@ -154,32 +182,3 @@ function logOut() {
 }
 //以上firebase auth
 
-async function detectTeacher(email, name) {
-  var url = "https://beta.api.cla-q.net/detect_role";
-  var postData = {
-    userEmail: email,
-    userName: name,
-  };
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Origin: "https://app.cla-q.net/",
-      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
-    },
-    body: JSON.stringify(postData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      var isTeacher; //boolean
-      console.log(data);
-      console.log(data.status_Code);
-      if (data.status_Code == "DR-01") {
-        isTeacher = true;
-      } else if (data.status_Code == "DR-02") {
-        isTeacher = false;
-      }
-      return isTeacher;
-    })
-    .catch((error) => {});
-}
