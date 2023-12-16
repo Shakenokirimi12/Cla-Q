@@ -192,6 +192,7 @@ function prevent_Overlogin() {
 
 var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
+  var isStudent; //boolean
   if (user) {
     // ログイン時
     //生徒か検知
@@ -211,7 +212,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        var isStudent; //boolean
         console.log(data);
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {

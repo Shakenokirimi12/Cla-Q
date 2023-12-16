@@ -142,6 +142,7 @@ function prevent_Overlogin() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    var isTeacher; //boolean
     //教師か検知
     var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
@@ -159,7 +160,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        var isTeacher; //boolean
         console.log(data);
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
