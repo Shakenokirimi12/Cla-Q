@@ -56,8 +56,7 @@ async function submitAnswer() {
               Swal.fire({
                 text:
                   "回答を提出できませんでした。問題が開始されているか確認してください。:" +
-                  data.status_Code +
-                  "",
+                  error,
                 title: "エラー",
                 icon: "error",
               });
@@ -163,14 +162,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
-          console.log("user is teacher.")
+          console.log("user is teacher.");
         } else if (data.status_Code == "DR-02") {
           isTeacher = false;
-          console.log("user is not teacher.")
+          console.log("user is not teacher.");
         }
         return isTeacher;
       })
-      .catch((error) => { })
+      .catch((error) => {})
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -179,7 +178,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         // ログイン時
         // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
-        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
+        document.getElementById("user_Email").innerHTML =
+          "(" + user.email + ")";
         document.getElementById("class_code").innerHTML =
           "参加中のクラス:" + class_Code;
 
@@ -264,7 +264,9 @@ async function leaveClass() {
             if (data[0].status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。" + data[0].status_Code,
+                text:
+                  "クラスが教師によって閉じられています。クラス参加画面に戻ります。" +
+                  data[0].status_Code,
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
@@ -298,7 +300,11 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[1].message + data[1].status_Code + ")",
+                text:
+                  "クラスを離脱できませんでした。(" +
+                  data[1].message +
+                  data[1].status_Code +
+                  ")",
                 title: "エラー",
                 icon: "error",
               });
