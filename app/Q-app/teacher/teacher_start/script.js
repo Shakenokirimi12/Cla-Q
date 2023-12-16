@@ -43,7 +43,7 @@ async function startClass() {
           });
         } else {
           Swal.fire({
-            text: "クラスを開始できませんでした。(" + data.message + ")",
+            text: "クラスを開始できませんでした。(" + data.message + data.status_Code + ")",
             title: "エラー",
             icon: "error",
           });
@@ -107,7 +107,7 @@ async function teacher_Rejoin() {
             });
           } else {
             Swal.fire({
-              text: "接続できませんでした。(" + data[1].message + ")",
+              text: "接続できませんでした。(" + data[1].message + data[1].status_Code + ")",
               title: "エラー",
               icon: "error",
             });
@@ -130,14 +130,14 @@ async function teacher_Rejoin() {
               });
             } else {
               Swal.fire({
-                text: "接続できませんでした。(" + data.message + ")",
+                text: "接続できませんでした。(" + data.message + data.status_Code + ")",
                 title: "エラー",
                 icon: "error",
               });
             }
           } catch (error) {
             Swal.fire({
-              text: "サーバーエラーです。サポートにお問い合わせください。",
+              text: "サーバーエラーです。サポートにお問い合わせください。" + error,
               title: "エラー",
               icon: "error",
             });
@@ -147,7 +147,7 @@ async function teacher_Rejoin() {
       })
       .catch((error) => {
         Swal.fire({
-          text: "ログインできませんでした。",
+          text: "ログインできませんでした。" + error,
           title: "エラー",
           icon: "error",
         });
@@ -263,6 +263,7 @@ function logOut() {
         showConfirmButton: false,
         timer: 1500, //3秒経過後に閉じる
       }).then((result) => {
+        document.cookie = "class_Code=; path=/;";
         location.reload();
       });
     });

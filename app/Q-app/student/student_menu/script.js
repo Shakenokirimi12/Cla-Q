@@ -264,7 +264,7 @@ async function leaveClass() {
             if (data[0].status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。" + data[0].status_Code,
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
@@ -298,7 +298,7 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[1].message + ")",
+                text: "クラスを離脱できませんでした。(" + data[1].message + data[1].status_Code + ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -349,7 +349,7 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      text: "クラスを離脱できませんでした。",
+      text: "クラスを離脱できませんでした。" + error,
       title: "不明なエラー",
       icon: "error",
     });

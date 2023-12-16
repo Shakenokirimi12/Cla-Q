@@ -186,7 +186,7 @@ async function endQuestion() {
           });
         } else {
           Swal.fire({
-            text: "問題を終了できませんでした",
+            text: "問題を終了できませんでした" + "[" + data.status_Code + "]",
             title: "エラー",
             icon: "error",
           });
@@ -210,6 +210,7 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
+
     Swal.fire({
       text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
       title: "エラー",
@@ -497,11 +498,22 @@ async function disposeClass() {
             try {
               var result = data[1].result;
               if (result == "success") {
-                prevent_Overlogin();
+                preventOverlogin();
                 console.log("Successfully deleted the class");
                 document.cookie = "class_Code=; path=/;";
                 Swal.fire({
                   text: "クラスを閉じました。クラス参加画面に戻ります。",
+                  title: "情報",
+                  icon: "info",
+                  showConfirmButton: false,
+                  timer: 1500, //3秒経過後に閉じる
+                }).then((result) => {
+                  window.location.href = "../teacher_start";
+                });
+              }
+              else if (data.status_Code == "IAE-13") {
+                Swal.fire({
+                  text: "クラスはすでに閉じられています。クラス参加画面に戻ります。",
                   title: "情報",
                   icon: "info",
                   showConfirmButton: false,
@@ -560,7 +572,7 @@ async function disposeClass() {
               } catch (error) {
                 Swal.fire({
                   text:
-                    "サーバーエラーです。サポートにお問い合わせください。(" +
+                    "サーバーエラーです。サポートにお問い合わせください。" +
                     error +
                     ")",
                   title: "エラー",

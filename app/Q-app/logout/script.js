@@ -14,6 +14,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           showConfirmButton: false,
           timer: 3000, //3秒経過後に閉じる
         }).then((result) => {
+          document.cookie = "class_Code=; path=/;";
           location.reload();
         });
       });
