@@ -56,7 +56,7 @@ async function student_Join() {
         } else {
           Swal.fire({
             title: "エラー",
-            text: "ログインできませんでした。" +  data.status_Code,
+            text: "ログインできませんでした。エラーコード:" + data[0].status_Code,
             icon: "error",
           });
         }
@@ -109,24 +109,68 @@ function prevent_Overlogin() {
 //以下firebase auth
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    var isTeacher; //boolean
     // ログイン時
-    if (user.email.includes("-")) {
-      window.location.href = "../teacher/teacher_start";
-    } else {
-      // Update the user information display
-      var userInfoElement = document.querySelector(".user-info");
-      userInfoElement.innerHTML =
-        "<p>ユーザー名: " +
-        user.displayName +
-        "</p><p>メールアドレス: " +
-        user.email +
-        "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+    //教師か検知
+    var url = "https://api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.status_Code);
+        if (data.status_Code == "DR-01") {
+          isTeacher = true;
+          console.log("user is teacher.")
+        } else if (data.status_Code == "DR-02") {
+          isTeacher = false;
+          console.log("user is not teacher.")
+        }
+        return isTeacher;
+      })
+      .catch((error) => { })
+      .finally(() => {
+        console.log(isTeacher);
+        if (isTeacher) {
+          window.location.href = "../../teacher/teacher_start";
+        }
+        else {
+          // Update the user information display
+          var userInfoElement = document.querySelector(".user-info");
+          userInfoElement.innerHTML =
+            "<p>ユーザー名: " +
+            user.displayName +
+            "</p><p>メールアドレス: " +
+            user.email +
+            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
 
-      let screenLock = document.getElementById("screenLock");
-      screenLock.parentNode.removeChild(screenLock);
-      userName = user.displayName;
-      userEmail = user.email;
-    }
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
+        }
+        // ログイン時
+        // Update the user information display
+        document.getElementById("user_Name").innerHTML = user.displayName;
+        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
+        document.getElementById("class_code").innerHTML =
+          "参加中のクラス:" + class_Code;
+
+        let screenLock = document.getElementById("screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+      });
   } else {
     // 未ログイン時
     window.location.href = "../../login";
@@ -151,3 +195,4 @@ function logOut() {
     });
 }
 //以上firebase auth
+

@@ -30,7 +30,10 @@ async function startClass() {
           prevent_Overlogin();
           document.cookie = "class_Code=" + data.class_Code + ";path=/;";
           Swal.fire({
-            text: "クラスを作成しました。クラスコードは" + data.class_Code + "です。",
+            text:
+              "クラスを作成しました。クラスコードは" +
+              data.class_Code +
+              "です。",
             title: "情報",
             icon: "success",
             showConfirmButton: false,
@@ -188,31 +191,64 @@ function prevent_Overlogin() {
 }
 
 var userName, userEmail;
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
+  var isStudent; //boolean
   if (user) {
     // ログイン時
-    if (user.email.includes("_")) {
-      window.location.href = "../student/student_start";
-    } else {
-      // Update the user information display
-      var userInfoElement = document.querySelector(".user-info");
-      userInfoElement.innerHTML =
-        "<p>ユーザー名: " +
-        user.displayName +
-        "</p><p>メールアドレス: " +
-        user.email +
-        "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-      //ログイン越え回避解除
-      let screenLock = document.getElementById("screenLock");
-      screenLock.parentNode.removeChild(screenLock);
-      userName = user.displayName;
-      userEmail = user.email;
-    }
+    //生徒か検知
+    var url = "https://api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.status_Code);
+        if (data.status_Code == "DR-01") {
+          isStudent = false;
+          console.log("user is not student.")
+        } else if (data.status_Code == "DR-02") {
+          isStudent = true;
+          console.log("user is student.")
+        }
+        return isStudent;
+      })
+      .catch((error) => { })
+      .finally(() => {
+        //生徒か検知
+        if (isStudent) {
+          window.location.href = "../../student/student_start";
+        } else {
+          // Update the user information display
+          var userInfoElement = document.querySelector(".user-info");
+          userInfoElement.innerHTML =
+            "<p>ユーザー名: " +
+            user.displayName +
+            "</p><p>メールアドレス: " +
+            user.email +
+            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+          //ログイン越え回避解除
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
+        }
+      });
   } else {
     // 未ログイン時
     window.location.href = "../../login";
   }
 });
+
 
 function logOut() {
   firebase
@@ -232,3 +268,5 @@ function logOut() {
       });
     });
 }
+//以上firebase auth
+

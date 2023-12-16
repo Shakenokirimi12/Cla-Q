@@ -1,6 +1,8 @@
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    if (user.email.includes("-")) {
+    var isTeacher = await detectTeacher(user.email, user.displayName);
+    console.log(isTeacher);
+    if (isTeacher) {
       window.location.href = "../../teacher/teacher_start";
     }
     userName = user.displayName;
@@ -79,4 +81,35 @@ async function qrcodeLogin(class_Code, userName) {
     console.log("エラー発生。");
     console.log(error);
   }
+}
+
+
+async function detectTeacher(email, name) {
+  var url = "https://api.cla-q.net/detect_role";
+  var postData = {
+    userEmail: email,
+    userName: name,
+  };
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://app.cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      var isTeacher; //boolean
+      console.log(data);
+      console.log(data.status_Code);
+      if (data.status_Code == "DR-01") {
+        isTeacher = true;
+      } else if (data.status_Code == "DR-02") {
+        isTeacher = false;
+      }
+      return isTeacher;
+    })
+    .catch((error) => {});
 }

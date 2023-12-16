@@ -46,7 +46,7 @@ async function submitAnswer() {
                 });
               } else {
                 Swal.fire({
-                  text: "答えを提出できませんでした。" + data.status_Code,
+                  text: "答えを提出できませんでした。:" + data.status_Code + "",
                   title: "エラー",
                   icon: "error",
                 });
@@ -54,7 +54,10 @@ async function submitAnswer() {
             })
             .catch((error) => {
               Swal.fire({
-                text: "回答を提出できませんでした。問題が開始されているか確認してください。",
+                text:
+                  "回答を提出できませんでした。問題が開始されているか確認してください。:" +
+                  data.status_Code +
+                  "",
                 title: "エラー",
                 icon: "error",
               });
@@ -89,7 +92,7 @@ function handleKeyDown(event) {
 }
 
 var class_Code;
-window.onload = function () {
+window.onload = async function () {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
@@ -104,8 +107,10 @@ window.onload = function () {
       window.location.href = "../student_start";
     });
   }
-  mobileRedirect();
-  prevent_Overlogin();
+  await mobileRedirect();
+  await prevent_Overlogin();
+  await checkPDFExistance();
+  setInterval("showClock()", 1000);
 };
 
 function mobileRedirect() {
@@ -137,21 +142,53 @@ function prevent_Overlogin() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    if (user.email.includes("-")) {
-      window.location.href = "../../teacher/teacher_start";
-    }
-    // ログイン時
-    // Update the user information display
-    document.getElementById("mail_address").innerHTML =
-      "メールアドレス:" + user.email;
-    document.getElementById("user_name").innerHTML = user.displayName;
-    document.getElementById("class_code").innerHTML =
-      "参加中のクラス:" + class_Code;
+    var isTeacher; //boolean
+    //教師か検知
+    var url = "https://api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://app.cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.status_Code);
+        if (data.status_Code == "DR-01") {
+          isTeacher = true;
+          console.log("user is teacher.")
+        } else if (data.status_Code == "DR-02") {
+          isTeacher = false;
+          console.log("user is not teacher.")
+        }
+        return isTeacher;
+      })
+      .catch((error) => { })
+      .finally(() => {
+        console.log(isTeacher);
+        if (isTeacher) {
+          window.location.href = "../../teacher/teacher_start";
+        }
+        // ログイン時
+        // Update the user information display
+        document.getElementById("user_Name").innerHTML = user.displayName;
+        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
+        document.getElementById("class_code").innerHTML =
+          "参加中のクラス:" + class_Code;
 
-    let screenLock = document.getElementById("screenLock");
-    screenLock.parentNode.removeChild(screenLock);
-    userName = user.displayName;
-    userEmail = user.email;
+        let screenLock = document.getElementById("screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+      });
+    //教師か検知
   } else {
     // 未ログイン時
     window.location.href = "../../login";
@@ -194,9 +231,9 @@ async function leaveClass() {
             try {
               var result3 = data.result;
             } catch (error3) {
-              console.log(error2);
+              console.log(error3);
               Swal.fire({
-                text: "クラスを離脱できませんでした。" + data.status_Code + +  data[1].status_Code + +  data[0].status_Code,
+                text: "クラスを離脱できませんでした。(" + error3 + ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -237,7 +274,12 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data[0].message + data[0].status_Code + ")",
+                text:
+                  "クラスを離脱できませんでした。(" +
+                  data[0].message +
+                  ":" +
+                  data[0].status_Code +
+                  ")",
                 title: "情報",
                 icon: "info",
               });
@@ -265,7 +307,10 @@ async function leaveClass() {
             if (data.status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
+                text:
+                  "クラスが教師によって閉じられています。クラス参加画面に戻ります。:" +
+                  data.status_Code +
+                  "",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
@@ -275,7 +320,12 @@ async function leaveClass() {
               });
             } else {
               Swal.fire({
-                text: "クラスを離脱できませんでした。(" + data.message + data.status_Code + ")",
+                text:
+                  "クラスを離脱できませんでした。(" +
+                  data.message +
+                  ":" +
+                  data.status_Code +
+                  ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -286,7 +336,12 @@ async function leaveClass() {
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          text: "クラスを離脱できませんでした。(" + data.message + data.status_Code + ")",
+          text:
+            "クラスを離脱できませんでした。(" +
+            data.message +
+            ":" +
+            data.status_Code +
+            ")",
           title: "不明なエラー",
           icon: "error",
         });
@@ -301,3 +356,97 @@ async function leaveClass() {
   }
 }
 
+function showClock() {
+  let nowTime = new Date();
+  var nowHour = nowTime.getHours();
+  var nowMin = nowTime.getMinutes();
+  var nowSec = nowTime.getSeconds();
+  if (String(nowHour).startsWith("0")) {
+    nowHour = Number("0" + String(nowHour));
+  }
+  if (String(nowMin).startsWith("0")) {
+    nowMin = Number("0" + String(nowMin));
+  }
+  if (String(nowSec).startsWith("0")) {
+    nowSec = Number("0" + String(nowSec));
+  }
+  let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
+  document.getElementById("currentTime").innerHTML = msg;
+}
+
+async function checkPDFExistance() {
+  /*
+  var url = "https://api.cla-q.net/class_info/pdf";
+  var postData = {
+    class_Code: class_Code,
+  };
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://app.cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // レスポンスデータの処理
+      if (data[1].result == "success" || data[0].result == "success") {
+        if (data[1].pdf == "exist") {
+          console.log("Successfully fetched pdf info.");
+          Swal.fire({
+            title: "成功",
+            text: "このクラスにはPDF資料があります。PDFを表示しますか？",
+            showDenyButton: true,
+            timer: 1500, //3秒経過後に閉じる
+            icon: "info",
+            confirmButtonText: "はい",
+            denyButtonText: "いいえ",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./pdf.html";
+            }
+          });
+        }
+      } else {
+        if (!(data[1].message == "")) {
+          Swal.fire({
+            title: "エラー",
+            text:
+              "サーバーでエラーが発生しました(" +
+              data[1].message +
+              ":" +
+              data[1].status_Code +
+              ")",
+            icon: "error",
+          });
+        } else if (!(data[0].message == "")) {
+          Swal.fire({
+            title: "エラー",
+            text:
+              "サーバーでエラーが発生しました(" +
+              data[0].message +
+              ":" +
+              data[0].status_Code +
+              ")",
+            icon: "error",
+          });
+        } else {
+          Swal.fire({
+            title: "エラー",
+            text: "サーバーでエラーが発生しました",
+            icon: "error",
+          });
+        }
+      }
+    })
+    .catch((error) => {
+      Swal.fire({
+        title: "エラー",
+        text: "サーバーでエラーが発生しました。",
+        icon: "error",
+      });
+    });
+    */
+}

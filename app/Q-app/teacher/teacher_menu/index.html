@@ -37,14 +37,14 @@
 
 <body>
   <!-- version -->
-  <span class="version">Version: Stable v2.1.0_BootStrap</span>
+  <span class="version">Version: Stable v2.2.0_BootStrap</span>
   <!-- version -->
   <div class="row h-100 w-100">
     <div id="control-area" class="col-md-4">
-      <div id="class_info" class="m-3 p-3 rounded border shadow rounded bg-yellow">
-        <p id="mail_address" class="fs-4"></p>
-        <p id="user_name" class="fs-4">クラス情報を読み込み中.....</p>
-        <p id="class_code" onclick="showExpandedCode()" class="fs-4"></p>
+      <div id="class_info" class="m-2 p-3 rounded border shadow rounded bg-yellow">
+        <p id="user_info" class="fs-5">クラス情報を読み込み中.....</p>
+        <p id="class_code" onclick="showExpandedCode()" class="fs-5"></p>
+        <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
       </div>
 
       <div id="class_control" class="p-3 rounded border shadow rounded m-3 bg-yellow">
@@ -57,13 +57,17 @@
         </button>
         <button id="gas_Link" onclick="sendToGAS()">答えを書き出し</button>
       </div>
-      <div id="time-keeper" class="p-3 rounded border shadow rounded m-3 bg-yellow">
-        <p class="fs-4 bg-yellow m-1" id="currentTime"></p>
+      <div id="fileShare" class="p-1 rounded border shadow rounded m-3 bg-yellow position-relative">
+        <p class="fs-8 bg-yellow m-1" for="filePicker">生徒への共有ファイルをアップロード</p>
+        <div class="m-1">
+          <input type="file" class="form-control form-control-sm" id="filePicker">
+          <button id="file-submit-button" class="fs-6 m-2" onclick="uploadFile(filePicker.files[0])">共有</button>
+        </div>
       </div>
     </div>
 
     <div id="answersTableZone" onchange="getAnswersList()" class="col-md-4">
-      <select id="problemSelector">
+      <select id="problemSelector" class="form-select">
         <!--問題をここで選択-->
       </select>
       <table id="answerTable" class="table table-striped">
