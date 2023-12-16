@@ -93,7 +93,6 @@ async function submitAnswer() {
   
   var class_Code;
   window.onload = async function () {
-    await checkPDFExist();
     const key = "class_Code";
     const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
     class_Code = value;
@@ -110,6 +109,7 @@ async function submitAnswer() {
     }
     await mobileRedirect();
     await prevent_Overlogin();
+    await checkPDFExistance();
     setInterval("showClock()", 1000);
   };
   
@@ -374,7 +374,7 @@ async function submitAnswer() {
     document.getElementById("currentTime").innerHTML = msg;
   }
   
-  async function checkPDFExist() {
+  async function checkPDFExistance() {
     var url = "https://beta.api.cla-q.net/class_info/pdf";
     var postData = {
       class_Code: class_Code,

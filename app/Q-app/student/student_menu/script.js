@@ -93,7 +93,6 @@ function handleKeyDown(event) {
 
 var class_Code;
 window.onload = async function () {
-  await checkPDFExist();
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
@@ -110,6 +109,7 @@ window.onload = async function () {
   }
   await mobileRedirect();
   await prevent_Overlogin();
+  await checkPDFExist();
   setInterval("showClock()", 1000);
 };
 
