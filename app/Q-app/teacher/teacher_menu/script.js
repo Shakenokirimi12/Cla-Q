@@ -434,19 +434,19 @@ firebase.auth().onAuthStateChanged(async function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isStudent = false;
+          console.log("user is not student.")
         } else if (data.status_Code == "DR-02") {
           isStudent = true;
+          console.log("user is student.")
         }
         return isStudent;
       })
       .catch((error) => { })
       .finally(() => {
         //生徒か検知
-        console.log(isStudent);
         if (isStudent) {
           window.location.href = "../../student/student_start";
         }

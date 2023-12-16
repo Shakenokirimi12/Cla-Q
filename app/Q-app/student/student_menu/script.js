@@ -160,12 +160,13 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
+          console.log("user is teacher.")
         } else if (data.status_Code == "DR-02") {
           isTeacher = false;
+          console.log("user is not teacher.")
         }
         return isTeacher;
       })
