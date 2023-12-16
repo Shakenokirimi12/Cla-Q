@@ -144,6 +144,21 @@ firebase.auth().onAuthStateChanged(function (user) {
         if (isTeacher) {
           window.location.href = "../../teacher/teacher_start";
         }
+        else {
+          // Update the user information display
+          var userInfoElement = document.querySelector(".user-info");
+          userInfoElement.innerHTML =
+            "<p>ユーザー名: " +
+            user.displayName +
+            "</p><p>メールアドレス: " +
+            user.email +
+            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+
+          let screenLock = document.getElementById("screenLock");
+          screenLock.parentNode.removeChild(screenLock);
+          userName = user.displayName;
+          userEmail = user.email;
+        }
         // ログイン時
         // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
