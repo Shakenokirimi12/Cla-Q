@@ -185,7 +185,7 @@ function logOut() {
         icon: "success",
         showConfirmButton: false,
         timer: 1500, //3秒経過後に閉じる
-      }).then((result) => {
+      }).finally((result) => {
         location.reload();
       });
     });
