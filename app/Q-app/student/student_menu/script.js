@@ -33,20 +33,33 @@ async function submitAnswer() {
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data.result == "success" || data[0].result == "success") {
-                console.log("Successfully submitted the question");
-                Swal.fire({
-                  text: "答えを提出しました。(" + answer + ")",
-                  title: "情報",
-                  icon: "info",
-                  toast: true,
-                  position: "top-end", //画面右上
-                  showConfirmButton: false,
-                  timer: 3000, //3秒経過後に閉じる
-                });
+              if (data.lenghth != 0) {
+                if (data.result == "success" || data[0].result == "success") {
+                  console.log("Successfully submitted the question");
+                  Swal.fire({
+                    text: "答えを提出しました。(" + answer + ")",
+                    title: "情報",
+                    icon: "info",
+                    toast: true,
+                    position: "top-end", //画面右上
+                    showConfirmButton: false,
+                    timer: 3000, //3秒経過後に閉じる
+                  }).finally(() => {
+                    answerBox.value = "";
+                  });
+                } else {
+                  Swal.fire({
+                    text:
+                      "答えを提出できませんでした。:" + data.status_Code + "",
+                    title: "エラー",
+                    icon: "error",
+                  });
+                }
               } else {
                 Swal.fire({
-                  text: "答えを提出できませんでした。:" + data.status_Code + "",
+                  text:
+                    "回答を提出できませんでした。問題が開始されているか確認してください。:" +
+                    error,
                   title: "エラー",
                   icon: "error",
                 });
@@ -55,7 +68,7 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 text:
-                  "回答を提出できませんでした。問題が開始されているか確認してください。:" +
+                  "回答を提出できませんでした。再度試してみてください。" +
                   error,
                 title: "エラー",
                 icon: "error",
@@ -66,7 +79,6 @@ async function submitAnswer() {
           console.log(error);
         }
         // ボックス内をクリア
-        answerBox.value = "";
       }
     });
   } else {
