@@ -1,59 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>ClaQ - 生徒ログイン</title>
+    <!--vue javascript area-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <!--vue javascript area-->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Cache-Control" content="no-cache">
-  <title>ClaQ - 生徒ログイン</title>
-  <!--vue javascript area-->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-  <!--vue javascript area-->
+    <!--sweet alert area-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweet alert area-->
 
-  <!--sweet alert area-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!--sweet alert area-->
+    <!--firebase authentication javascript area-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <!--firebase authentication javascript area-->
 
-  <!--firebase authentication javascript area-->
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-  <!--firebase authentication javascript area-->
+    <!--normal javascript area-->
+    <script src="../../firebase_config.js"></script>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <!--normal javascript area-->
 
-  <!--normal javascript area-->
-  <script src="../../firebase_config.js"></script>
-  <script src="./script.js"></script>
-  <link rel="stylesheet" href="./style.css" />
-  <!--normal javascript area-->
+    <!--Bootstrap5 javascript and css area-->
+    <script src="../../bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
+    <!--Bootstrap5 javascript and css area-->
+  </head>
 
-  <!--Bootstrap5 javascript and css area-->
-  <script src="../../bootstrap/bootstrap.js"></script>
-  <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
-  <!--Bootstrap5 javascript and css area-->
-</head>
+  <body>
+    <span class="version">Version: Stable v2.2.0_BootStrap</span>
 
-<body>
-  <span class="version">Version: Stable v2.2.0_BootStrap</span>
+    <div class="user-info"></div>
 
-  <div class="user-info"></div>
-
-  <div id="login-header">
-    <p class="text-light">ClaQ - 生徒ログイン</p>
-  </div>
-
-  <div id="login-form">
-    <form id="student-login-form">
-      <label>クラスコードを入力して参加</label>
-      <input type="number" autocomplete="off" min="100000" max="999999" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
-        required="true" onkeydown="handleKeyDown(event)" />
-      <br />
-      <button type="button" class="action-button" onclick="student_Join()">
-        ログイン
-      </button>
-    </form>
-  </div>
-</body>
-
+    <div id="centering">
+      <div id="login-form">
+        <div id="login-header">
+          <p class="text-dark fs-5">ClaQ - クラス参加</p>
+        </div>
+        <form id="student-login-form">
+          <input
+            type="number"
+            autocomplete="off"
+            min="100000"
+            max="999999"
+            id="class-code-input"
+            class="input-field"
+            placeholder="クラスコードを入力"
+            required="true"
+            onkeydown="handleKeyDown(event)"
+          />
+          <br />
+          <button type="button" class="action-button" onclick="student_Join()">
+            ログイン
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
