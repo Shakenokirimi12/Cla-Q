@@ -68,8 +68,7 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 text:
-                  "回答を提出できませんでした。再度試してみてください。" +
-                  error,
+                  "回答を提出できませんでした。再度試してみてください。",
                 title: "エラー",
                 icon: "error",
               });
