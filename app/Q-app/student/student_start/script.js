@@ -54,11 +54,20 @@ async function student_Join() {
             window.location.href = "../student_menu";
           });
         } else {
-          Swal.fire({
-            title: "エラー",
-            text: "ログインできませんでした。エラーコード:" + data[0].status_Code,
-            icon: "error",
-          });
+          if (data.status_Code == undefined) {
+            Swal.fire({
+              title: "エラー",
+              text: "ログインできませんでした。",
+              icon: "error",
+            });
+          } else {
+            Swal.fire({
+              title: "エラー",
+              text:
+                "ログインできませんでした。エラーコード:" + data.status_Code,
+              icon: "error",
+            });
+          }
         }
       })
       .catch((error) => {
@@ -131,20 +140,19 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
-          console.log("user is teacher.")
+          console.log("user is teacher.");
         } else if (data.status_Code == "DR-02") {
           isTeacher = false;
-          console.log("user is not teacher.")
+          console.log("user is not teacher.");
         }
         return isTeacher;
       })
-      .catch((error) => { })
+      .catch((error) => {})
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
           window.location.href = "../../teacher/teacher_start";
-        }
-        else {
+        } else {
           // Update the user information display
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
@@ -162,7 +170,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         // ログイン時
         // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
-        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
+        document.getElementById("user_Email").innerHTML =
+          "(" + user.email + ")";
         document.getElementById("class_code").innerHTML =
           "参加中のクラス:" + class_Code;
 
@@ -195,4 +204,3 @@ function logOut() {
     });
 }
 //以上firebase auth
-
