@@ -27,21 +27,8 @@ async function student_Join() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
-        console.log(
-          data[1].message,
-          data[0].message,
-          data[1].result,
-          data[0].result
-        );
         if (data[1].result == "success" || data[0].result == "success") {
           console.log("Successfully joined the class");
-          console.log(
-            data[1].message,
-            data[0].message,
-            data[1].result,
-            data[0].result
-          );
           prevent_Overlogin();
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           Swal.fire({
