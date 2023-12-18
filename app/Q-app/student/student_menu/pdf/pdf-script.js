@@ -180,7 +180,6 @@ firebase.auth().onAuthStateChanged(function (user) {
           isTeacher = false;
           console.log("user is not teacher.");
         }
-        return isTeacher;
       })
       .catch((error) => { })
       .finally(() => {
@@ -332,20 +331,17 @@ async function checkPDFExistance() {
       var responseresult = data[Object.keys(data).length - 1];
       if (responseresult.result == "success") {
         if (responseresult.pdf == "true") {
-          console.log("Successfully fetched pdf info.");
-          Swal.fire({
-            title: "PDFを表示しますか？",
-            text: "このクラスにはPDF資料があります。PDFを表示しますか？",
-            showDenyButton: true,
-            timer: 1500, //3秒経過後に閉じる
-            icon: "info",
-            confirmButtonText: "はい",
-            denyButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "./pdf";
-            }
-          });
+          var repeatcount = Object.keys(data).length - 2;
+          var select = document.getElementById("pdfSelector");
+          for (var i = 0; i <= repeatcount; i++) {
+            // optionタグを作成する
+            var option = document.createElement("option");
+            // optionタグのテキストを設定する
+            option.value = i;
+            option.text = data[i].file_Name;
+            // selectタグの子要素にoptionタグを追加する
+            select.appendChild(option);
+          }
         }
       } else {
         Swal.fire({

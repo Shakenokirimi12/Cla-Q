@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 });
 //反映されないので再コミット
 async function qrcodeLogin(class_Code, userName) {
-  var url = "https://api.cla-q.net/student/join";
+  var url = "https://beta.api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -36,26 +36,21 @@ async function qrcodeLogin(class_Code, userName) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
+        var responseresult = data[Object.keys(data).length - 1];
         // レスポンスデータの処理
-        if (data[1].result == "success" || data[0].result == "success") {
+        if (responseresult.result == "success") {
           console.log("Successfully joined the class");
-          console.log(
-            data[1].message,
-            data[0].message,
-            data[1].result,
-            data[0].result
-          );
           document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
           Swal.fire({
             title: "成功",
-            text: "クラス" + data[0].class_Code + "に参加しました。",
+            text: "クラス" + responseresult.class_Code + "に参加しました。",
             icon: "success",
             showConfirmButton: false,
             timer: 1500, //3秒経過後に閉じる
@@ -65,7 +60,7 @@ async function qrcodeLogin(class_Code, userName) {
         } else {
           Swal.fire({
             title: "エラー",
-            text: "ログインできませんでした。" + data.status_Code,
+            text: "ログインできませんでした。" + responseresult.status_Code,
             icon: "error",
           });
         }
@@ -85,7 +80,7 @@ async function qrcodeLogin(class_Code, userName) {
 
 
 async function detectTeacher(email, name) {
-  var url = "https://api.cla-q.net/detect_role";
+  var url = "https://beta.api.cla-q.net/detect_role";
   var postData = {
     userEmail: email,
     userName: name,
@@ -94,22 +89,27 @@ async function detectTeacher(email, name) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Origin: "https://app.cla-q.net/",
+      Origin: "https://beta.cla-q.net/",
       // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
   })
     .then((response) => response.json())
     .then((data) => {
-      var isTeacher; //boolean
-      console.log(data);
-      console.log(data.status_Code);
-      if (data.status_Code == "DR-01") {
+      var isTeacher;
+      var responseresult = data[Object.keys(data).length - 1];
+      console.log(responseresult.status_Code);
+      if (responseresult.status_Code == "DR-01") {
         isTeacher = true;
-      } else if (data.status_Code == "DR-02") {
+        console.log("user is teacher.");
+      } else if (responseresult.status_Code == "DR-02") {
         isTeacher = false;
+        console.log("user is not teacher.");
       }
-      return isTeacher;
+      console.log(isTeacher);
+      if (isTeacher) {
+        window.location.href = "../../teacher/teacher_start";
+      }
     })
-    .catch((error) => {});
+    .catch((error) => { });
 }

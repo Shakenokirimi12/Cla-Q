@@ -1,6 +1,6 @@
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -9,18 +9,20 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
+        var responseresult = data[Object.keys(data).length - 1];
+
         var isTeacher; //boolean
-        console.log(data);
-        if (data.status_Code == "DR-01") {
+        console.log(responseresult);
+        if (responseresult.status_Code == "DR-01") {
           isTeacher = true;
-        } else if (data.status_Code == "DR-02") {
+        } else if (responseresult.status_Code == "DR-02") {
           isTeacher = false;
         } else {
           //先生でも生徒でもない場合
@@ -57,7 +59,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   } else {
     // 未ログイン時
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -67,7 +69,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       ],
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
-          var url = "https://api.cla-q.net/detect_role";
+          var url = "https://beta.api.cla-q.net/detect_role";
           var postData = {
             userEmail: currentUser.email,
             userName: currentUser.displayName,
@@ -76,22 +78,23 @@ firebase.auth().onAuthStateChanged(async function (user) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Origin: "https://app.cla-q.net/",
+              Origin: "https://beta.cla-q.net/",
               // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
           })
             .then((response) => response.json())
             .then((data) => {
+              var responseresult = data[Object.keys(data).length - 1];
               var isTeacher; //boolean
-              if (data.status_Code == "DR-01") {
+              if (responseresult.status_Code == "DR-01") {
                 isTeacher = true;
-              } else if (data.status_Code == "DR-02") {
+              } else if (responseresult.status_Code == "DR-02") {
                 isTeacher = false;
               } else {
                 //先生でも生徒でもない場合
                 Swal.fire({
-                  text: "サーバーレスポンスエラーです。(ErrorCode:" + data.status_Code + ")",
+                  text: "サーバーレスポンスエラーです。\n(ErrorCode:" + responseresult.status_Code + ")",
                   title: "エラー",
                   icon: "error",
                   showConfirmButton: false,
@@ -123,7 +126,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
                 });
               }
             })
-            .catch((error) => {});
+            .catch((error) => { });
 
           return false;
         },

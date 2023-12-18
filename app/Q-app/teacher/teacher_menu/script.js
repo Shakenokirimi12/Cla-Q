@@ -58,7 +58,7 @@ async function startQuestion() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  var url = "https://api.cla-q.net/teacher/start_question";
+  var url = "https://beta.api.cla-q.net/teacher/start_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -69,7 +69,7 @@ async function startQuestion() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -77,68 +77,70 @@ async function startQuestion() {
       .then((response) => response.json())
       .then((data) => {
         // レスポンスデータの処理
-        console.log(data.question_Number);
-        if (data.result == "success" || data[0].result == "success") {
-          console.log("Successfully started the question");
-          console.log(data.question_Number);
-          var questionnumber = data.question_Number;
-          document.getElementById("status").innerHTML =
-            "現在:" + questionnumber + "問目実施中";
-          // selectタグを取得する
-          var select = document.getElementById("problemSelector");
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.question_Number);
+          if (responseresult.result == "success") {
+            console.log("Successfully started the question");
+            console.log(responseresult.question_Number);
+            var questionnumber = responseresult.question_Number;
+            document.getElementById("status").innerHTML =
+              "現在:" + questionnumber + "問目実施中";
+            // selectタグを取得する
+            var select = document.getElementById("problemSelector");
 
-          // problemSelectorの中身がない場合のみ実行
-          if (select.options.length === 0) {
-            // questionnumberが1でない場合
-            if (questionnumber !== 1) {
-              // 1からquestionnumberまでのループ
-              for (var i = 1; i <= questionnumber; i++) {
-                // optionタグを作成する
+            // problemSelectorの中身がない場合のみ実行
+            if (select.options.length === 0) {
+              // questionnumberが1でない場合
+              if (questionnumber !== 1) {
+                // 1からquestionnumberまでのループ
+                for (var i = 1; i <= questionnumber; i++) {
+                  // optionタグを作成する
+                  var option = document.createElement("option");
+                  // optionタグのテキストを設定する
+                  option.value = i;
+                  option.text = "第" + i + "問";
+                  // selectタグの子要素にoptionタグを追加する
+                  select.appendChild(option);
+                }
+              } else {
+                // questionnumberが1の場合は単一のoptionを追加するだけ
                 var option = document.createElement("option");
-                // optionタグのテキストを設定する
-                option.value = i;
-                option.text = "第" + i + "問";
-                // selectタグの子要素にoptionタグを追加する
+                option.value = 1;
+                option.text = "第1問";
                 select.appendChild(option);
               }
             } else {
-              // questionnumberが1の場合は単一のoptionを追加するだけ
+              // problemSelectorの中身がある場合はquestionnumberだけを追加する
               var option = document.createElement("option");
-              option.value = 1;
-              option.text = "第1問";
+              option.value = questionnumber;
+              option.text = "第" + questionnumber + "問";
               select.appendChild(option);
             }
+            document.getElementById("problemSelector").value = questionnumber;
+            Swal.fire({
+              text: "問題を開始しました。現在" + questionnumber + "問目です。",
+              title: "成功",
+              icon: "success",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 1000, //3秒経過後に閉じる
+            });
           } else {
-            // problemSelectorの中身がある場合はquestionnumberだけを追加する
-            var option = document.createElement("option");
-            option.value = questionnumber;
-            option.text = "第" + questionnumber + "問";
-            select.appendChild(option);
+            console.log(responseresult.question_Number);
+            console.log(responseresult.result);
+            Swal.fire({
+              text: "問題を開始できませんでした。\nエラーコード:" + responseresult.status_Code,
+              title: "エラー",
+              icon: "error",
+            });
           }
-          document.getElementById("problemSelector").value = questionnumber;
-          Swal.fire({
-            text: "問題を開始しました。現在" + questionnumber + "問目です。",
-            title: "成功",
-            icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
-            showConfirmButton: false,
-            timer: 1000, //3秒経過後に閉じる
-          });
-        } else {
-          console.log(data.question_Number);
-          console.log(data.result);
-          Swal.fire({
-            text: "問題を開始できませんでした:" + data.status_Code + "",
-            title: "エラー",
-            icon: "error",
-          });
         }
       })
       .catch((error) => {
-        console.log(data.result);
         Swal.fire({
-          text: "問題を開始できませんでした(" + error + ")",
+          text: "問題を開始できませんでした。\n(" + error + ")",
           title: "エラー",
           icon: "error",
         });
@@ -154,7 +156,7 @@ async function endQuestion() {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
   // Add your login logic here
-  var url = "https://api.cla-q.net/teacher/end_question";
+  var url = "https://beta.api.cla-q.net/teacher/end_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -165,34 +167,39 @@ async function endQuestion() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.result == "success" || data[0].result == "success") {
-          console.log("Successfully started the question");
-          document.getElementById("status").innerHTML = "現在:問題開始待ち";
-          Swal.fire({
-            text: "問題を終了しました。",
-            title: "成功",
-            icon: "success",
-            toast: true,
-            position: "top-end", //画面右上
-            showConfirmButton: false,
-            timer: 1000, //3秒経過後に閉じる
-          });
-        } else {
-          Swal.fire({
-            text: "問題を終了できませんでした" + "[" + data.status_Code + "]",
-            title: "エラー",
-            icon: "error",
-          });
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          if (responseresult.result == "success") {
+            console.log("Successfully started the question");
+            document.getElementById("status").innerHTML = "現在:問題開始待ち";
+            Swal.fire({
+              text: "問題を終了しました。",
+              title: "成功",
+              icon: "success",
+              toast: true,
+              position: "top-end", //画面右上
+              showConfirmButton: false,
+              timer: 1000, //3秒経過後に閉じる
+            });
+          } else {
+            Swal.fire({
+              text: "問題を終了できませんでした。\n" + "エラーコード:" + responseresult.status_Code,
+              title: "エラー",
+              icon: "error",
+            });
+          }
+
         }
       })
       .catch((error) => {
+        console.log(error);
         Swal.fire({
           text: "問題を終了できませんでした",
           title: "エラー",
@@ -236,7 +243,7 @@ async function executeEveryTwoSeconds() {
 
 async function getStudentsList() {
   console.log("生徒一覧を取得しています。");
-  var url = "https://api.cla-q.net/teacher/get_StudentsList";
+  var url = "https://beta.api.cla-q.net/teacher/get_StudentsList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -247,7 +254,7 @@ async function getStudentsList() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -293,11 +300,7 @@ async function getStudentsList() {
         } else {
           Swal.fire({
             text:
-              "生徒一覧を取得できませんでした(" +
-              data.message +
-              ":" +
-              data.status_Code +
-              ")",
+              "生徒一覧を取得できませんでした。\nサーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -320,7 +323,7 @@ async function getAnswersList() {
   var comboBox = document.getElementById("problemSelector");
   var selectedIndex = String(comboBox.selectedIndex + 1);
   console.log("答え一覧を取得しています。");
-  var url = "https://api.cla-q.net/teacher/get_AnswersList";
+  var url = "https://beta.api.cla-q.net/teacher/get_AnswersList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -332,7 +335,7 @@ async function getAnswersList() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -363,11 +366,7 @@ async function getAnswersList() {
         } else {
           Swal.fire({
             text:
-              "答えの一覧を取得できませんでした(" +
-              data.message +
-              ":" +
-              data.status_Code +
-              ")",
+              "答えの一覧を取得できませんでした。\nサーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -381,7 +380,7 @@ async function getAnswersList() {
         console.log("生徒一覧を取得できませんでした。");
       });
   } catch (error) {
-    console.log("エラー発生。");
+    console.log("APIアクセス中にエラー発生。");
     console.log(error);
   }
 }
@@ -419,7 +418,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     var isStudent; //boolean
     // ログイン時
     //生徒か検知
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -428,22 +427,24 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.status_Code);
-        if (data.status_Code == "DR-01") {
-          isStudent = false;
-          console.log("user is not student.")
-        } else if (data.status_Code == "DR-02") {
-          isStudent = true;
-          console.log("user is student.")
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.status_Code);
+          if (responseresult.status_Code == "DR-01") {
+            isStudent = false;
+            console.log("user is not student.")
+          } else if (responseresult.status_Code == "DR-02") {
+            isStudent = true;
+            console.log("user is student.")
+          }
         }
-        return isStudent;
       })
       .catch((error) => { })
       .finally(() => {
@@ -477,7 +478,7 @@ async function disposeClass() {
     confirmButtonText: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
-      var url = "https://api.cla-q.net/teacher/inactivate_class";
+      var url = "https://beta.api.cla-q.net/teacher/inactivate_class";
       var postData = {
         class_Code: class_Code,
         userEmail: userEmail,
@@ -488,7 +489,7 @@ async function disposeClass() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Origin: "https://app.cla-q.net/",
+            Origin: "https://beta.cla-q.net/",
             // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
           },
           body: JSON.stringify(postData),
@@ -496,45 +497,13 @@ async function disposeClass() {
           .then((response) => response.json())
           .then((data) => {
             try {
-              var result = data[1].result;
-              if (result == "success") {
-                console.log("Successfully deleted the class");
-                document.cookie = "class_Code=; path=/;";
-                Swal.fire({
-                  text: "クラスを閉じました。クラス参加画面に戻ります。",
-                  title: "情報",
-                  icon: "info",
-                  showConfirmButton: false,
-                  timer: 1500, //3秒経過後に閉じる
-                }).then((result) => {
-                  window.location.href = "../teacher_start";
-                });
-              }
-              else if (data.status_Code == "IAE-13") {
-                Swal.fire({
-                  text: "クラスはすでに閉じられています。クラス参加画面に戻ります。",
-                  title: "情報",
-                  icon: "info",
-                  showConfirmButton: false,
-                  timer: 1500, //3秒経過後に閉じる
-                }).then((result) => {
-                  window.location.href = "../teacher_start";
-                });
-              } else {
-                Swal.fire({
-                  text: "クラスを終了できませんでした",
-                  title: "エラー",
-                  icon: "error",
-                });
-              }
-            } catch (error) {
-              try {
-                var result2 = data.result;
-                if (result2 == "success") {
+              if (data != undefined && data.length != 0) {
+                var responseresult = data[Object.keys(data).length - 1];
+                if (responseresult.result == "success") {
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
-                    text: "クラスを閉じました。クラス参加画面に戻ります。",
+                    text: "クラスを閉じました。\nクラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -542,12 +511,10 @@ async function disposeClass() {
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
-                } else if (data.status_Code == "IAE-13") {
+                }
+                else if (responseresult.status_Code == "IAE-13") {
                   Swal.fire({
-                    text:
-                      "クラスはすでに閉じられています。クラス参加画面に戻ります。" +
-                      ":" +
-                      data.status_Code,
+                    text: "クラスはすでに閉じられています。\nクラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -557,26 +524,15 @@ async function disposeClass() {
                   });
                 } else {
                   Swal.fire({
-                    text:
-                      "クラスを終了できませんでした(" +
-                      data.mesage +
-                      ":" +
-                      data.status_Code +
-                      ")",
+                    text: "クラスを終了できませんでした",
                     title: "エラー",
                     icon: "error",
                   });
                 }
-              } catch (error) {
-                Swal.fire({
-                  text:
-                    "サーバーエラーです。サポートにお問い合わせください。" +
-                    error +
-                    ")",
-                  title: "エラー",
-                  icon: "error",
-                });
               }
+            } catch (error) {
+              console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
+              console.log(data)
             }
             // レスポンスデータの処理
           })
@@ -588,7 +544,7 @@ async function disposeClass() {
             });
           });
       } catch (error) {
-        console.log("エラー発生。");
+        console.log("APIアクセス中にエラー発生。");
         console.log(error);
       }
     }
@@ -628,8 +584,7 @@ async function uploadFile(file) {
     body: formData, // FormDataオブジェクトをbodyに追加
   })
     .then((response) => response.text())
-    .then((data) => {
-      console.log(data);
+    .then(() => {
       Swal.fire({
         text: "ファイルを共有しました。",
         title: "成功",

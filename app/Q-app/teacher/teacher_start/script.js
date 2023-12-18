@@ -7,7 +7,7 @@ function handleKeyDown(event) {
 }
 
 async function startClass() {
-  var url = "https://api.cla-q.net/teacher/create_class";
+  var url = "https://beta.api.cla-q.net/teacher/create_class";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -17,7 +17,7 @@ async function startClass() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -25,25 +25,35 @@ async function startClass() {
       .then((response) => response.json())
       .then((data) => {
         // レスポンスデータの処理
-        if (data.result == "success") {
-          console.log("Successfully created the class");
-          prevent_Overlogin();
-          document.cookie = "class_Code=" + data.class_Code + ";path=/;";
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          if (responseresult.result == "success") {
+            console.log("Successfully created the class.");
+            prevent_Overlogin();
+            document.cookie = "class_Code=" + responseresult.class_Code + ";path=/;";
+            Swal.fire({
+              text:
+                "クラスを作成しました。\nクラスコードは" +
+                responseresult.class_Code +
+                "です。",
+              title: "情報",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "../teacher_menu";
+            });
+          } else {
+            Swal.fire({
+              text: "クラスを開始できませんでした。\n(" + responseresult.message + responseresult.status_Code + ")",
+              title: "エラー",
+              icon: "error",
+            });
+          }
+        }
+        else {
           Swal.fire({
-            text:
-              "クラスを作成しました。クラスコードは" +
-              data.class_Code +
-              "です。",
-            title: "情報",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
-          }).then((result) => {
-            window.location.href = "../teacher_menu";
-          });
-        } else {
-          Swal.fire({
-            text: "クラスを開始できませんでした。(" + data.message + data.status_Code + ")",
+            text: "接続できませんでした。\nサーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
           });
@@ -72,7 +82,7 @@ async function teacher_Rejoin() {
     });
     return;
   }
-  var url = "https://api.cla-q.net/teacher/rejoin_class";
+  var url = "https://beta.api.cla-q.net/teacher/rejoin_class";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -83,16 +93,16 @@ async function teacher_Rejoin() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        try {
-          var result = data[1].result;
-          if (result == "success") {
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          if (responseresult.result == "success") {
             prevent_Overlogin();
             console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + class_Code + ";path=/;";
@@ -107,47 +117,23 @@ async function teacher_Rejoin() {
             });
           } else {
             Swal.fire({
-              text: "接続できませんでした。(" + data[1].message + data[1].status_Code + ")",
-              title: "エラー",
-              icon: "error",
-            });
-          }
-        } catch (error) {
-          try {
-            var result2 = data.result;
-            if (result2 == "success") {
-              console.log("Successfully created the class");
-              prevent_Overlogin();
-              document.cookie = "class_Code=" + class_Code + ";path=/;";
-              Swal.fire({
-                text: "クラスに再接続しました。",
-                title: "情報",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500, //3秒経過後に閉じる
-              }).then((result) => {
-                window.location.href = "../teacher_menu";
-              });
-            } else {
-              Swal.fire({
-                text: "接続できませんでした。(" + data.message + data.status_Code + ")",
-                title: "エラー",
-                icon: "error",
-              });
-            }
-          } catch (error) {
-            Swal.fire({
-              text: "サーバーエラーです。サポートにお問い合わせください。" + error,
+              text: "接続できませんでした。\n" + responseresult.message + "(" + responseresult.status_Code + ")",
               title: "エラー",
               icon: "error",
             });
           }
         }
-        // レスポンスデータの処理
+        else {
+          Swal.fire({
+            text: "接続できませんでした。\nサーバーから無効な応答が返されました。",
+            title: "エラー",
+            icon: "error",
+          });
+        }
       })
       .catch((error) => {
         Swal.fire({
-          text: "ログインできませんでした。" + error,
+          text: "クラスに再接続できませんでした。" + error,
           title: "エラー",
           icon: "error",
         });
@@ -196,7 +182,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     // ログイン時
     //生徒か検知
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -205,22 +191,24 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.status_Code);
-        if (data.status_Code == "DR-01") {
-          isStudent = false;
-          console.log("user is not student.")
-        } else if (data.status_Code == "DR-02") {
-          isStudent = true;
-          console.log("user is student.")
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.status_Code);
+          if (responseresult.status_Code == "DR-01") {
+            isStudent = false;
+            console.log("user is not student.")
+          } else if (responseresult.status_Code == "DR-02") {
+            isStudent = true;
+            console.log("user is student.")
+          }
         }
-        return isStudent;
       })
       .catch((error) => { })
       .finally(() => {
