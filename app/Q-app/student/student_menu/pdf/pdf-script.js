@@ -14,7 +14,7 @@ async function submitAnswer() {
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
         // Add your login logic here
-        var url = "https://beta.api.cla-q.net/student/submit_answer";
+        var url = "https://api.cla-q.net/student/submit_answer";
         var postData = {
           class_Code: class_Code,
           userName: userName,
@@ -26,40 +26,27 @@ async function submitAnswer() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Origin: "https://beta.cla-q.net/",
+              Origin: "https://app.cla-q.net/",
               // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data.lenghth != 0) {
-                if (data.result == "success" || data[0].result == "success") {
-                  console.log("Successfully submitted the question");
-                  Swal.fire({
-                    text: "答えを提出しました。(" + answer + ")",
-                    title: "情報",
-                    icon: "info",
-                    toast: true,
-                    position: "top-end", //画面右上
-                    showConfirmButton: false,
-                    timer: 3000, //3秒経過後に閉じる
-                  }).finally(() => {
-                    answerBox.value = "";
-                  });
-                } else {
-                  Swal.fire({
-                    text:
-                      "答えを提出できませんでした。:" + data.status_Code + "",
-                    title: "エラー",
-                    icon: "error",
-                  });
-                }
+              if (data.result == "success" || data[0].result == "success") {
+                console.log("Successfully submitted the question");
+                Swal.fire({
+                  text: "答えを提出しました。(" + answer + ")",
+                  title: "情報",
+                  icon: "info",
+                  toast: true,
+                  position: "top-end", //画面右上
+                  showConfirmButton: false,
+                  timer: 3000, //3秒経過後に閉じる
+                });
               } else {
                 Swal.fire({
-                  text:
-                    "回答を提出できませんでした。問題が開始されているか確認してください。:" +
-                    error,
+                  text: "答えを提出できませんでした。:" + data.status_Code + "",
                   title: "エラー",
                   icon: "error",
                 });
@@ -68,7 +55,9 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 text:
-                  "回答を提出できませんでした。再度試してみてください。",
+                  "回答を提出できませんでした。問題が開始されているか確認してください。:" +
+                  data.status_Code +
+                  "",
                 title: "エラー",
                 icon: "error",
               });
@@ -78,6 +67,7 @@ async function submitAnswer() {
           console.log(error);
         }
         // ボックス内をクリア
+        answerBox.value = "";
       }
     });
   } else {
@@ -114,7 +104,7 @@ window.onload = async function () {
       icon: "error",
       timer: 1500,
     }).then((result) => {
-      window.location.href = "../student_start";
+      window.location.href = "../../student_start";
     });
   }
   await mobileRedirect();
@@ -130,7 +120,7 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("iPod") > 0 ||
     navigator.userAgent.indexOf("Android") > 0
   ) {
-    location.href = "../mobile";
+    location.href = "../../../mobile";
   }
 }
 
@@ -154,7 +144,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     var isTeacher; //boolean
     //教師か検知
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -163,7 +153,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://beta.cla-q.net/",
+        Origin: "https://app.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -173,24 +163,23 @@ firebase.auth().onAuthStateChanged(function (user) {
         console.log(data.status_Code);
         if (data.status_Code == "DR-01") {
           isTeacher = true;
-          console.log("user is teacher.");
+          console.log("user is teacher.")
         } else if (data.status_Code == "DR-02") {
           isTeacher = false;
-          console.log("user is not teacher.");
+          console.log("user is not teacher.")
         }
         return isTeacher;
       })
-      .catch((error) => {})
+      .catch((error) => { })
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
-          window.location.href = "../../teacher/teacher_start";
+          window.location.href = "../../../teacher/teacher_start";
         }
         // ログイン時
         // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
-        document.getElementById("user_Email").innerHTML =
-          "(" + user.email + ")";
+        document.getElementById("user_Email").innerHTML = "(" + user.email + ")";
         document.getElementById("class_code").innerHTML =
           "参加中のクラス:" + class_Code;
 
@@ -202,7 +191,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     //教師か検知
   } else {
     // 未ログイン時
-    window.location.href = "../../login";
+    window.location.href = "../../../login";
   }
 });
 
@@ -214,7 +203,7 @@ async function logOut() {
 //以下workers
 async function leaveClass() {
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/student/leave";
+  var url = "https://api.cla-q.net/student/leave";
   var postData = {
     userName: userName,
   };
@@ -223,7 +212,7 @@ async function leaveClass() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://beta.cla-q.net/",
+        Origin: "https://app.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -267,7 +256,7 @@ async function leaveClass() {
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
-            window.location.href = "../student_start";
+            window.location.href = "../../student_start";
           });
         } else {
           console.log("データエラー。successが返されなかった。");
@@ -275,15 +264,13 @@ async function leaveClass() {
             if (data[0].status_Code == "LE-11") {
               prevent_Overlogin();
               Swal.fire({
-                text:
-                  "クラスが教師によって閉じられています。クラス参加画面に戻ります。" +
-                  data[0].status_Code,
+                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
                 title: "情報",
                 icon: "info",
                 showConfirmButton: false,
                 timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student_start";
+                window.location.href = "../../student_start";
               });
             } else {
               Swal.fire({
@@ -307,15 +294,11 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student_start";
+                window.location.href = "../../student_start";
               });
             } else {
               Swal.fire({
-                text:
-                  "クラスを離脱できませんでした。(" +
-                  data[1].message +
-                  data[1].status_Code +
-                  ")",
+                text: "クラスを離脱できませんでした。(" + data[1].message + ")",
                 title: "エラー",
                 icon: "error",
               });
@@ -333,7 +316,7 @@ async function leaveClass() {
                 showConfirmButton: false,
                 timer: 1500, //3秒経過後に閉じる
               }).then((result) => {
-                window.location.href = "../student_start";
+                window.location.href = "../../student_start";
               });
             } else {
               Swal.fire({
@@ -366,7 +349,7 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      text: "クラスを離脱できませんでした。" + error,
+      text: "クラスを離脱できませんでした。",
       title: "不明なエラー",
       icon: "error",
     });
@@ -392,7 +375,7 @@ function showClock() {
 }
 
 async function checkPDFExistance() {
-  var url = "https://beta.api.cla-q.net/class_info/pdf";
+  var url = "https://api.cla-q.net/class_info/pdf";
   var postData = {
     class_Code: class_Code,
   };
@@ -400,30 +383,28 @@ async function checkPDFExistance() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Origin: "https://beta.cla-q.net/",
+      Origin: "https://app.cla-q.net/",
       // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
   })
     .then((response) => response.json())
     .then((data) => {
-      // レスポンスデータの処理
       if (data[1].result == "success" || data[0].result == "success") {
         if (data[1].pdf == "exist") {
           console.log("Successfully fetched pdf info.");
-          Swal.fire({
-            title: "成功",
-            text: "このクラスにはPDF資料があります。PDFを表示しますか？",
-            showDenyButton: true,
-            timer: 1500, //3秒経過後に閉じる
-            icon: "info",
-            confirmButtonText: "はい",
-            denyButtonText: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "./pdf";
-            }
-          });
+          console.log(data);
+          var repeatcount = Object.keys(data).length - 2;
+          var select = document.getElementById("pdfSelector");
+          for (var i = 0; i <= repeatcount; i++) {
+            // optionタグを作成する
+            var option = document.createElement("option");
+            // optionタグのテキストを設定する
+            option.value = i;
+            option.text = data[i].file_Name;
+            // selectタグの子要素にoptionタグを追加する
+            select.appendChild(option);
+          }
         }
       } else {
         if (!(data[1].message == "")) {
@@ -465,3 +446,4 @@ async function checkPDFExistance() {
       });
     });
 }
+
