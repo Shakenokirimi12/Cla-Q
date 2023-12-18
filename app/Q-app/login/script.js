@@ -1,6 +1,6 @@
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://beta.api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -9,7 +9,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://app.cla-q.net/",
+        Origin: "https://beta.cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -67,7 +67,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       ],
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
-          var url = "https://api.cla-q.net/detect_role";
+          var url = "https://beta.api.cla-q.net/detect_role";
           var postData = {
             userEmail: currentUser.email,
             userName: currentUser.displayName,
@@ -76,7 +76,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Origin: "https://app.cla-q.net/",
+              Origin: "https://beta.cla-q.net/",
               // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
