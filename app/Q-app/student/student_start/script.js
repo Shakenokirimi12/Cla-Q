@@ -27,33 +27,36 @@ async function student_Join() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data[1].result == "success" || data[0].result == "success") {
-          console.log("Successfully joined the class");
-          prevent_Overlogin();
-          document.cookie = "class_Code=" + data[0].class_Code + "; path=/;";
-          Swal.fire({
-            title: "成功",
-            text: "クラス" + data[0].class_Code + "に参加しました。",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
-          }).then((result) => {
-            window.location.href = "../student_menu";
-          });
-        } else {
-          if (data.status_Code == undefined) {
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          if (responseresult.result == "success") {
+            console.log("Successfully joined the class");
+            prevent_Overlogin();
+            document.cookie = "class_Code=" + responseresult.class_Code + "; path=/;";
             Swal.fire({
-              title: "エラー",
-              text: "クラスに参加できませんでした。",
-              icon: "error",
+              title: "成功",
+              text: "クラス" + responseresult.class_Code + "に参加しました。",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "../student_menu";
             });
           } else {
-            Swal.fire({
-              title: "エラー",
-              text:
-                "クラスに参加できませんでした。エラーコード:" + data.status_Code,
-              icon: "error",
-            });
+            if (responseresult.status_Code == undefined) {
+              Swal.fire({
+                title: "エラー",
+                text: "クラスに参加できませんでした。",
+                icon: "error",
+              });
+            } else {
+              Swal.fire({
+                title: "エラー",
+                text:
+                  "クラスに参加できませんでした。\nエラーコード:" + responseresult.status_Code,
+                icon: "error",
+              });
+            }
           }
         }
       })
@@ -124,17 +127,19 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.status_Code);
-        if (data.status_Code == "DR-01") {
-          isTeacher = true;
-          console.log("user is teacher.");
-        } else if (data.status_Code == "DR-02") {
-          isTeacher = false;
-          console.log("user is not teacher.");
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.status_Code);
+          if (responseresult.status_Code == "DR-01") {
+            isTeacher = true;
+            console.log("user is teacher.");
+          } else if (responseresult.status_Code == "DR-02") {
+            isTeacher = false;
+            console.log("user is not teacher.");
+          }
         }
-        return isTeacher;
       })
-      .catch((error) => {})
+      .catch((error) => { })
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {

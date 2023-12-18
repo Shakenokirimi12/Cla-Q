@@ -33,8 +33,9 @@ async function submitAnswer() {
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data.lenghth != 0) {
-                if (data.result == "success" || data[0].result == "success") {
+              if (Object.keys(data).length != 0) {
+                var responseresult = data[Object.keys(data).length - 1];
+                if (responseresult.result == "success") {
                   console.log("Successfully submitted the question");
                   Swal.fire({
                     text: "答えを提出しました。(" + answer + ")",
@@ -50,7 +51,7 @@ async function submitAnswer() {
                 } else {
                   Swal.fire({
                     text:
-                      "答えを提出できませんでした。:" + data.status_Code + "",
+                      "答えを提出できませんでした。:" + responseresult.status_Code + "",
                     title: "エラー",
                     icon: "error",
                   });
@@ -170,17 +171,18 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.status_Code);
-        if (data.status_Code == "DR-01") {
+        var responseresult = data[Object.keys(data).length - 1];
+        console.log(responseresult.status_Code);
+        if (responseresult.status_Code == "DR-01") {
           isTeacher = true;
           console.log("user is teacher.");
-        } else if (data.status_Code == "DR-02") {
+        } else if (responseresult.status_Code == "DR-02") {
           isTeacher = false;
           console.log("user is not teacher.");
         }
         return isTeacher;
       })
-      .catch((error) => {})
+      .catch((error) => { })
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -230,33 +232,8 @@ async function leaveClass() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
-        try {
-          var result1 = data[0].result;
-        } catch (error) {
-          console.log(error);
-          try {
-            var result2 = data[1].result;
-          } catch (error2) {
-            console.log(error2);
-            try {
-              var result3 = data.result;
-            } catch (error3) {
-              console.log(error3);
-              Swal.fire({
-                text: "クラスを離脱できませんでした。(" + error3 + ")",
-                title: "エラー",
-                icon: "error",
-              });
-              return;
-            }
-          }
-        }
-        if (
-          result1 == "success" ||
-          result2 == "success" ||
-          result3 == "success"
-        ) {
+        var responseresult = data[Object.keys(data).length - 1];//レスポン状況ノードを抽出
+        if (responseresult.result == "success") {//レスポン成功
           console.log("Successfully leaved the class");
           prevent_Overlogin();
           Swal.fire({
@@ -269,96 +246,40 @@ async function leaveClass() {
             document.cookie = "class_Code=; path=/;";
             window.location.href = "../student_start";
           });
-        } else {
+        } else {//レスポン失敗
           console.log("データエラー。successが返されなかった。");
-          if (result1 != undefined) {
-            if (data[0].status_Code == "LE-11") {
-              prevent_Overlogin();
-              Swal.fire({
-                text:
-                  "クラスが教師によって閉じられています。クラス参加画面に戻ります。" +
-                  data[0].status_Code,
-                title: "情報",
-                icon: "info",
-                showConfirmButton: false,
-                timer: 1500, //3秒経過後に閉じる
-              }).then((result) => {
-                window.location.href = "../student_start";
-              });
-            } else {
-              Swal.fire({
-                text:
-                  "クラスを離脱できませんでした。(" +
-                  data[0].message +
-                  ":" +
-                  data[0].status_Code +
-                  ")",
-                title: "情報",
-                icon: "info",
-              });
-            }
-          } else if (result2 != undefined) {
-            if (data[1].status_Code == "LE-11") {
-              prevent_Overlogin();
-              Swal.fire({
-                text: "クラスが教師によって閉じられています。クラス参加画面に戻ります。",
-                title: "情報",
-                icon: "info",
-                showConfirmButton: false,
-                timer: 1500, //3秒経過後に閉じる
-              }).then((result) => {
-                window.location.href = "../student_start";
-              });
-            } else {
-              Swal.fire({
-                text:
-                  "クラスを離脱できませんでした。(" +
-                  data[1].message +
-                  data[1].status_Code +
-                  ")",
-                title: "エラー",
-                icon: "error",
-              });
-            }
+          if (responseresult.status_Code == "LE-11") {//教師がクラスを閉じていた時
+            prevent_Overlogin();
+            Swal.fire({
+              text:
+                "クラスが教師によって閉じられています。クラス参加画面に戻ります。:" +
+                responseresult.status_Code +
+                "",
+              title: "情報",
+              icon: "info",
+              showConfirmButton: false,
+              timer: 1500, //3秒経過後に閉じる
+            }).then((result) => {
+              window.location.href = "../student_start";
+            });
           } else {
-            if (data.status_Code == "LE-11") {
-              prevent_Overlogin();
-              Swal.fire({
-                text:
-                  "クラスが教師によって閉じられています。クラス参加画面に戻ります。:" +
-                  data.status_Code +
-                  "",
-                title: "情報",
-                icon: "info",
-                showConfirmButton: false,
-                timer: 1500, //3秒経過後に閉じる
-              }).then((result) => {
-                window.location.href = "../student_start";
-              });
-            } else {
-              Swal.fire({
-                text:
-                  "クラスを離脱できませんでした。(" +
-                  data.message +
-                  ":" +
-                  data.status_Code +
-                  ")",
-                title: "エラー",
-                icon: "error",
-              });
-            }
+            Swal.fire({
+              text:
+                "クラスを離脱できませんでした。(" +
+                responseresult.message +
+                ":" +
+                responseresult.status_Code +
+                ")",
+              title: "エラー",
+              icon: "error",
+            });
           }
         }
       })
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          text:
-            "クラスを離脱できませんでした。(" +
-            data.message +
-            ":" +
-            data.status_Code +
-            ")",
+          text: "クラスを離脱できませんでした。\n予期しないエラーが発生しました。\nエラーコード:CSE-02",
           title: "不明なエラー",
           icon: "error",
         });
@@ -366,7 +287,7 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      text: "クラスを離脱できませんでした。" + error,
+      text: "クラスを離脱できませんでした。\nAPIへの接続または応答に失敗しました。\nエラーコード:CSE-03\n" + error,
       title: "不明なエラー",
       icon: "error",
     });
@@ -408,8 +329,9 @@ async function checkPDFExistance() {
     .then((response) => response.json())
     .then((data) => {
       // レスポンスデータの処理
-      if (data[1].result == "success" || data[0].result == "success") {
-        if (data[1].pdf == "exist") {
+      var responseresult = data[Object.keys(data).length - 1];
+      if (responseresult.result == "success") {
+        if (responseresult.pdf == "true") {
           console.log("Successfully fetched pdf info.");
           Swal.fire({
             title: "成功",
@@ -426,35 +348,11 @@ async function checkPDFExistance() {
           });
         }
       } else {
-        if (!(data[1].message == "")) {
-          Swal.fire({
-            title: "エラー",
-            text:
-              "サーバーでエラーが発生しました(" +
-              data[1].message +
-              ":" +
-              data[1].status_Code +
-              ")",
-            icon: "error",
-          });
-        } else if (!(data[0].message == "")) {
-          Swal.fire({
-            title: "エラー",
-            text:
-              "サーバーでエラーが発生しました(" +
-              data[0].message +
-              ":" +
-              data[0].status_Code +
-              ")",
-            icon: "error",
-          });
-        } else {
-          Swal.fire({
-            title: "エラー",
-            text: "サーバーでエラーが発生しました",
-            icon: "error",
-          });
-        }
+        Swal.fire({
+          title: "エラー",
+          text: "サーバーでエラーが発生しました。\nPDF存在チェックに失敗しました。",
+          icon: "error",
+        });
       }
     })
     .catch((error) => {

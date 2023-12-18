@@ -16,11 +16,13 @@ firebase.auth().onAuthStateChanged(async function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
+        var responseresult = data[Object.keys(data).length - 1];
+
         var isTeacher; //boolean
-        console.log(data);
-        if (data.status_Code == "DR-01") {
+        console.log(responseresult);
+        if (responseresult.status_Code == "DR-01") {
           isTeacher = true;
-        } else if (data.status_Code == "DR-02") {
+        } else if (responseresult.status_Code == "DR-02") {
           isTeacher = false;
         } else {
           //先生でも生徒でもない場合
@@ -57,7 +59,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
           });
         }
       })
-      .catch((error) => {});
+      .catch((error) => { });
   } else {
     // 未ログイン時
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -83,15 +85,16 @@ firebase.auth().onAuthStateChanged(async function (user) {
           })
             .then((response) => response.json())
             .then((data) => {
+              var responseresult = data[Object.keys(data).length - 1];
               var isTeacher; //boolean
-              if (data.status_Code == "DR-01") {
+              if (responseresult.status_Code == "DR-01") {
                 isTeacher = true;
-              } else if (data.status_Code == "DR-02") {
+              } else if (responseresult.status_Code == "DR-02") {
                 isTeacher = false;
               } else {
                 //先生でも生徒でもない場合
                 Swal.fire({
-                  text: "サーバーレスポンスエラーです。(ErrorCode:" + data.status_Code + ")",
+                  text: "サーバーレスポンスエラーです。\n(ErrorCode:" + responseresult.status_Code + ")",
                   title: "エラー",
                   icon: "error",
                   showConfirmButton: false,
@@ -123,7 +126,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
                 });
               }
             })
-            .catch((error) => {});
+            .catch((error) => { });
 
           return false;
         },
