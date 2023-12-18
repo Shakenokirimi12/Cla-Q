@@ -10,7 +10,7 @@ var userName, userEmail;
 async function student_Join() {
   var class_Code = document.getElementById("class-code-input").value;
   // Add your login logic here
-  var url = "https://beta.api.cla-q.net/student/join";
+  var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -20,7 +20,7 @@ async function student_Join() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://beta.cla-q.net/",
+        Origin: "https://cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -111,7 +111,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     var isTeacher; //boolean
     // ログイン時
     //教師か検知
-    var url = "https://beta.api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -120,7 +120,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://beta.cla-q.net/",
+        Origin: "https://cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),

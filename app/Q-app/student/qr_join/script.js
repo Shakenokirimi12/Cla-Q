@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 });
 //反映されないので再コミット
 async function qrcodeLogin(class_Code, userName) {
-  var url = "https://beta.api.cla-q.net/student/join";
+  var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -36,7 +36,7 @@ async function qrcodeLogin(class_Code, userName) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://beta.cla-q.net/",
+        Origin: "https://cla-q.net/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -80,7 +80,7 @@ async function qrcodeLogin(class_Code, userName) {
 
 
 async function detectTeacher(email, name) {
-  var url = "https://beta.api.cla-q.net/detect_role";
+  var url = "https://api.cla-q.net/detect_role";
   var postData = {
     userEmail: email,
     userName: name,
@@ -89,7 +89,7 @@ async function detectTeacher(email, name) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Origin: "https://beta.cla-q.net/",
+      Origin: "https://cla-q.net/",
       // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
