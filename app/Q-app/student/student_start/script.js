@@ -44,14 +44,14 @@ async function student_Join() {
           if (data.status_Code == undefined) {
             Swal.fire({
               title: "エラー",
-              text: "ログインできませんでした。",
+              text: "クラスに参加できませんでした。",
               icon: "error",
             });
           } else {
             Swal.fire({
               title: "エラー",
               text:
-                "ログインできませんでした。エラーコード:" + data.status_Code,
+                "クラスに参加できませんでした。エラーコード:" + data.status_Code,
               icon: "error",
             });
           }
@@ -60,7 +60,7 @@ async function student_Join() {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          text: "ログインできませんでした。",
+          text: "クラスに参加できませんでした。",
           icon: "error",
         });
       });

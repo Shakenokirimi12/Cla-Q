@@ -147,7 +147,7 @@ async function teacher_Rejoin() {
       })
       .catch((error) => {
         Swal.fire({
-          text: "ログインできませんでした。" + error,
+          text: "クラスに再接続できませんでした。" + error,
           title: "エラー",
           icon: "error",
         });
