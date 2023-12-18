@@ -334,7 +334,7 @@ async function checkPDFExistance() {
         if (responseresult.pdf == "true") {
           console.log("Successfully fetched pdf info.");
           Swal.fire({
-            title: "成功",
+            title: "PDFを表示しますか？",
             text: "このクラスにはPDF資料があります。PDFを表示しますか？",
             showDenyButton: true,
             timer: 1500, //3秒経過後に閉じる
