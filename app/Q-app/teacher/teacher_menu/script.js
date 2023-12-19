@@ -663,6 +663,7 @@ async function getClassInfo() {
             var classinfo = data[0];
             if (responseresult.result == "success") {
               console.log(classinfo)
+              var select = document.getElementById("problemSelector");
               if (classinfo.latest_Question_Number == "0") {
                 document.getElementById("status").innerHTML = "現在:問題開始待ち";
               }
