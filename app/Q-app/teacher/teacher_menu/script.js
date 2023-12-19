@@ -177,7 +177,7 @@ async function endQuestion() {
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
           if (responseresult.result == "success") {
-            console.log("Successfully started the question");
+            console.log("Successfully ended the question");
             document.getElementById("status").innerHTML = "現在:問題開始待ち";
             Swal.fire({
               text: "問題を終了しました。",
@@ -229,6 +229,37 @@ window.onload = async function () {
   }
   await redirectMobile();
   await preventOverLogin();
+  var classinfo = await getClassInfo();
+  if (classinfo.latest_Question_Number == "0") {
+    document.getElementById("status").innerHTML = "現在:問題開始待ち";
+  }
+  else {
+    if (classinfo.current_Question_Number == classinfo.latest_Question_Number) {
+      if (classinfo.latest_Question_Number !== 1) {
+        // 1からquestionnumberまでのループ
+        for (var i = 1; i <= classinfo.latest_Question_Number; i++) {
+          // optionタグを作成する
+          var option = document.createElement("option");
+          // optionタグのテキストを設定する
+          option.value = i;
+          option.text = "第" + i + "問";
+          // selectタグの子要素にoptionタグを追加する
+          select.appendChild(option);
+        }
+      } else {
+        // questionnumberが1の場合は単一のoptionを追加するだけ
+        var option = document.createElement("option");
+        option.value = 1;
+        option.text = "第1問";
+        select.appendChild(option);
+      }
+      document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
+    }
+    else {
+      document.getElementById("status").innerHTML = "現在:問題開始待ち";
+
+    }
+  }
   setInterval("showClock()", 1000);
 };
 
@@ -635,3 +666,55 @@ function logOut() {
 }
 //以上firebase auth
 
+async function getClassInfo(class_Code, userEmail) {
+  var url = "https://api.cla-q.net/teacher/class_info";
+  var postData = {
+    class_Code: class_Code,
+    userEmail: userEmail,
+  };
+  try {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://cla-q.net/",
+        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        try {
+          if (data != undefined && data.length != 0) {
+            var responseresult = data[Object.keys(data).length - 1];
+            var classinfo = data[0];
+            if (responseresult.result == "success") {
+              return classinfo;
+            }
+          } else {
+            Swal.fire({
+              text: "クラス情報を取得できませんでした",
+              title: "エラー",
+              icon: "error",
+            });
+            window.location.href = "../teacher_start"
+          }
+        }
+        catch (error) {
+          console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
+          console.log(data)
+        }
+        // レスポンスデータの処理
+      })
+      .catch((error) => {
+        Swal.fire({
+          text: "API送信に失敗しました。",
+          title: "エラー",
+          icon: "error",
+        });
+      });
+  } catch (error) {
+    console.log("APIアクセス中にエラー発生。");
+    console.log(error);
+  }
+}
