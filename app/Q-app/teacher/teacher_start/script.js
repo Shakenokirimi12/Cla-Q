@@ -1,5 +1,4 @@
 function handleKeyDown(event) {
-  // Enter キーが押された場合に送信処理を行う
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     teacher_Rejoin();
@@ -18,13 +17,11 @@ async function startClass() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
           if (responseresult.result == "success") {
@@ -39,7 +36,7 @@ async function startClass() {
               title: "情報",
               icon: "success",
               showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
+              timer: 1500, 
             }).then((result) => {
               window.location.href = "../teacher_menu";
             });
@@ -94,7 +91,6 @@ async function teacher_Rejoin() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -112,7 +108,7 @@ async function teacher_Rejoin() {
               title: "情報",
               icon: "success",
               showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
+              timer: 1500, 
             }).then((result) => {
               window.location.href = "../teacher_menu";
             });
@@ -179,10 +175,8 @@ function prevent_Overlogin() {
 
 var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
-  var isStudent; //boolean
+  var isStudent;
   if (user) {
-    // ログイン時
-    //生徒か検知
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
@@ -193,7 +187,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -213,11 +206,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
       })
       .catch((error) => { })
       .finally(() => {
-        //生徒か検知
         if (isStudent) {
           window.location.href = "../../student/student_start";
         } else {
-          // Update the user information display
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
             "<p>ユーザー名: " +
@@ -225,7 +216,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
             "</p><p>メールアドレス: " +
             user.email +
             "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-          //ログイン越え回避解除
           let screenLock = document.getElementById("screenLock");
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
@@ -233,7 +223,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
         }
       });
   } else {
-    // 未ログイン時
     window.location.href = "../../login";
   }
 });
@@ -250,12 +239,11 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
+        timer: 1500, 
       }).then((result) => {
         document.cookie = "class_Code=; path=/;";
         location.reload();
       });
     });
 }
-//以上firebase auth
 

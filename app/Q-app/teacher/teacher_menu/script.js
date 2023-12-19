@@ -6,15 +6,14 @@ async function sendToGAS() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
-  // Add your login logic here
   Swal.fire({
     title: "通知",
     text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
     toast: true,
-    position: "top-end", //画面右上
+    position: "top-end", 
     showConfirmButton: false,
-    timer: 3000, //3秒経過後に閉じる
+    timer: 3000, 
   });
   var url =
     "https://script.google.com/macros/s/AKfycbxGJTMf6kqWsODNhUNYB_QqdENHl28b-y_Y32n5_RijVivPDAQM5Lde7SSJYyOOHGd7/exec";
@@ -27,7 +26,6 @@ async function sendToGAS() {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -43,9 +41,9 @@ async function sendToGAS() {
           text: "共有リンクを取得できませんでした。もう一度試してください。",
           icon: "error",
           toast: true,
-          position: "top-end", //画面右上
+          position: "top-end", 
           showConfirmButton: false,
-          timer: 3000, //3秒経過後に閉じる
+          timer: 3000,
         });
       });
   } catch (error) {
@@ -57,7 +55,6 @@ async function startQuestion() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
-  // Add your login logic here
   var url = "https://api.cla-q.net/teacher/start_question";
   var postData = {
     class_Code: class_Code,
@@ -70,13 +67,11 @@ async function startQuestion() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
           console.log(responseresult.question_Number);
@@ -86,32 +81,23 @@ async function startQuestion() {
             var questionnumber = responseresult.question_Number;
             document.getElementById("status").innerHTML =
               "現在:" + questionnumber + "問目実施中";
-            // selectタグを取得する
             var select = document.getElementById("problemSelector");
 
-            // problemSelectorの中身がない場合のみ実行
             if (select.options.length === 0) {
-              // questionnumberが1でない場合
               if (questionnumber !== 1) {
-                // 1からquestionnumberまでのループ
                 for (var i = 1; i <= questionnumber; i++) {
-                  // optionタグを作成する
                   var option = document.createElement("option");
-                  // optionタグのテキストを設定する
                   option.value = i;
                   option.text = "第" + i + "問";
-                  // selectタグの子要素にoptionタグを追加する
                   select.appendChild(option);
                 }
               } else {
-                // questionnumberが1の場合は単一のoptionを追加するだけ
                 var option = document.createElement("option");
                 option.value = 1;
                 option.text = "第1問";
                 select.appendChild(option);
               }
             } else {
-              // problemSelectorの中身がある場合はquestionnumberだけを追加する
               var option = document.createElement("option");
               option.value = questionnumber;
               option.text = "第" + questionnumber + "問";
@@ -123,9 +109,9 @@ async function startQuestion() {
               title: "成功",
               icon: "success",
               toast: true,
-              position: "top-end", //画面右上
+              position: "top-end", 
               showConfirmButton: false,
-              timer: 1000, //3秒経過後に閉じる
+              timer: 1000, 
             });
           } else {
             console.log(responseresult.question_Number);
@@ -155,7 +141,6 @@ async function endQuestion() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
-  // Add your login logic here
   var url = "https://api.cla-q.net/teacher/end_question";
   var postData = {
     class_Code: class_Code,
@@ -168,7 +153,6 @@ async function endQuestion() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -184,9 +168,9 @@ async function endQuestion() {
               title: "成功",
               icon: "success",
               toast: true,
-              position: "top-end", //画面右上
+              position: "top-end", 
               showConfirmButton: false,
-              timer: 1000, //3秒経過後に閉じる
+              timer: 1000, 
             });
           } else {
             Swal.fire({
@@ -255,35 +239,23 @@ async function getStudentsList() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
         if (data != undefined) {
           var tableBody = document.getElementById("studentsTableBody");
-          // HTMLのstdList要素を取得
           tableBody.innerHTML = "";
-          // JSONデータを処理してHTMLに追加
           data.forEach(function (item) {
-            // UNIX時間を通常の日時形式に変換
-            var connectedTime = new Date(item.connected_Time * 1000); // UNIX時間はミリ秒ではなく秒で提供されているため、1000倍する
-
-            // 新しい行を作成
+            var connectedTime = new Date(item.connected_Time * 1000);
             var newRow = document.createElement("tr");
-
-            // 接続日時のセルを作成
             var connectedTimeCell = document.createElement("td");
-            connectedTimeCell.textContent = connectedTime.toLocaleString(); // 通常の日時形式に変換
+            connectedTimeCell.textContent = connectedTime.toLocaleString();
             newRow.appendChild(connectedTimeCell);
-
-            // 名前のセルを作成
             var nameCell = document.createElement("td");
             nameCell.textContent = item.connected_User_Name;
             newRow.appendChild(nameCell);
-
             tableBody.appendChild(newRow);
           });
           document.getElementById("student_count").innerHTML =
@@ -293,9 +265,9 @@ async function getStudentsList() {
             title: "情報",
             icon: "info",
             toast: true,
-            position: "top-end", //画面右上
+            position: "top-end", 
             showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
+            timer: 1500, 
           });
         } else {
           Swal.fire({
@@ -304,9 +276,9 @@ async function getStudentsList() {
             title: "エラー",
             icon: "error",
             toast: true,
-            position: "top-end", //画面右上
+            position: "top-end", 
             showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
+            timer: 1500,
           });
         }
       })
@@ -336,31 +308,22 @@ async function getAnswersList() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        // レスポンスデータの処理
         if (data != undefined) {
           var tableBody = document.getElementById("answersTableBody");
-          // HTMLのstdList要素を取得
           tableBody.innerHTML = "";
-          // JSONデータを処理してHTMLに追加
           data.forEach(function (item) {
-            // 新しい行を作成
             var newRow = document.createElement("tr");
-            // 名前のセルを作成
             var nameCell = document.createElement("td");
             nameCell.textContent = item.submitted_User_Name;
             newRow.appendChild(nameCell);
-
-            // 接続日時のセルを作成
             var connectedTimeCell = document.createElement("td");
             connectedTimeCell.textContent = item.answer_Value;
             newRow.appendChild(connectedTimeCell);
-
             tableBody.appendChild(newRow);
           });
         } else {
@@ -370,9 +333,9 @@ async function getAnswersList() {
             title: "エラー",
             icon: "error",
             toast: true,
-            position: "top-end", //画面右上
+            position: "top-end", 
             showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
+            timer: 1500,
           });
         }
       })
@@ -415,9 +378,7 @@ function preventOverLogin() {
 var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var isStudent; //boolean
-    // ログイン時
-    //生徒か検知
+    var isStudent; 
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
@@ -428,7 +389,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -448,11 +408,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
       })
       .catch((error) => { })
       .finally(() => {
-        //生徒か検知
         if (isStudent) {
           window.location.href = "../../student/student_start";
         }
-        // Update the user information display
         document.getElementById("user_info").innerHTML =
           user.displayName + "(" + user.email + ")";
         document.getElementById("class_code").innerHTML =
@@ -465,7 +423,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
     await getClassInfo();
     executeEveryTwoSeconds();
   } else {
-    // 未ログイン時
     window.location.href = "../../login";
   }
 });
@@ -491,7 +448,6 @@ async function disposeClass() {
           headers: {
             "Content-Type": "application/json",
             Origin: "https://cla-q.net/",
-            // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
           },
           body: JSON.stringify(postData),
         })
@@ -508,7 +464,7 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
-                    timer: 1500, //3秒経過後に閉じる
+                    timer: 1500, 
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
@@ -519,7 +475,7 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
-                    timer: 1500, //3秒経過後に閉じる
+                    timer: 1500,
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
@@ -535,7 +491,6 @@ async function disposeClass() {
               console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
               console.log(data)
             }
-            // レスポンスデータの処理
           })
           .catch((error) => {
             Swal.fire({
@@ -574,7 +529,7 @@ async function uploadFile(file) {
   const formData = new FormData();
   formData.append("class_Code", class_Code);
   formData.append("fileName", file.name);
-  formData.append("file", file); // ファイルデータを追加
+  formData.append("file", file);
 
   fetch("https://pdf.api.cla-q.net", {
     method: "POST",
@@ -582,7 +537,7 @@ async function uploadFile(file) {
       "Access-Control-Allow-Origin": "*",
       "Content-Type": file.type,
     },
-    body: formData, // FormDataオブジェクトをbodyに追加
+    body: formData,
   })
     .then((response) => response.text())
     .then(() => {
@@ -591,9 +546,9 @@ async function uploadFile(file) {
         title: "成功",
         icon: "success",
         toast: true,
-        position: "top-end", //画面右上
+        position: "top-end",
         showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
+        timer: 1500,
       })
         .then((result) => {
           document.getElementById("filePicker").value = "";
@@ -609,9 +564,9 @@ async function uploadFile(file) {
         title: "エラー",
         icon: "error",
         toast: true,
-        position: "top-end", //画面右上
+        position: "top-end", 
         showConfirmButton: false,
-        timer: 1000, //3秒経過後に閉じる
+        timer: 1000, 
       });
     });
 }
@@ -628,13 +583,12 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
+        timer: 1500, 
       }).then((result) => {
         location.reload();
       });
     });
 }
-//以上firebase auth
 
 async function getClassInfo() {
   const key = "class_Code";
@@ -651,7 +605,6 @@ async function getClassInfo() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -669,24 +622,19 @@ async function getClassInfo() {
               }
               else {
                 if (classinfo.latest_Question_Number !== 1) {
-                  // 1からquestionnumberまでのループ
                   for (var i = 1; i <= classinfo.latest_Question_Number; i++) {
-                    // optionタグを作成する
                     var option = document.createElement("option");
-                    // optionタグのテキストを設定する
                     option.value = i;
                     option.text = "第" + i + "問";
-                    // selectタグの子要素にoptionタグを追加する
                     select.appendChild(option);
                   }
                 } else {
-                  // questionnumberが1の場合は単一のoptionを追加するだけ
                   var option = document.createElement("option");
                   option.value = 1;
                   option.text = "第1問";
                   select.appendChild(option);
                 }
-                if (classinfo.current_Question_Number != 0) {//クラス情報
+                if (classinfo.current_Question_Number != 0) {
                   document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
                 }
                 else {
@@ -708,7 +656,6 @@ async function getClassInfo() {
           console.log(data)
           console.log(error)
         }
-        // レスポンスデータの処理
       })
       .catch((error) => {
         Swal.fire({

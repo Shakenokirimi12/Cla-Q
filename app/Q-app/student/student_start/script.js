@@ -1,5 +1,4 @@
 function handleKeyDown(event) {
-  // Enter キーが押された場合に送信処理を行う
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     student_Join();
@@ -9,7 +8,6 @@ function handleKeyDown(event) {
 var userName, userEmail;
 async function student_Join() {
   var class_Code = document.getElementById("class-code-input").value;
-  // Add your login logic here
   var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
@@ -21,7 +19,6 @@ async function student_Join() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -29,7 +26,7 @@ async function student_Join() {
       .then((data) => {
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
-          var classinfo = data[0];//クラス情報は別格納
+          var classinfo = data[0];
           if (responseresult.result == "success") {
             console.log("Successfully joined the class");
             prevent_Overlogin();
@@ -39,7 +36,7 @@ async function student_Join() {
               text: "クラス" + classinfo.class_Code + "に参加しました。",
               icon: "success",
               showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
+              timer: 1500,
             }).then((result) => {
               window.location.href = "../student_menu";
             });
@@ -106,12 +103,9 @@ function prevent_Overlogin() {
   objBody.appendChild(lock_screen);
 }
 
-//以下firebase auth
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    var isTeacher; //boolean
-    // ログイン時
-    //教師か検知
+    var isTeacher;
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
@@ -122,7 +116,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -146,7 +139,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         if (isTeacher) {
           window.location.href = "../../teacher/teacher_start";
         } else {
-          // Update the user information display
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
             "<p>ユーザー名: " +
@@ -160,8 +152,6 @@ firebase.auth().onAuthStateChanged(function (user) {
           userName = user.displayName;
           userEmail = user.email;
         }
-        // ログイン時
-        // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
         document.getElementById("user_Email").innerHTML =
           "(" + user.email + ")";
@@ -174,7 +164,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmail = user.email;
       });
   } else {
-    // 未ログイン時
     window.location.href = "../../login";
   }
 });
@@ -190,10 +179,9 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
+        timer: 1500,
       }).finally((result) => {
         location.reload();
       });
     });
 }
-//以上firebase auth

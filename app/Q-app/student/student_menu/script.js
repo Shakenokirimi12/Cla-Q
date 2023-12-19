@@ -1,5 +1,4 @@
 async function submitAnswer() {
-  // 送信処理のコードを追加
   var answerBox = document.getElementById("answer-box");
   var answer = answerBox.value.trim();
 
@@ -13,7 +12,6 @@ async function submitAnswer() {
         const key = "class_Code";
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
-        // Add your login logic here
         var url = "https://api.cla-q.net/student/submit_answer";
         var postData = {
           class_Code: class_Code,
@@ -27,7 +25,6 @@ async function submitAnswer() {
             headers: {
               "Content-Type": "application/json",
               Origin: "https://cla-q.net/",
-              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
           })
@@ -42,9 +39,9 @@ async function submitAnswer() {
                     title: "情報",
                     icon: "info",
                     toast: true,
-                    position: "top-end", //画面右上
+                    position: "top-end",
                     showConfirmButton: false,
-                    timer: 3000, //3秒経過後に閉じる
+                    timer: 3000,
                   }).finally(() => {
                     answerBox.value = "";
                   });
@@ -78,7 +75,6 @@ async function submitAnswer() {
           console.log("エラー発生。");
           console.log(error);
         }
-        // ボックス内をクリア
       }
     });
   } else {
@@ -87,15 +83,14 @@ async function submitAnswer() {
       title: "エラー",
       icon: "error",
       toast: true,
-      position: "top-end", //画面右上
+      position: "top-end",
       showConfirmButton: false,
-      timer: 3000, //3秒経過後に閉じる
+      timer: 3000,
     });
   }
 }
 
 function handleKeyDown(event) {
-  // Enter キーが押された場合に送信処理を行う
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     submitAnswer();
@@ -153,8 +148,7 @@ function prevent_Overlogin() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    var isTeacher; //boolean
-    //教師か検知
+    var isTeacher;
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
@@ -165,7 +159,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
@@ -188,8 +181,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         if (isTeacher) {
           window.location.href = "../../teacher/teacher_start";
         }
-        // ログイン時
-        // Update the user information display
         document.getElementById("user_Name").innerHTML = user.displayName;
         document.getElementById("user_Email").innerHTML =
           "(" + user.email + ")";
@@ -201,9 +192,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         userName = user.displayName;
         userEmail = user.email;
       });
-    //教師か検知
   } else {
-    // 未ログイン時
     window.location.href = "../../login";
   }
 });
@@ -211,11 +200,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 async function logOut() {
   await leaveClass();
 }
-//以上firebase
 
-//以下workers
 async function leaveClass() {
-  // Add your login logic here
   var url = "https://api.cla-q.net/student/leave";
   var postData = {
     userName: userName,
@@ -226,14 +212,13 @@ async function leaveClass() {
       headers: {
         "Content-Type": "application/json",
         Origin: "https://cla-q.net/",
-        // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
     })
       .then((response) => response.json())
       .then((data) => {
-        var responseresult = data[Object.keys(data).length - 1];//レスポン状況ノードを抽出
-        if (responseresult.result == "success") {//レスポン成功
+        var responseresult = data[Object.keys(data).length - 1];
+        if (responseresult.result == "success") {
           console.log("Successfully leaved the class");
           prevent_Overlogin();
           Swal.fire({
@@ -241,14 +226,14 @@ async function leaveClass() {
             title: "情報",
             icon: "info",
             showConfirmButton: false,
-            timer: 1500, //3秒経過後に閉じる
+            timer: 1500,
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
             window.location.href = "../student_start";
           });
-        } else {//レスポン失敗
+        } else {
           console.log("データエラー。successが返されなかった。");
-          if (responseresult.status_Code == "LE-11") {//教師がクラスを閉じていた時
+          if (responseresult.status_Code == "LE-11") {
             prevent_Overlogin();
             Swal.fire({
               text:
@@ -258,7 +243,7 @@ async function leaveClass() {
               title: "情報",
               icon: "info",
               showConfirmButton: false,
-              timer: 1500, //3秒経過後に閉じる
+              timer: 1500,
             }).then((result) => {
               window.location.href = "../student_start";
             });
@@ -322,13 +307,11 @@ async function checkPDFExistance() {
     headers: {
       "Content-Type": "application/json",
       Origin: "https://cla-q.net/",
-      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
   })
     .then((response) => response.json())
     .then((data) => {
-      // レスポンスデータの処理
       var responseresult = data[Object.keys(data).length - 1];
       if (responseresult.result == "success") {
         if (responseresult.pdf == "true") {
@@ -337,7 +320,7 @@ async function checkPDFExistance() {
             title: "PDFを表示しますか？",
             text: "このクラスにはPDF資料があります。PDFを表示しますか？",
             showDenyButton: true,
-            timer: 1500, //3秒経過後に閉じる
+            timer: 1500,
             icon: "info",
             confirmButtonText: "はい",
             denyButtonText: "いいえ",
