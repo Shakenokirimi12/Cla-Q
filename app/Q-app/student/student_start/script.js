@@ -29,13 +29,14 @@ async function student_Join() {
       .then((data) => {
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
+          var classinfo = data[0];
           if (responseresult.result == "success") {
             console.log("Successfully joined the class");
             prevent_Overlogin();
-            document.cookie = "class_Code=" + responseresult.class_Code + "; path=/;";
+            document.cookie = "class_Code=" + classinfo.class_Code + "; path=/;";
             Swal.fire({
               title: "成功",
-              text: "クラス" + responseresult.class_Code + "に参加しました。",
+              text: "クラス" + classinfo.class_Code + "に参加しました。",
               icon: "success",
               showConfirmButton: false,
               timer: 1500, //3秒経過後に閉じる
