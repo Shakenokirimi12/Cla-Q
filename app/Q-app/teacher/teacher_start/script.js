@@ -102,10 +102,11 @@ async function teacher_Rejoin() {
       .then((data) => {
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
+          var classinfo = data[0];
           if (responseresult.result == "success") {
             prevent_Overlogin();
             console.log("Successfully rejoined the class");
-            document.cookie = "class_Code=" + class_Code + ";path=/;";
+            document.cookie = "class_Code=" + classinfo.class_Code + ";path=/;";
             Swal.fire({
               text: "クラスに再接続しました。",
               title: "情報",

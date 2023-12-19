@@ -29,7 +29,7 @@ async function student_Join() {
       .then((data) => {
         if (data.length != 0) {
           var responseresult = data[Object.keys(data).length - 1];
-          var classinfo = data[0];
+          var classinfo = data[0];//クラス情報は別格納
           if (responseresult.result == "success") {
             console.log("Successfully joined the class");
             prevent_Overlogin();
