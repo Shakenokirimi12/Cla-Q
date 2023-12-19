@@ -229,37 +229,6 @@ window.onload = async function () {
   }
   await redirectMobile();
   await preventOverLogin();
-  var classinfo = await getClassInfo(class_Code, userEmail);
-  if (classinfo.latest_Question_Number == "0") {
-    document.getElementById("status").innerHTML = "現在:問題開始待ち";
-  }
-  else {
-    if (classinfo.current_Question_Number == classinfo.latest_Question_Number) {
-      if (classinfo.latest_Question_Number !== 1) {
-        // 1からquestionnumberまでのループ
-        for (var i = 1; i <= classinfo.latest_Question_Number; i++) {
-          // optionタグを作成する
-          var option = document.createElement("option");
-          // optionタグのテキストを設定する
-          option.value = i;
-          option.text = "第" + i + "問";
-          // selectタグの子要素にoptionタグを追加する
-          select.appendChild(option);
-        }
-      } else {
-        // questionnumberが1の場合は単一のoptionを追加するだけ
-        var option = document.createElement("option");
-        option.value = 1;
-        option.text = "第1問";
-        select.appendChild(option);
-      }
-      document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
-    }
-    else {
-      document.getElementById("status").innerHTML = "現在:問題開始待ち";
-
-    }
-  }
   setInterval("showClock()", 1000);
 };
 
@@ -493,6 +462,37 @@ firebase.auth().onAuthStateChanged(async function (user) {
         userName = user.displayName;
         userEmail = user.email;
       });
+    var classinfo = await getClassInfo(class_Code, userEmail);
+    if (classinfo.latest_Question_Number == "0") {
+      document.getElementById("status").innerHTML = "現在:問題開始待ち";
+    }
+    else {
+      if (classinfo.current_Question_Number == classinfo.latest_Question_Number) {
+        if (classinfo.latest_Question_Number !== 1) {
+          // 1からquestionnumberまでのループ
+          for (var i = 1; i <= classinfo.latest_Question_Number; i++) {
+            // optionタグを作成する
+            var option = document.createElement("option");
+            // optionタグのテキストを設定する
+            option.value = i;
+            option.text = "第" + i + "問";
+            // selectタグの子要素にoptionタグを追加する
+            select.appendChild(option);
+          }
+        } else {
+          // questionnumberが1の場合は単一のoptionを追加するだけ
+          var option = document.createElement("option");
+          option.value = 1;
+          option.text = "第1問";
+          select.appendChild(option);
+        }
+        document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
+      }
+      else {
+        document.getElementById("status").innerHTML = "現在:問題開始待ち";
+
+      }
+    }
     executeEveryTwoSeconds();
   } else {
     // 未ログイン時
