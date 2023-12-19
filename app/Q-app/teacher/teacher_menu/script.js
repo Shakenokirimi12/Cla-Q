@@ -229,7 +229,7 @@ window.onload = async function () {
   }
   await redirectMobile();
   await preventOverLogin();
-  var classinfo = await getClassInfo();
+  var classinfo = await getClassInfo(class_Code, userEmail);
   if (classinfo.latest_Question_Number == "0") {
     document.getElementById("status").innerHTML = "現在:問題開始待ち";
   }
