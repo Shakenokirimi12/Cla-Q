@@ -686,7 +686,6 @@ async function getClassInfo() {
                   select.appendChild(option);
                 }
                 if (classinfo.current_Question_Number == classinfo.latest_Question_Number) {
-
                   document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
                 }
                 else {
@@ -706,6 +705,7 @@ async function getClassInfo() {
         catch (error) {
           console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
           console.log(data)
+          console.log(error)
         }
         // レスポンスデータの処理
       })
