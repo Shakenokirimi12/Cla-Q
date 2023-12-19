@@ -686,7 +686,7 @@ async function getClassInfo() {
                   option.text = "第1問";
                   select.appendChild(option);
                 }
-                if ((Number(classinfo.current_Question_Number) - Number(classinfo.latest_Question_Number)) == 0) {//クラス情報
+                if (classinfo.current_Question_Number != 0) {//クラス情報
                   document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
                 }
                 else {
