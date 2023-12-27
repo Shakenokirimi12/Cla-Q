@@ -72,14 +72,6 @@ async function student_Join() {
 }
 
 window.onload = function () {
-  let url_string = window.location.href;
-  let url = new URL(url_string);
-  let data = url.searchParams.get("class_Code");
-  console.log(data);
-  var class_Code = data;
-  if (class_Code.length = !0) {
-    document.getElementById("class-code-input").value = class_Code;
-  }
   mobileRedirect();
   prevent_Overlogin();
 };
@@ -113,6 +105,23 @@ function prevent_Overlogin() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    let url_string = window.location.href;
+    let url = new URL(url_string);
+    let data = url.searchParams.get("class_Code");
+    console.log(data);
+    var class_Code = data;
+    if (class_Code.length = !0) {
+      document.getElementById("class-code-input").value = class_Code;
+    }
+    else {
+      const key = "qr_class_Code";
+      const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
+      if (value.length != 0) {
+        class_Code = value;
+        document.cookie = "qr_class_Code=; path=/; max-age=240;";
+        document.getElementById("class-code-input").value = class_Code;
+      }
+    }
     var isTeacher;
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
@@ -172,6 +181,14 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmail = user.email;
       });
   } else {
+    let url_string = window.location.href;
+    let url = new URL(url_string);
+    let data = url.searchParams.get("class_Code");
+    console.log(data);
+    var class_Code = data;
+    if (class_Code.length = !0) {
+      document.cookie = "qr_class_Code=" + class_Code + "; path=/; max-age=240;";
+    }
     window.location.href = "../../login";
   }
 });
