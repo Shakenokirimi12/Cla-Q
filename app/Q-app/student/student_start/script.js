@@ -123,12 +123,12 @@ firebase.auth().onAuthStateChanged(function (user) {
       }
     }
     var isTeacher;
-    var url = "https://api.cla-q.net/detect_role";
+    var posturl = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
     };
-    fetch(url, {
+    fetch(posturl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
