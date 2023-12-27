@@ -110,13 +110,13 @@ firebase.auth().onAuthStateChanged(function (user) {
     let data = currenturl.searchParams.get("class_Code");
     console.log(data);
     var class_Code = data;
-    if (class_Code.length != 0) {
+    if (class_Code != null) {
       document.getElementById("class-code-input").value = class_Code;
     }
     else {
       const key = "qr_class_Code";
       const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-      if (value.length != 0) {
+      if (value != null) {
         class_Code = value;
         document.cookie = "qr_class_Code=; path=/; max-age=240;";
         document.getElementById("class-code-input").value = class_Code;
