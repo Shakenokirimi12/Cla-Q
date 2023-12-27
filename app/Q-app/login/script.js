@@ -27,7 +27,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         } else {
           //先生でも生徒でもない場合
           Swal.fire({
-            text: "ログインできませんでした。もう一度試してください。",
+            text: "サーバーレスポンスエラーです。\n(ErrorCode:" + responseresult.status_Code + ")",
             title: "エラー",
             icon: "error",
             showConfirmButton: false,

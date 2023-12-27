@@ -1,8 +1,6 @@
 async function submitAnswer() {
-  // 送信処理のコードを追加
   var answerBox = document.getElementById("answer-box");
   var answer = answerBox.value.trim();
-
   if (answer !== "") {
     Swal.fire({
       title: "回答を送信しますか？",
@@ -42,24 +40,50 @@ async function submitAnswer() {
                     title: "情報",
                     icon: "info",
                     toast: true,
-                    position: "top-end", //画面右上
+                    position: "top-end",
                     showConfirmButton: false,
-                    timer: 3000, //3秒経過後に閉じる
+                    timer: 3000,
                   }).finally(() => {
                     answerBox.value = "";
                   });
                 } else {
-                  Swal.fire({
-                    text:
-                      "答えを提出できませんでした。:" + responseresult.status_Code + "",
-                    title: "エラー",
-                    icon: "error",
-                  });
+                  if (responseresult.status_Code == "SSE-11") {
+                    Swal.fire({
+                      text:
+                        "答えを提出できませんでした。\n問題が開始されていません。\n先生の指示を待ってください。\nエラーコード:" + responseresult.status_Code,
+                      title: "エラー",
+                      icon: "error",
+                    });
+                  }
+                  else if (responseresult.status_Code == "SSE-12") {
+                    Swal.fire({
+                      text:
+                        "答えを提出できませんでした。\n答えを提出済みの可能性があります。\nエラーコード:" + responseresult.status_Code,
+                      title: "エラー",
+                      icon: "error",
+                    });
+                  }
+                  else if (responseresult.status_Code == "SSE-01") {
+                    Swal.fire({
+                      text:
+                        "答えを提出できませんでした。\nサーバーエラーです。\nサポートへご確認ください。\nエラーコード:" + responseresult.status_Code,
+                      title: "エラー",
+                      icon: "error",
+                    });
+                  }
+                  else {
+                    Swal.fire({
+                      text:
+                        "答えを提出できませんでした。\n不明なエラーです。\nエラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
+                      title: "エラー",
+                      icon: "error",
+                    });
+                  }
                 }
               } else {
                 Swal.fire({
                   text:
-                    "回答を提出できませんでした。問題が開始されているか確認してください。:" +
+                    "回答を提出できませんでした。クライアントでエラーが発生しました。\n" +
                     error,
                   title: "エラー",
                   icon: "error",
@@ -69,7 +93,7 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 text:
-                  "回答を提出できませんでした。再度試してみてください。",
+                  "回答を提出できませんでした。再度試してみてください。\n" + error,
                 title: "エラー",
                 icon: "error",
               });
@@ -264,11 +288,10 @@ async function leaveClass() {
           } else {
             Swal.fire({
               text:
-                "クラスを離脱できませんでした。(" +
+                "クラスを離脱できませんでした。\nエラーコード:" +
                 responseresult.message +
-                ":" +
-                responseresult.status_Code +
-                ")",
+                "\n" +
+                responseresult.status_Code,
               title: "エラー",
               icon: "error",
             });

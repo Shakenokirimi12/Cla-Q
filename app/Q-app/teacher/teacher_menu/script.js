@@ -38,7 +38,7 @@ async function sendToGAS() {
         console.log(error);
         Swal.fire({
           title: "エラー",
-          text: "共有リンクを取得できませんでした。もう一度試してください。",
+          text: "共有リンクを取得できませんでした。\nエラー内容:" + error,
           icon: "error",
           toast: true,
           position: "top-end", 
@@ -82,7 +82,6 @@ async function startQuestion() {
             document.getElementById("status").innerHTML =
               "現在:" + questionnumber + "問目実施中";
             var select = document.getElementById("problemSelector");
-
             if (select.options.length === 0) {
               if (questionnumber !== 1) {
                 for (var i = 1; i <= questionnumber; i++) {
@@ -114,10 +113,9 @@ async function startQuestion() {
               timer: 1000, 
             });
           } else {
-            console.log(responseresult.question_Number);
             console.log(responseresult.result);
             Swal.fire({
-              text: "問題を開始できませんでした。\nエラーコード:" + responseresult.status_Code,
+              text: "問題を開始できませんでした。\nエラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -174,7 +172,7 @@ async function endQuestion() {
             });
           } else {
             Swal.fire({
-              text: "問題を終了できませんでした。\n" + "エラーコード:" + responseresult.status_Code,
+              text: "問題を終了できませんでした。\n" + "エラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -185,7 +183,7 @@ async function endQuestion() {
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          text: "問題を終了できませんでした",
+          text: "問題を終了できませんでした。\nエラー内容:" + error,
           title: "エラー",
           icon: "error",
         });

@@ -44,16 +44,42 @@ async function student_Join() {
             if (responseresult.status_Code == undefined) {
               Swal.fire({
                 title: "エラー",
-                text: "クラスに参加できませんでした。",
+                text: "クラスに参加できませんでした。\nエラーコード:不明",
                 icon: "error",
               });
             } else {
-              Swal.fire({
-                title: "エラー",
-                text:
-                  "クラスに参加できませんでした。\nエラーコード:" + responseresult.status_Code,
-                icon: "error",
-              });
+              if(responseresult.status_Code == "SSE-11"){
+                Swal.fire({
+                  text:
+                    "答えを提出できませんでした。\n問題が開始されていません。\n先生の指示を待ってください。\nエラーコード:" + responseresult.status_Code,
+                  title: "エラー",
+                  icon: "error",
+                });  
+              }
+              else if(responseresult.status_Code == "SSE-12"){
+                Swal.fire({
+                  text:
+                    "答えを提出できませんでした。\n答えを提出済みの可能性があります。\nエラーコード:" + responseresult.status_Code,
+                  title: "エラー",
+                  icon: "error",
+                });  
+              }
+              else if(responseresult.status_Code == "SSE-01"){
+                Swal.fire({
+                  text:
+                    "答えを提出できませんでした。\nサーバーエラーです。\nサポートへご確認ください。\nエラーコード:" + responseresult.status_Code,
+                  title: "エラー",
+                  icon: "error",
+                });  
+              }
+              else{
+                Swal.fire({
+                  text:
+                    "答えを提出できませんでした。\n不明なエラーです。\nエラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
+                  title: "エラー",
+                  icon: "error",
+                });  
+              }
             }
           }
         }
@@ -61,7 +87,7 @@ async function student_Join() {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          text: "クラスに参加できませんでした。",
+          text: "クラスに参加できませんでした。\nエラー内容:「" + error + "」",
           icon: "error",
         });
       });
