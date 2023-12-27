@@ -106,8 +106,8 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     let url_string = window.location.href;
-    let url = new URL(url_string);
-    let data = url.searchParams.get("class_Code");
+    let currenturl = new URL(url_string);
+    let data = currenturl.searchParams.get("class_Code");
     console.log(data);
     var class_Code = data;
     if (class_Code.length = !0) {
@@ -182,8 +182,8 @@ firebase.auth().onAuthStateChanged(function (user) {
       });
   } else {
     let url_string = window.location.href;
-    let url = new URL(url_string);
-    let data = url.searchParams.get("class_Code");
+    let currenturl = new URL(url_string);
+    let data = currenturl.searchParams.get("class_Code");
     console.log(data);
     var class_Code = data;
     if (class_Code.length = !0) {
