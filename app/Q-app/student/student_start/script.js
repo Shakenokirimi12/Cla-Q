@@ -110,7 +110,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     let data = currenturl.searchParams.get("class_Code");
     console.log(data);
     var class_Code = data;
-    if (class_Code.length = !0) {
+    if (class_Code.length != 0) {
       document.getElementById("class-code-input").value = class_Code;
     }
     else {
