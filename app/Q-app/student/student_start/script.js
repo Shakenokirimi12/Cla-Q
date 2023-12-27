@@ -118,7 +118,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
       if (value != null) {
         class_Code = value;
-        document.cookie = "qr_class_Code=; path=/; max-age=240;";
+        document.cookie = "qr_class_Code=; path=/; max-age=2;";
         document.getElementById("class-code-input").value = class_Code;
       }
     }
