@@ -72,6 +72,14 @@ async function student_Join() {
 }
 
 window.onload = function () {
+  let url_string = window.location.href;
+  let url = new URL(url_string);
+  let data = url.searchParams.get("class_Code");
+  console.log(data);
+  var class_Code = data;
+  if (class_Code.length = !0) {
+    document.getElementById("class-code-input").value = class_Code;
+  }
   mobileRedirect();
   prevent_Overlogin();
 };
