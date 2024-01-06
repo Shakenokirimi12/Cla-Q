@@ -120,9 +120,9 @@ html {
 }
 
 .status {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
+    position:absolute;
+    bottom:10px;
+    right:10px;
     font-size: 12px;
     color: #666;
 }
