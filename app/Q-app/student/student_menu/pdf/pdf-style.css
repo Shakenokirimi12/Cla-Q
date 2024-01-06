@@ -118,3 +118,11 @@ html {
     background-color: #fff59d;
     color: black;
 }
+
+.status {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+}
