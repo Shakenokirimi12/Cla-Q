@@ -524,10 +524,11 @@ function showClock() {
 }
 
 async function uploadFile(file) {
+  console.log(file);
   const data = {
     class_Code: class_Code,
     fileName: file.name,
-    file: file,
+    file: file
   };
 
   fetch("https://pdf.api.cla-q.net", {
