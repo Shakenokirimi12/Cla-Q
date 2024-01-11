@@ -8,7 +8,6 @@ function handleKeyDown(event) {
 var userName, userEmail;
 async function student_Join() {
   var class_Code = document.getElementById("class-code-input").value;
-  var userName = document.getElementById("username").value;
   var url = "https://api.cla-q.net/student/join";
   var postData = {
     class_Code: class_Code,
