@@ -536,7 +536,7 @@ async function uploadFile(file) {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
-      "file-type": "application/pdf"
+      "file-type": "application/pdf",
     },
     body: JSON.stringify(data),
   })
