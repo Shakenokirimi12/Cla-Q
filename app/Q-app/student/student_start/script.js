@@ -5,7 +5,6 @@ function handleKeyDown(event) {
   }
 }
 
-var userName, userEmail;
 async function student_Join() {
   var class_Code = document.getElementById("class-code-input").value;
   var url = "https://api.cla-q.net/student/join";
@@ -130,8 +129,11 @@ function prevent_Overlogin() {
   objBody.appendChild(lock_screen);
 }
 
+var userName, userEmail;
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    userName = user.displayName;
+    userEmail = user.email;
     var isTeacher;
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
@@ -168,7 +170,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         } else {
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
-            "<p id='username'>ユーザー名: " +
+            "<p>ユーザー名: " +
             user.displayName +
             "</p><p>メールアドレス: " +
             user.email +
@@ -185,8 +187,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         let screenLock = document.getElementById("screenLock");
         screenLock.parentNode.removeChild(screenLock);
-        userName = user.displayName;
-        userEmail = user.email;
       });
   } else {
     window.location.href = "../../login";
