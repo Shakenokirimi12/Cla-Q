@@ -11,9 +11,9 @@ async function sendToGAS() {
     text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
     toast: true,
-    position: "top-end", 
+    position: "top-end",
     showConfirmButton: false,
-    timer: 3000, 
+    timer: 3000,
   });
   var url =
     "https://script.google.com/macros/s/AKfycbxGJTMf6kqWsODNhUNYB_QqdENHl28b-y_Y32n5_RijVivPDAQM5Lde7SSJYyOOHGd7/exec";
@@ -41,7 +41,7 @@ async function sendToGAS() {
           text: "共有リンクを取得できませんでした。\nエラー内容:" + error,
           icon: "error",
           toast: true,
-          position: "top-end", 
+          position: "top-end",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -108,9 +108,9 @@ async function startQuestion() {
               title: "成功",
               icon: "success",
               toast: true,
-              position: "top-end", 
+              position: "top-end",
               showConfirmButton: false,
-              timer: 1000, 
+              timer: 1000,
             });
           } else {
             console.log(responseresult.result);
@@ -166,9 +166,9 @@ async function endQuestion() {
               title: "成功",
               icon: "success",
               toast: true,
-              position: "top-end", 
+              position: "top-end",
               showConfirmButton: false,
-              timer: 1000, 
+              timer: 1000,
             });
           } else {
             Swal.fire({
@@ -263,9 +263,9 @@ async function getStudentsList() {
             title: "情報",
             icon: "info",
             toast: true,
-            position: "top-end", 
+            position: "top-end",
             showConfirmButton: false,
-            timer: 1500, 
+            timer: 1500,
           });
         } else {
           Swal.fire({
@@ -274,7 +274,7 @@ async function getStudentsList() {
             title: "エラー",
             icon: "error",
             toast: true,
-            position: "top-end", 
+            position: "top-end",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -331,7 +331,7 @@ async function getAnswersList() {
             title: "エラー",
             icon: "error",
             toast: true,
-            position: "top-end", 
+            position: "top-end",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -376,7 +376,7 @@ function preventOverLogin() {
 var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var isStudent; 
+    var isStudent;
     var url = "https://api.cla-q.net/detect_role";
     var postData = {
       userEmail: user.email,
@@ -462,7 +462,7 @@ async function disposeClass() {
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
-                    timer: 1500, 
+                    timer: 1500,
                   }).then((result) => {
                     window.location.href = "../teacher_start";
                   });
@@ -524,24 +524,19 @@ function showClock() {
 }
 
 async function uploadFile(file) {
-  console.log(file);
-  const data = {
-    class_Code: class_Code,
-    fileName: file.name,
-    file: file
-  };
+  const formData = new FormData();
+  formData.append("file", file);
 
   fetch("https://pdf.api.cla-q.net", {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      "file-type": "application/pdf",
+      "Content-Type": file.type,
     },
-    body: JSON.stringify(data),
+    body: formData,
   })
     .then((response) => response.text())
-    .then(() => {
+    .then((data) => {
       Swal.fire({
         text: "ファイルを共有しました。",
         title: "成功",
@@ -565,9 +560,9 @@ async function uploadFile(file) {
         title: "エラー",
         icon: "error",
         toast: true,
-        position: "top-end", 
+        position: "top-end",
         showConfirmButton: false,
-        timer: 1000, 
+        timer: 1000,
       });
     });
 }
@@ -584,7 +579,7 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, 
+        timer: 1500,
       }).then((result) => {
         location.reload();
       });
