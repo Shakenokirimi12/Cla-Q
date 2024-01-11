@@ -13,6 +13,7 @@ async function student_Join() {
     class_Code: class_Code,
     userName: userName,
   };
+  console.log(postData)
   try {
     await fetch(url, {
       method: "POST",
@@ -48,26 +49,18 @@ async function student_Join() {
                 icon: "error",
               });
             } else {
-              if(responseresult.status_Code == "SSE-11"){
+              if(responseresult.status_Code == "JE-12"){
                 Swal.fire({
                   text:
-                    "答えを提出できませんでした。\n問題が開始されていません。\n先生の指示を待ってください。\nエラーコード:" + responseresult.status_Code,
+                    "クラスに参加できませんでした。\nクラスがアクティブでありませんでした。\nエラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
               }
-              else if(responseresult.status_Code == "SSE-12"){
+              else if(responseresult.status_Code == "JE-01"){
                 Swal.fire({
                   text:
-                    "答えを提出できませんでした。\n答えを提出済みの可能性があります。\nエラーコード:" + responseresult.status_Code,
-                  title: "エラー",
-                  icon: "error",
-                });  
-              }
-              else if(responseresult.status_Code == "SSE-01"){
-                Swal.fire({
-                  text:
-                    "答えを提出できませんでした。\nサーバーエラーです。\nサポートへご確認ください。\nエラーコード:" + responseresult.status_Code,
+                    "クラスが見つからなかったため、クラスに参加できませんでした。\nエラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -75,7 +68,7 @@ async function student_Join() {
               else{
                 Swal.fire({
                   text:
-                    "答えを提出できませんでした。\n不明なエラーです。\nエラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
+                    "クラスに参加できませんでした。\nサポートへご確認ください。\nエラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
