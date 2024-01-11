@@ -524,18 +524,20 @@ function showClock() {
 }
 
 async function uploadFile(file) {
-  const formData = new FormData();
-  formData.append("class_Code", class_Code);
-  formData.append("fileName", file.name);
-  formData.append("file", file);
+  const data = {
+    class_Code: class_Code,
+    fileName: file.name,
+    file: file,
+  };
 
   fetch("https://pdf.api.cla-q.net", {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": file.type,
+      "Content-Type": "application/json",
+      "file-type": "application/pdf"
     },
-    body: formData,
+    body: JSON.stringify(data),
   })
     .then((response) => response.text())
     .then(() => {
