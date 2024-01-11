@@ -177,8 +177,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
           let screenLock = document.getElementById("screenLock");
           screenLock.parentNode.removeChild(screenLock);
-          userName = user.displayName;
-          userEmail = user.email;
         }
         document.getElementById("user_Name").innerHTML = user.displayName;
         document.getElementById("user_Email").innerHTML =
