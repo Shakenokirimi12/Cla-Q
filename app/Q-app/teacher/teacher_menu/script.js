@@ -526,8 +526,7 @@ function showClock() {
 async function uploadFile(file) {
   const formData = new FormData();
   formData.append("file", file);
-
-  fetch("https://pdf.api.cla-q.net/" + file.name, {
+  fetch("https://pdf.api.cla-q.net/" + file.name + "(" + class_Code + ")", {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -540,60 +539,13 @@ async function uploadFile(file) {
       if (data != undefined && data.length != 0) {
         var responseresult = data[Object.keys(data).length - 1];
         if (responseresult.result == "success") {
-          var url = "https://api.cla-q.net/teacher/registar_pdf";
-          var postData = {
-            class_Code: class_Code,
-            fileid: responseresult.fileid,
-            filename: file.name
-          };
-          try {
-            fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Origin: "https://cla-q.net/",
-              },
-              body: JSON.stringify(postData),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                try {
-                  if (data != undefined && data.length != 0) {
-                    var responseresult = data[Object.keys(data).length - 1];
-                    if (responseresult.result == "success") {
-                      console.log("Successfully deleted the class");
-                      document.cookie = "class_Code=; path=/;";
-                      Swal.fire({
-                        text: "ファイルを共有しました。",
-                        title: "情報",
-                        icon: "info",
-                        showConfirmButton: false,
-                        timer: 1500,
-                      });
-                    } else {
-                      Swal.fire({
-                        text: "ファイルを共有できませんでした。DB登録に失敗しました。" + responseresult.status_Code,
-                        title: "エラー",
-                        icon: "error",
-                      });
-                    }
-                  }
-                } catch (error) {
-                  console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
-                  console.log(data)
-                }
-              })
-              .catch((error) => {
-                Swal.fire({
-                  text: "ファイルを共有できませんでした。" + error,
-                  title: "エラー",
-                  icon: "error",
-                });
-              });
-          } catch (error) {
-            console.log("APIアクセス中にエラー発生。");
-            console.log(error);
-          }
+          Swal.fire({
+            text: "ファイルを共有しました。",
+            title: "情報",
+            icon: "info",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       }
       else {
