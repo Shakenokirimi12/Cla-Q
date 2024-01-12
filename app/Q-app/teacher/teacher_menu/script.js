@@ -526,7 +526,7 @@ function showClock() {
 async function uploadFile(file) {
   const formData = new FormData();
   formData.append("file", file);
-  fetch("https://pdf.api.cla-q.net/" + file.name + "(" + class_Code + ")", {
+  fetch("https://pdf.api.cla-q.net/" + class_Code + "-" + file.name, {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
