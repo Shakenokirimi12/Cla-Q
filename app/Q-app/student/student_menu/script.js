@@ -139,7 +139,7 @@ window.onload = async function () {
       icon: "error",
       timer: 1500,
     }).then((result) => {
-      window.location.href = "../student_start";
+      window.location.href = "../../student/student_start";
     });
   }
   await mobileRedirect();
