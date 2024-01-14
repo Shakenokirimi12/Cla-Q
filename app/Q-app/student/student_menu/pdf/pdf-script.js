@@ -150,6 +150,7 @@ window.onload = async function () {
   await prevent_Overlogin();
   await checkPDFExistance();
   setInterval("showClock()", 1000);
+  setInterval("checkPDFExistance()",10000)
 };
 
 function mobileRedirect() {
@@ -370,6 +371,18 @@ async function checkPDFExistance() {
             select.add(option);
           });
           showPDF();
+        }
+        else{
+          Swal.fire({
+            html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
+            showDenyButton: true,
+            timer: 1500,
+            icon: "info",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./";
+            }
+          });
         }
     })
     .catch((error) => {

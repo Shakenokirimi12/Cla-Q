@@ -146,6 +146,7 @@ window.onload = async function () {
   await prevent_Overlogin();
   await checkPDFExistance();
   setInterval("showClock()", 1000);
+  setInterval("checkPDFExistance()",10000);
 };
 
 function mobileRedirect() {
@@ -350,13 +351,12 @@ async function checkPDFExistance() {
       console.log(data)
       if (data.length != 0) {
         Swal.fire({
-          title: "PDFを表示しますか？",
-          html: "このクラスにはPDF資料があります。PDFを表示しますか？",
+          title: "PDFを表示します。",
+          html: "このクラスにはPDF資料があります。PDFを表示します。",
           showDenyButton: true,
           timer: 1500,
           icon: "info",
-          confirmButtontext: "はい",
-          denyButtontext: "いいえ",
+          confirmButtontext: "進む",
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "./pdf";
