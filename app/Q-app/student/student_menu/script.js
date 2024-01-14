@@ -350,13 +350,20 @@ async function checkPDFExistance() {
       //ファイル名を抽出
       const filesarray = JSON.parse(data);
       if (filesarray.length != 0) {
-        var select = document.getElementById("pdfSelector");
-        data.forEach((key) => {
-          const option = document.createElement("option");
-          option.value = key;
-          option.text = key;
-          select.add(option);
+        Swal.fire({
+          title: "PDFを表示しますか？",
+          html: "このクラスにはPDF資料があります。PDFを表示しますか？",
+          showDenyButton: true,
+          timer: 1500,
+          icon: "info",
+          confirmButtontext: "はい",
+          denyButtontext: "いいえ",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "./pdf";
+          }
         });
+        
       }
     })
     .catch((error) => {
@@ -367,16 +374,3 @@ async function checkPDFExistance() {
       });
     });
 }
-Swal.fire({
-  title: "PDFを表示しますか？",
-  html: "このクラスにはPDF資料があります。PDFを表示しますか？",
-  showDenyButton: true,
-  timer: 1500,
-  icon: "info",
-  confirmButtontext: "はい",
-  denyButtontext: "いいえ",
-}).then((result) => {
-  if (result.isConfirmed) {
-    window.location.href = "./pdf";
-  }
-});
