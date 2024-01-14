@@ -395,5 +395,7 @@ function showPDF() {
   var comboBox = document.getElementById("pdfSelector");
   var pdfzone = document.getElementById("pdfzone");
   var pdffilename = comboBox.value;
-  pdfzone.src = "https://r2-pdf.cla-q.net/" + pdffilename;
+  if (pdfzone.src != "https://r2-pdf.cla-q.net/" + pdffilename) {
+    pdfzone.src = "https://r2-pdf.cla-q.net/" + pdffilename;
+  }
 }
