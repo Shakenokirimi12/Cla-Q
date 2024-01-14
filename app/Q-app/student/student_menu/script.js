@@ -368,7 +368,7 @@ async function checkPDFExistance() {
     .catch((error) => {
       Swal.fire({
         title: "エラー",
-        html: "サーバーでエラーが発生しました。",
+        html: "サーバーでエラーが発生しました。<br>" + error,
         icon: "error",
       });
     });
