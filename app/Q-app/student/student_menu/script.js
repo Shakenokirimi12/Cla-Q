@@ -362,7 +362,6 @@ async function checkPDFExistance() {
             window.location.href = "./pdf";
           }
         });
-        
       }
     })
     .catch((error) => {
