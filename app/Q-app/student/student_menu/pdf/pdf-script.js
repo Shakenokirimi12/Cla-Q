@@ -363,6 +363,7 @@ async function checkPDFExistance() {
       console.log(data);
       if (data.length != 0) {
         var select = document.getElementById("pdfSelector");
+        select.clear;
         data.forEach((key) => {
           const option = document.createElement("option");
           option.value = key;
