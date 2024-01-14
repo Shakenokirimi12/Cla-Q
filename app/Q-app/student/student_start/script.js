@@ -33,7 +33,7 @@ async function student_Join() {
             document.cookie = "class_Code=" + classinfo.class_Code + "; path=/;";
             Swal.fire({
               title: "成功",
-              text: "クラス" + classinfo.class_Code + "に参加しました。",
+              html: "クラス" + classinfo.class_Code + "に参加しました。",
               icon: "success",
               showConfirmButton: false,
               timer: 1500,
@@ -44,30 +44,30 @@ async function student_Join() {
             if (responseresult.status_Code == undefined) {
               Swal.fire({
                 title: "エラー",
-                text: "クラスに参加できませんでした。\nエラーコード:不明",
+                html: "クラスに参加できませんでした。<br>エラーコード:不明",
                 icon: "error",
               });
             } else {
               if(responseresult.status_Code == "JE-12"){
                 Swal.fire({
-                  text:
-                    "クラスに参加できませんでした。\nクラスがアクティブでありませんでした。\nエラーコード:" + responseresult.status_Code,
+                  html:
+                    "クラスに参加できませんでした。<br>クラスがアクティブでありませんでした。<br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
               }
               else if(responseresult.status_Code == "JE-01"){
                 Swal.fire({
-                  text:
-                    "クラスが見つからなかったため、クラスに参加できませんでした。\nエラーコード:" + responseresult.status_Code,
+                  html:
+                    "クラスが見つからなかったため、クラスに参加できませんでした。<br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
               }
               else{
                 Swal.fire({
-                  text:
-                    "クラスに参加できませんでした。\nサポートへご確認ください。\nエラーコード:" + responseresult.status_Code,
+                  html:
+                    "クラスに参加できませんでした。<br>サポートへご確認ください。<br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -79,7 +79,7 @@ async function student_Join() {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          text: "クラスに参加できませんでした。\nエラー内容:「" + error + "」",
+          html: "クラスに参加できませんでした。<br>エラー内容:「" + error + "」",
           icon: "error",
         });
       });
@@ -200,7 +200,7 @@ function logOut() {
     .then(function () {
       prevent_Overlogin();
       Swal.fire({
-        text: "ログアウトしました。ログイン画面に戻ります。",
+        html: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,

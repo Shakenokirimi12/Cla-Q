@@ -8,7 +8,7 @@ async function sendToGAS() {
   var class_Code = value;
   Swal.fire({
     title: "通知",
-    text: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
+    html: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
     toast: true,
     position: "top-end", 
@@ -38,7 +38,7 @@ async function sendToGAS() {
         console.log(error);
         Swal.fire({
           title: "エラー",
-          text: "共有リンクを取得できませんでした。\nエラー内容:" + error,
+          html: "共有リンクを取得できませんでした。<br>エラー内容:" + error,
           icon: "error",
           toast: true,
           position: "top-end", 
@@ -104,7 +104,7 @@ async function startQuestion() {
             }
             document.getElementById("problemSelector").value = questionnumber;
             Swal.fire({
-              text: "問題を開始しました。現在" + questionnumber + "問目です。",
+              html: "問題を開始しました。現在" + questionnumber + "問目です。",
               title: "成功",
               icon: "success",
               toast: true,
@@ -115,7 +115,7 @@ async function startQuestion() {
           } else {
             console.log(responseresult.result);
             Swal.fire({
-              text: "問題を開始できませんでした。\nエラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
+              html: "問題を開始できませんでした。<br>エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -124,7 +124,7 @@ async function startQuestion() {
       })
       .catch((error) => {
         Swal.fire({
-          text: "問題を開始できませんでした。\n(" + error + ")",
+          html: "問題を開始できませんでした。<br>(" + error + ")",
           title: "エラー",
           icon: "error",
         });
@@ -162,7 +162,7 @@ async function endQuestion() {
             console.log("Successfully ended the question");
             document.getElementById("status").innerHTML = "現在:問題開始待ち";
             Swal.fire({
-              text: "問題を終了しました。",
+              html: "問題を終了しました。",
               title: "成功",
               icon: "success",
               toast: true,
@@ -172,7 +172,7 @@ async function endQuestion() {
             });
           } else {
             Swal.fire({
-              text: "問題を終了できませんでした。\n" + "エラーコード:" + responseresult.status_Code + "\n" + responseresult.message,
+              html: "問題を終了できませんでした。<br>" + "エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -183,7 +183,7 @@ async function endQuestion() {
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          text: "問題を終了できませんでした。\nエラー内容:" + error,
+          html: "問題を終了できませんでした。<br>エラー内容:" + error,
           title: "エラー",
           icon: "error",
         });
@@ -201,7 +201,7 @@ window.onload = async function () {
   if (class_Code == "" || class_Code == undefined) {
 
     Swal.fire({
-      text: "クラス情報が読み込めませんでした。(Code:CTE-01)",
+      html: "クラス情報が読み込めませんでした。(Code:CTE-01)",
       title: "エラー",
       icon: "error",
       timer: 1500,
@@ -259,7 +259,7 @@ async function getStudentsList() {
           document.getElementById("student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
           Swal.fire({
-            text: "生徒接続情報が更新されました。",
+            html: "生徒接続情報が更新されました。",
             title: "情報",
             icon: "info",
             toast: true,
@@ -269,8 +269,8 @@ async function getStudentsList() {
           });
         } else {
           Swal.fire({
-            text:
-              "生徒一覧を取得できませんでした。\nサーバーから無効な応答が返されました。",
+            html:
+              "生徒一覧を取得できませんでした。<br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -326,8 +326,8 @@ async function getAnswersList() {
           });
         } else {
           Swal.fire({
-            text:
-              "答えの一覧を取得できませんでした。\nサーバーから無効な応答が返されました。",
+            html:
+              "答えの一覧を取得できませんでした。<br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -431,7 +431,7 @@ async function disposeClass() {
       "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonText: "続行",
+    confirmButtonhtml: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
       var url = "https://api.cla-q.net/teacher/inactivate_class";
@@ -458,7 +458,7 @@ async function disposeClass() {
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
-                    text: "クラスを閉じました。\nクラス参加画面に戻ります。",
+                    html: "クラスを閉じました。<br>クラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -469,7 +469,7 @@ async function disposeClass() {
                 }
                 else if (responseresult.status_Code == "IAE-13") {
                   Swal.fire({
-                    text: "クラスはすでに閉じられています。\nクラス参加画面に戻ります。",
+                    html: "クラスはすでに閉じられています。<br>クラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -479,20 +479,20 @@ async function disposeClass() {
                   });
                 } else {
                   Swal.fire({
-                    text: "クラスを終了できませんでした",
+                    html: "クラスを終了できませんでした",
                     title: "エラー",
                     icon: "error",
                   });
                 }
               }
             } catch (error) {
-              console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
+              console.log("レスポンス解析中にエラー発生。<br>レスポンスは以下です。")
               console.log(data)
             }
           })
           .catch((error) => {
             Swal.fire({
-              text: "ログインできませんでした。",
+              html: "ログインできませんでした。",
               title: "エラー",
               icon: "error",
             });
@@ -542,7 +542,7 @@ async function uploadFile(file) {
     .then((response) => response.text())
     .then(() => {
       Swal.fire({
-        text: "ファイルを共有しました。",
+        html: "ファイルを共有しました。",
         title: "成功",
         icon: "success",
         toast: true,
@@ -560,7 +560,7 @@ async function uploadFile(file) {
     .catch((error) => {
       console.error(error);
       Swal.fire({
-        text: "ファイルが選択されていません。",
+        html: "ファイルが選択されていません。",
         title: "エラー",
         icon: "error",
         toast: true,
@@ -579,7 +579,7 @@ function logOut() {
     .then(function () {
       preventOverlogin();
       Swal.fire({
-        text: "ログアウトしました。ログイン画面に戻ります。",
+        html: "ログアウトしました。ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,
@@ -644,7 +644,7 @@ async function getClassInfo() {
             }
           } else {
             Swal.fire({
-              text: "クラス情報を取得できませんでした",
+              html: "クラス情報を取得できませんでした",
               title: "エラー",
               icon: "error",
             });
@@ -652,14 +652,14 @@ async function getClassInfo() {
           }
         }
         catch (error) {
-          console.log("レスポンス解析中にエラー発生。\nレスポンスは以下です。")
+          console.log("レスポンス解析中にエラー発生。<br>レスポンスは以下です。")
           console.log(data)
           console.log(error)
         }
       })
       .catch((error) => {
         Swal.fire({
-          text: "API送信に失敗しました。",
+          html: "API送信に失敗しました。",
           title: "エラー",
           icon: "error",
         });
