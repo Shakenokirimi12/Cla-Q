@@ -335,7 +335,7 @@ function showClock() {
 }
 
 async function checkPDFExistance() {
-  var url = "https://api.cla-q.net/class_info/pdf";
+  var url = "https://api.pdf.cla-q.net/list";
   var postData = {
     class_Code: class_Code,
   };
@@ -351,6 +351,13 @@ async function checkPDFExistance() {
     .then((response) => response.json())
     .then((data) => {
       // レスポンスデータの処理
+      //ファイル名を抽出
+      const searchString = class_Code;
+      const matchingKeys = jsonData.objects
+        .filter(obj => obj.key.includes(searchString))
+        .map(obj => obj.key);
+      console.log(matchingKeys);
+
       var responseresult = data[Object.keys(data).length - 1];
       if (responseresult.result == "success") {
         if (responseresult.pdf == "true") {
