@@ -346,7 +346,6 @@ async function checkPDFExistance() {
   })
     .then((response) => response.json())
     .then((data) => {
-      // レスポンスデータの処理
       //ファイル名を抽出
       const filesarray = JSON.parse(data);
       if (filesarray.length != 0) {
