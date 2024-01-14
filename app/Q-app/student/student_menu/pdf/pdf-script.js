@@ -359,8 +359,9 @@ async function checkPDFExistance() {
   })
     .then((response) => response.json())
     .then((data) => {
+      //ファイル名を抽出
       console.log(data)
-      if (data.length != 2) {
+      if (data.length != 0) {
           var select = document.getElementById("pdfSelector");
           data.forEach((key) => {
             const option = document.createElement("option");
