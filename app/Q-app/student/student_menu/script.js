@@ -48,31 +48,34 @@ async function submitAnswer() {
                   if (responseresult.status_Code == "SSE-11") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else if (responseresult.status_Code == "SSE-12") {
+                  } else if (responseresult.status_Code == "SSE-12") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>答えを提出済みの可能性があります。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>答えを提出済みの可能性があります。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else if (responseresult.status_Code == "SSE-01") {
+                  } else if (responseresult.status_Code == "SSE-01") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else {
+                  } else {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>不明なエラーです。<br>エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
+                        "答えを提出できませんでした。<br>不明なエラーです。<br>エラーコード:" +
+                        responseresult.status_Code +
+                        "<br>" +
+                        responseresult.message,
                       title: "エラー",
                       icon: "error",
                     });
@@ -91,7 +94,8 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 html:
-                  "回答を提出できませんでした。再度試してみてください。" + error,
+                  "回答を提出できませんでした。再度試してみてください。" +
+                  error,
                 title: "エラー",
                 icon: "error",
               });
@@ -200,7 +204,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         }
         return isTeacher;
       })
-      .catch((error) => { })
+      .catch((error) => {})
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -289,7 +293,9 @@ async function leaveClass() {
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          html: "クラスを離脱できませんでした。<br>予期しないエラーが発生しました。<br>エラーコード:CSE-02<br>" + error,
+          html:
+            "クラスを離脱できませんでした。<br>予期しないエラーが発生しました。<br>エラーコード:CSE-02<br>" +
+            error,
           title: "不明なエラー",
           icon: "error",
         });
@@ -297,7 +303,9 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      html: "クラスを離脱できませんでした。<br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" + error,
+      html:
+        "クラスを離脱できませんでした。<br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" +
+        error,
       title: "不明なエラー",
       icon: "error",
     });
@@ -321,9 +329,9 @@ function showClock() {
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
   document.getElementById("currentTime").innerHTML = msg;
 }
-/*
+
 async function checkPDFExistance() {
-  var url = "https://api.cla-q.net/class_info/pdf";
+  var url = "https://api.pdf.cla-q.net/list";
   var postData = {
     class_Code: class_Code,
   };
@@ -332,34 +340,22 @@ async function checkPDFExistance() {
     headers: {
       "Content-Type": "application/json",
       Origin: "https://cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
   })
     .then((response) => response.json())
     .then((data) => {
-      var responseresult = data[Object.keys(data).length - 1];
-      if (responseresult.result == "success") {
-        if (responseresult.pdf == "true") {
-          console.log("Successfully fetched pdf info.");
-          Swal.fire({
-            title: "PDFを表示しますか？",
-            html: "このクラスにはPDF資料があります。PDFを表示しますか？",
-            showDenyButton: true,
-            timer: 1500,
-            icon: "info",
-            confirmButtonhtml: "はい",
-            denyButtonhtml: "いいえ",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "./pdf";
-            }
-          });
-        }
-      } else {
-        Swal.fire({
-          title: "エラー",
-          html: "サーバーでエラーが発生しました。<br>PDF存在チェックに失敗しました。",
-          icon: "error",
+      // レスポンスデータの処理
+      //ファイル名を抽出
+      const filesarray = JSON.parse(data);
+      if (filesarray.length != 0) {
+        var select = document.getElementById("pdfSelector");
+        data.forEach((key) => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.text = key;
+          select.add(option);
         });
       }
     })
@@ -371,4 +367,16 @@ async function checkPDFExistance() {
       });
     });
 }
-*/
+Swal.fire({
+  title: "PDFを表示しますか？",
+  html: "このクラスにはPDF資料があります。PDFを表示しますか？",
+  showDenyButton: true,
+  timer: 1500,
+  icon: "info",
+  confirmButtonhtml: "はい",
+  denyButtonhtml: "いいえ",
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = "./pdf";
+  }
+});

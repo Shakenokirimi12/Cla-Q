@@ -50,31 +50,34 @@ async function submitAnswer() {
                   if (responseresult.status_Code == "SSE-11") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else if (responseresult.status_Code == "SSE-12") {
+                  } else if (responseresult.status_Code == "SSE-12") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>答えを提出済みの可能性があります。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>答えを提出済みの可能性があります。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else if (responseresult.status_Code == "SSE-01") {
+                  } else if (responseresult.status_Code == "SSE-01") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" + responseresult.status_Code,
+                        "答えを提出できませんでした。<br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" +
+                        responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
                     });
-                  }
-                  else {
+                  } else {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>不明なエラーです。<br>エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
+                        "答えを提出できませんでした。<br>不明なエラーです。<br>エラーコード:" +
+                        responseresult.status_Code +
+                        "<br>" +
+                        responseresult.message,
                       title: "エラー",
                       icon: "error",
                     });
@@ -93,7 +96,8 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 html:
-                  "回答を提出できませんでした。再度試してみてください。<br>" + error,
+                  "回答を提出できませんでした。再度試してみてください。<br>" +
+                  error,
                 title: "エラー",
                 icon: "error",
               });
@@ -205,7 +209,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           console.log("user is not teacher.");
         }
       })
-      .catch((error) => { })
+      .catch((error) => {})
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -255,8 +259,9 @@ async function leaveClass() {
     })
       .then((response) => response.json())
       .then((data) => {
-        var responseresult = data[Object.keys(data).length - 1];//レスポン状況ノードを抽出
-        if (responseresult.result == "success") {//レスポン成功
+        var responseresult = data[Object.keys(data).length - 1]; //レスポン状況ノードを抽出
+        if (responseresult.result == "success") {
+          //レスポン成功
           console.log("Successfully leaved the class");
           prevent_Overlogin();
           Swal.fire({
@@ -269,9 +274,11 @@ async function leaveClass() {
             document.cookie = "class_Code=; path=/;";
             window.location.href = "../student_start";
           });
-        } else {//レスポン失敗
+        } else {
+          //レスポン失敗
           console.log("データエラー。successが返されなかった。");
-          if (responseresult.status_Code == "LE-11") {//教師がクラスを閉じていた時
+          if (responseresult.status_Code == "LE-11") {
+            //教師がクラスを閉じていた時
             prevent_Overlogin();
             Swal.fire({
               html:
@@ -309,7 +316,9 @@ async function leaveClass() {
   } catch (error) {
     console.log("不明なエラー2。", error);
     Swal.fire({
-      html: "クラスを離脱できませんでした。<br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" + error,
+      html:
+        "クラスを離脱できませんでした。<br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" +
+        error,
       title: "不明なエラー",
       icon: "error",
     });
@@ -352,34 +361,16 @@ async function checkPDFExistance() {
     .then((data) => {
       // レスポンスデータの処理
       //ファイル名を抽出
-      const searchString = class_Code;
-      const matchingKeys = jsonData.objects
-        .filter(obj => obj.key.includes(searchString))
-        .map(obj => obj.key);
-      console.log(matchingKeys);
-
-      var responseresult = data[Object.keys(data).length - 1];
-      if (responseresult.result == "success") {
-        if (responseresult.pdf == "true") {
-          var repeatcount = Object.keys(data).length - 2;
+      const filesarray = JSON.parse(data);
+        if (filesarray.length != 0) {
           var select = document.getElementById("pdfSelector");
-          for (var i = 0; i <= repeatcount; i++) {
-            // optionタグを作成する
-            var option = document.createElement("option");
-            // optionタグのテキストを設定する
-            option.value = i;
-            option.text = data[i].file_Name;
-            // selectタグの子要素にoptionタグを追加する
-            select.appendChild(option);
-          }
+          data.forEach((key) => {
+            const option = document.createElement("option");
+            option.value = key;
+            option.text = key;
+            select.add(option);
+          });
         }
-      } else {
-        Swal.fire({
-          title: "エラー",
-          html: "サーバーでエラーが発生しました。<br>PDF存在チェックに失敗しました。",
-          icon: "error",
-        });
-      }
     })
     .catch((error) => {
       Swal.fire({

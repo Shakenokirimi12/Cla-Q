@@ -8,7 +8,7 @@ async function sendToGAS() {
   var class_Code = value;
   Swal.fire({
     title: "通知",
-    html: "エクスポートを開始しました。完了すると新しいタブでスプレッドシートが開きます。",
+    html: "エクスポートを開始しました。<br>完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
     toast: true,
     position: "top-end",
@@ -428,8 +428,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
 async function disposeClass() {
   Swal.fire({
     title:
-      "クラスを終了すると、クラスが無効になり、先生、生徒全員が再入室できなくなります。続行しますか？",
+      "続行しますか？",
     icon: "warning",
+    html:"クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
     showCancelButton: true,
     confirmButtonhtml: "続行",
   }).then((result) => {
