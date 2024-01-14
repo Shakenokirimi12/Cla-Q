@@ -369,6 +369,7 @@ async function checkPDFExistance() {
             option.text = key;
             select.add(option);
           });
+          showPDF();
         }
     })
     .catch((error) => {
