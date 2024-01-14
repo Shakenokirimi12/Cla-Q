@@ -6,7 +6,7 @@ async function submitAnswer() {
     Swal.fire({
       title: "回答を送信しますか？",
       showCancelButton: true,
-      confirmButtonhtml: "送信",
+      confirmButtontext: "送信",
     }).then((result) => {
       if (result.isConfirmed) {
         const key = "class_Code";
@@ -331,7 +331,7 @@ function showClock() {
 }
 
 async function checkPDFExistance() {
-  var url = "https://api.pdf.cla-q.net/list";
+  var url = "https://pdf.api.cla-q.net/list";
   var postData = {
     class_Code: class_Code,
   };
@@ -373,8 +373,8 @@ Swal.fire({
   showDenyButton: true,
   timer: 1500,
   icon: "info",
-  confirmButtonhtml: "はい",
-  denyButtonhtml: "いいえ",
+  confirmButtontext: "はい",
+  denyButtontext: "いいえ",
 }).then((result) => {
   if (result.isConfirmed) {
     window.location.href = "./pdf";

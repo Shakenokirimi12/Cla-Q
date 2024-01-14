@@ -432,7 +432,7 @@ async function disposeClass() {
     icon: "warning",
     html:"クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
     showCancelButton: true,
-    confirmButtonhtml: "続行",
+    confirmButtontext: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
       var url = "https://api.cla-q.net/teacher/inactivate_class";
