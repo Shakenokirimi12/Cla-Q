@@ -347,8 +347,8 @@ async function checkPDFExistance() {
     .then((response) => response.json())
     .then((data) => {
       //ファイル名を抽出
-      const filesarray = JSON.parse(data);
-      if (filesarray.length != 0) {
+      console.log(data)
+      if (data.length != 2) {
         Swal.fire({
           title: "PDFを表示しますか？",
           html: "このクラスにはPDF資料があります。PDFを表示しますか？",
