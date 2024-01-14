@@ -354,9 +354,7 @@ async function checkPDFExistance() {
           title: "PDFを表示します。",
           html: "このクラスにはPDF資料があります。PDFを表示します。",
           showDenyButton: true,
-          timer: 1500,
           icon: "info",
-          confirmButtontext: "進む",
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "./pdf";

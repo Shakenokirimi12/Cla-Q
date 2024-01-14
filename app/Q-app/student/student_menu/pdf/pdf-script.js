@@ -150,7 +150,7 @@ window.onload = async function () {
   await prevent_Overlogin();
   await checkPDFExistance();
   setInterval("showClock()", 1000);
-  setInterval("checkPDFExistance()",10000)
+  setInterval("checkPDFExistance()", 10000);
 };
 
 function mobileRedirect() {
@@ -161,8 +161,8 @@ function mobileRedirect() {
     navigator.userAgent.indexOf("Android") > 0
   ) {
     location.href = "../../../mobile.html";
+  }
 }
-
 function prevent_Overlogin() {
   let lock_screen = document.createElement("div");
   lock_screen.id = "screenLock";
@@ -360,29 +360,27 @@ async function checkPDFExistance() {
     .then((response) => response.json())
     .then((data) => {
       //ファイル名を抽出
-      console.log(data)
+      console.log(data);
       if (data.length != 0) {
-          var select = document.getElementById("pdfSelector");
-          data.forEach((key) => {
-            const option = document.createElement("option");
-            option.value = key;
-            option.text = key;
-            select.add(option);
-          });
-          showPDF();
-        }
-        else{
-          Swal.fire({
-            html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
-            showDenyButton: true,
-            timer: 1500,
-            icon: "info",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "./";
-            }
-          });
-        }
+        var select = document.getElementById("pdfSelector");
+        data.forEach((key) => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.text = key;
+          select.add(option);
+        });
+        showPDF();
+      } else {
+        Swal.fire({
+          html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
+          showDenyButton: true,
+          icon: "info",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "./";
+          }
+        });
+      }
     })
     .catch((error) => {
       Swal.fire({
@@ -393,10 +391,9 @@ async function checkPDFExistance() {
     });
 }
 
-
-function showPDF(){
+function showPDF() {
   var comboBox = document.getElementById("pdfSelector");
   var pdfzone = document.getElementById("pdfzone");
   var pdffilename = comboBox.value;
-  pdfzone.src = "https://r2-pdf.cla-q.net/" + pdffilename
+  pdfzone.src = "https://r2-pdf.cla-q.net/" + pdffilename;
 }
