@@ -381,7 +381,7 @@ async function checkPDFExistance() {
 }
 
 
-function showPDF (){
+function showPDF(){
   var comboBox = document.getElementById("pdfSelector");
   var pdfzone = document.getElementById("pdfzone");
   var pdffilename = comboBox.value;
