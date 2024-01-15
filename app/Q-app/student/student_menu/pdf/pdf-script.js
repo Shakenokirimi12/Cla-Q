@@ -374,11 +374,10 @@ async function checkPDFExistance() {
       } else {
         Swal.fire({
           html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
-          showDenyButton: true,
           icon: "info",
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "./";
+            window.location.href = "../";
           }
         });
       }

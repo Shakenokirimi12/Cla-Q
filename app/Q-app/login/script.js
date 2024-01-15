@@ -145,6 +145,11 @@ window.onload = function () {
   ) {
     location.href = "../mobile";
   }
+  Swal.fire({
+    title:"お知らせ",
+    html: "PDFの閲覧機能を実装しました。<br>ただし、<strong>日本語のファイル名には対応していません。</strong><br>アップロードする際には、ファイル名に日本語を含めないでください。",
+    icon: "info",
+  });
 };
 
 function logOut() {
