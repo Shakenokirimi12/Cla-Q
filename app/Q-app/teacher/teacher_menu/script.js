@@ -214,10 +214,10 @@ window.onload = async function () {
         window.location.href = "../teacher_start";
       });
     }
-    await redirectMobile();
-    await preventOverLogin();
-    setInterval("showClock()", 1000);  
   });
+  await redirectMobile();
+  await preventOverLogin();
+  setInterval("showClock()", 1000);  
 };
 
 async function executeEveryTwoSeconds() {
