@@ -223,8 +223,8 @@ var listingprocess;
 
 function startListingContents() {
   listingprocess = setInterval(function () {
-    await getStudentsList();
-    await getAnswersList();
+    getStudentsList();
+    getAnswersList();
   }, 20000);
 }
 
