@@ -198,13 +198,12 @@ window.onload = async function () {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
-  Swal.fire({
+  await Swal.fire({
     title:"お知らせ",
     html: "PDFの閲覧機能を実装しました。<br>ただし、<strong>日本語のファイル名には対応していません。</strong><br>アップロードする際には、ファイル名に日本語を含めないでください。",
     icon: "info",
   }).then((result) => {
     if (class_Code == "" || class_Code == undefined) {
-
       Swal.fire({
         html: "クラス情報が読み込めませんでした。(Code:CTE-01)",
         title: "エラー",
