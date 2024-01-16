@@ -199,7 +199,7 @@ window.onload = async function () {
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   class_Code = value;
   await Swal.fire({
-    title: "お知らせ",
+    title:"お知らせ",
     html: "PDFの閲覧機能を実装しました。<br>ただし、<strong>日本語のファイル名には対応していません。</strong><br>アップロードする際には、<br><strong>ファイル名に日本語を含めないでください。</strong>",
     icon: "info",
   }).then((result) => {
@@ -216,16 +216,16 @@ window.onload = async function () {
   });
   await redirectMobile();
   await preventOverLogin();
-  setInterval("showClock()", 1000);
+  setInterval("showClock()", 1000);  
 };
 
-var listingprocess;
-
-function startListingContents() {
-  listingprocess = setInterval(function () {
-    getStudentsList();
-    getAnswersList();
-  }, 20000);
+async function executeEveryTwoSeconds() {
+  while (true) {
+    await getStudentsList();
+    await getAnswersList();
+    console.log("処理を実行しました。");
+    await new Promise((resolve) => setTimeout(resolve, 20000));
+  }
 }
 
 async function getStudentsList() {
@@ -424,19 +424,18 @@ firebase.auth().onAuthStateChanged(async function (user) {
         userEmail = user.email;
       });
     await getClassInfo();
-    startListingContents();
+    executeEveryTwoSeconds();
   } else {
     window.location.href = "../../login";
   }
 });
 
 async function disposeClass() {
-  clearInterval(listingprocess);
-  Swal.fire({
+  await Swal.fire({
     title:
       "続行しますか？",
     icon: "warning",
-    html: "クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
+    html:"クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
     showCancelButton: true,
     confirmButtontext: "続行",
   }).then((result) => {
@@ -508,9 +507,6 @@ async function disposeClass() {
         console.log("APIアクセス中にエラー発生。");
         console.log(error);
       }
-    }
-    else{
-      startListingContents();
     }
   });
 }
