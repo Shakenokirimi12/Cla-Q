@@ -19,10 +19,11 @@ async function sendToGAS() {
     "https://script.google.com/macros/s/AKfycbyPgZDVZ9I4cJB_4Lfg8pcfDJHSmPP0PE1VXzf8B0PS8mzzilG5H-j0zrhN212J1vhw/exec";
   try {
     await fetch(url + "/?code=" + class_Code + "&mail=" + userEmail, {
-      method: "GET"
+      method: "GET",
+      mode: 'no-cors',
     })
       .then((res) => {
-        console.log(text);
+        console.log(res);
         window.open(res.url, "_blank");
       })
       .catch((error) => {
