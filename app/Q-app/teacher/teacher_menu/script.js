@@ -16,8 +16,7 @@ async function sendToGAS() {
     timer: 3000,
   });
   var url =
-    "https://script.google.com/macros/s/AKfycbxIiypcS2079X9XWdMVcjX47Iockewbl_pP2CJboEqEt5zbOoSZbMYNoZFniIE9C6_Z/exec";
-  var postData = {
+    "https://script.google.com/macros/s/AKfycbzXDI-uMxKrdOoBdcCH9Tcm7ult9cLNExEC5JPx9eoYUFFUXeUIsDGbjSYlW02kLNYo/exec"
     class_Code: class_Code,
     userEmail: userEmail,
   };
