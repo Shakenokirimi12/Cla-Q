@@ -12,7 +12,7 @@ async function submitAnswer() {
         const key = "class_Code";
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
-        var url = "https://api.cla-q.net/student/submit_answer";
+        var url = "https://student.api.cla-q.net/submit_answer";
         var postData = {
           class_Code: class_Code,
           userName: userName,
@@ -232,9 +232,10 @@ async function logOut() {
 }
 
 async function leaveClass() {
-  var url = "https://api.cla-q.net/student/leave";
+  var url = "https://student.api.cla-q.net/leave";
   var postData = {
     userName: userName,
+    userEmail: userEmail,
   };
   try {
     await fetch(url, {
