@@ -16,23 +16,18 @@ async function sendToGAS() {
     timer: 3000,
   });
   var url =
-    "https://script.google.com/macros/s/AKfycbzXDI-uMxKrdOoBdcCH9Tcm7ult9cLNExEC5JPx9eoYUFFUXeUIsDGbjSYlW02kLNYo/exec";
+    "https://script.google.com/macros/s/AKfycbyPgZDVZ9I4cJB_4Lfg8pcfDJHSmPP0PE1VXzf8B0PS8mzzilG5H-j0zrhN212J1vhw/exec";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
   };
   try {
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: JSON.stringify(postData),
+    await fetch(url + "/?code=" + class_Code + "&mail=" + userEmail, {
+      method: "GET"
     })
-      .then((response) => response.json())
       .then((res) => {
-        console.log(res);
-        window.open(res.url, "_blank");
+        console.log(text);
+        window.open(res.text, "_blank");
       })
       .catch((error) => {
         console.log(error);
@@ -210,7 +205,7 @@ window.onload = async function () {
   }
   await redirectMobile();
   await preventOverLogin();
-  setInterval("showClock()", 1000);  
+  setInterval("showClock()", 1000);
 };
 
 async function executeEveryTwoSeconds() {
@@ -429,7 +424,7 @@ async function disposeClass() {
     title:
       "続行しますか？",
     icon: "warning",
-    html:"クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
+    html: "クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
     showCancelButton: true,
     confirmButtontext: "続行",
   }).then((result) => {
