@@ -17,17 +17,13 @@ async function sendToGAS() {
   });
   var url =
     "https://script.google.com/macros/s/AKfycbyPgZDVZ9I4cJB_4Lfg8pcfDJHSmPP0PE1VXzf8B0PS8mzzilG5H-j0zrhN212J1vhw/exec";
-  var postData = {
-    class_Code: class_Code,
-    userEmail: userEmail,
-  };
   try {
     await fetch(url + "/?code=" + class_Code + "&mail=" + userEmail, {
       method: "GET"
     })
       .then((res) => {
         console.log(text);
-        window.open(res.text, "_blank");
+        window.open(res.url, "_blank");
       })
       .catch((error) => {
         console.log(error);
