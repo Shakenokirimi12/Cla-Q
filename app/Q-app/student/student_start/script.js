@@ -11,6 +11,7 @@ async function student_Join() {
   var postData = {
     class_Code: class_Code,
     userName: userName,
+    userEmail: userEmail,
   };
   console.log(postData)
   try {
