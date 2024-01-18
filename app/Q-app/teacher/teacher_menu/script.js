@@ -15,7 +15,7 @@ async function sendToGAS() {
     showConfirmButton: false,
     timer: 3000,
   });
-  var url = "https://teacher.api.cla-q.net/start_question";
+  var url = "https://teacher.api.cla-q.net/export";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -32,22 +32,19 @@ async function sendToGAS() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length != 0) {
-          var responseresult = data[Object.keys(data).length - 1];
-          console.log(responseresult.question_Number);
-          if (responseresult.result == "success") {
-            window.open(responseresult.url, "_blank");
-          } else {
-            console.log(responseresult.result);
-            Swal.fire({
-              title: "エラー",
-              html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
-              icon: "error",
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 3000,
-            });
-          }
+          window.open(data.url, "_blank");
+        }
+        else {
+          console.log(responseresult.result);
+          Swal.fire({
+            title: "エラー",
+            html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
+            icon: "error",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+          });
         }
       })
       .catch((error) => {
