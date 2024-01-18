@@ -15,22 +15,45 @@ async function sendToGAS() {
     showConfirmButton: false,
     timer: 3000,
   });
-  var url =
-    "https://script.google.com/macros/s/AKfycbyPgZDVZ9I4cJB_4Lfg8pcfDJHSmPP0PE1VXzf8B0PS8mzzilG5H-j0zrhN212J1vhw/exec";
+  var url = "https://teacher.api.cla-q.net/start_question";
+  var postData = {
+    class_Code: class_Code,
+    userEmail: userEmail,
+  };
   try {
-    await fetch(url + "/?code=" + class_Code + "&mail=" + userEmail, {
-      method: "GET",
-      mode: 'no-cors',
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://cla-q.net/",
+      },
+      body: JSON.stringify(postData),
     })
-      .then((res) => {
-        console.log(res);
-        window.open(res.url, "_blank");
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length != 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.question_Number);
+          if (responseresult.result == "success") {
+            window.open(responseresult.url, "_blank");
+          } else {
+            console.log(responseresult.result);
+            Swal.fire({
+              title: "エラー",
+              html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
+              icon: "error",
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+            });
+          }
+        }
       })
       .catch((error) => {
-        console.log(error);
         Swal.fire({
           title: "エラー",
-          html: "共有リンクを取得できませんでした。<br>エラー内容:" + error,
+          html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
           icon: "error",
           toast: true,
           position: "top-end",
@@ -42,6 +65,7 @@ async function sendToGAS() {
     console.log("エラー発生。");
     console.log(error);
   }
+
 }
 async function startQuestion() {
   const key = "class_Code";
