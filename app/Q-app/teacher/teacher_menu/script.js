@@ -32,7 +32,7 @@ async function sendToGAS() {
       .then((response) => response.json())
       .then((data) => {
         if (data.length != 0) {
-          window.open(data.url, "_blank");
+          window.open(data.shareurl, "_blank");
         }
         else {
           console.log(responseresult.result);
