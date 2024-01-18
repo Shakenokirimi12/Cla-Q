@@ -146,7 +146,7 @@ window.onload = function () {
   prevent_Overlogin();
   Swal.fire({
     title: "お知らせ",
-    html: '開発履歴などは<a href="https://dev.cla-q.net/">こちら</a><br>開発ブログは<a href="https://blog.cla-q.net/">こちら</a>',
+    html: '開発履歴などは<a href="https://dev.cla-q.net/" target="_blank">こちら</a><br>開発ブログは<a href="https://blog.cla-q.net/" target="_blank>こちら</a>',
     icon: "info",
     toast: true,
     position: "top-end",
