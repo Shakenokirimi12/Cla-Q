@@ -101,6 +101,14 @@ window.onload = function () {
   }
   mobileRedirect();
   prevent_Overlogin();
+  Swal.fire({
+    title: "エラー",
+    html: '開発履歴などは<a href="https://dev.cla-q.net/">こちら</a><br>こちら開発ブログは<a href="blog.cla-q.net">こちら</a>',
+    icon: "error",
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+  });
 };
 
 function mobileRedirect() {
