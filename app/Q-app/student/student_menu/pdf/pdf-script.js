@@ -364,7 +364,7 @@ async function checkPDFExistance() {
       console.log(data);
       if (data.length != 0) {
         var select = document.getElementById("pdfSelector");
-        var index = select.index;
+        var currentvalue = select.value;
         select.innerHTML = "";
         data.forEach((key) => {
           const option = document.createElement("option");
@@ -372,7 +372,7 @@ async function checkPDFExistance() {
           option.text = key;
           select.add(option);
         });
-        select.index = index;
+        select.value = currentvalue;
         showPDF();
       } else {
         Swal.fire({
