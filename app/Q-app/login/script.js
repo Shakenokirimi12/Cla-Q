@@ -67,11 +67,11 @@ firebase.auth().onAuthStateChanged(async function (user) {
     // 未ログイン時
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", {
-      signInOptions: [
+      'signInOptions': [
         firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
       ],
-      tosUrl: "https://app.cla-q.net/tos.html",
-      callbacks: {
+      'tosUrl': 'https://app.cla-q.net/tos',
+      'callbacks': {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           var url = "https://api.cla-q.net/detect_role";
           var postData = {
