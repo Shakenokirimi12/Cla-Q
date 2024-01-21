@@ -71,6 +71,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
       ],
       'tosUrl': 'https://app.cla-q.net/tos',
+      'privacyPolicyUrl': 'https://app.cla-q.net/tos',
       'callbacks': {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           var url = "https://api.cla-q.net/detect_role";
