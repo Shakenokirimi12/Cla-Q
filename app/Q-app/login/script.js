@@ -27,7 +27,10 @@ firebase.auth().onAuthStateChanged(async function (user) {
         } else {
           //先生でも生徒でもない場合
           Swal.fire({
-            text: "サーバーレスポンスエラーです。\n(ErrorCode:" + responseresult.status_Code + ")",
+            text:
+              "サーバーレスポンスエラーです。\n(ErrorCode:" +
+              responseresult.status_Code +
+              ")",
             title: "エラー",
             icon: "error",
             showConfirmButton: false,
@@ -59,7 +62,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
           });
         }
       })
-      .catch((error) => { });
+      .catch((error) => {});
   } else {
     // 未ログイン時
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -67,6 +70,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       signInOptions: [
         firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
       ],
+      tosUrl: "https://app.cla-q.net/tos.html",
       callbacks: {
         signInSuccess: function (currentUser, credential, redirectUrl) {
           var url = "https://api.cla-q.net/detect_role";
@@ -79,7 +83,6 @@ firebase.auth().onAuthStateChanged(async function (user) {
             headers: {
               "Content-Type": "application/json",
               Origin: "https://cla-q.net/",
-              // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
           })
@@ -94,7 +97,10 @@ firebase.auth().onAuthStateChanged(async function (user) {
               } else {
                 //先生でも生徒でもない場合
                 Swal.fire({
-                  text: "サーバーレスポンスエラーです。\n(ErrorCode:" + responseresult.status_Code + ")",
+                  text:
+                    "サーバーレスポンスエラーです。\n(ErrorCode:" +
+                    responseresult.status_Code +
+                    ")",
                   title: "エラー",
                   icon: "error",
                   showConfirmButton: false,
@@ -126,8 +132,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
                 });
               }
             })
-            .catch((error) => { });
-
+            .catch((error) => {});
           return false;
         },
       },
