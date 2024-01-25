@@ -743,6 +743,7 @@ function applySettingChanges(){
               Swal.fire({
                 html: "クラス設定をサーバーに反映しました。",
                 toast: true,
+                position: "top-end",
                 showConfirmButton: false,
                 timer: 1000,
                 title: "情報",
