@@ -706,7 +706,7 @@ function showSettingModal(){
 }
 
 function applySettingChanges(){
-  var showClockOption = documetn.querySelector("#display-clock").checked;
+  var showClockOption = document.querySelector("#display-clock").checked;
   if(showClockOption){
     document.querySelector("#currentTime").style.display = "block";
   }
