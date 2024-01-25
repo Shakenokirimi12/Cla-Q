@@ -70,7 +70,7 @@ async function startClass() {
 }
 
 async function teacher_Rejoin() {
-  var class_Code = document.getElementById("class-code-input").value;
+  var class_Code = document.querySelector("#class-code-input").value;
   if (class_Code == null || class_Code == undefined || class_Code == "") {
     Swal.fire({
       html: "クラスコードが入力されていません。",
@@ -224,7 +224,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             "</p><p>メールアドレス: " +
             user.email +
             "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-          let screenLock = document.getElementById("screenLock");
+          let screenLock = document.querySelector("#screenLock");
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
           userEmail = user.email;

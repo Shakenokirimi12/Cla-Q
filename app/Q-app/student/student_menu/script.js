@@ -1,5 +1,5 @@
 async function submitAnswer() {
-  var answerBox = document.getElementById("answer-box");
+  var answerBox = document.querySelector("#answer-box");
   var answer = answerBox.value.trim();
 
   if (answer !== "") {
@@ -211,13 +211,13 @@ firebase.auth().onAuthStateChanged(function (user) {
         if (isTeacher) {
           window.location.href = "../../teacher/teacher_start";
         }
-        document.getElementById("user_Name").innerHTML = user.displayName;
-        document.getElementById("user_Email").innerHTML =
+        document.querySelector("#user_Name").innerHTML = user.displayName;
+        document.querySelector("#user_Email").innerHTML =
           "(" + user.email + ")";
-        document.getElementById("class_code").innerHTML =
+        document.querySelector("#class_code").innerHTML =
           "参加中のクラス:" + class_Code;
 
-        let screenLock = document.getElementById("screenLock");
+        let screenLock = document.querySelector("#screenLock");
         screenLock.parentNode.removeChild(screenLock);
         userName = user.displayName;
         userEmail = user.email;
@@ -329,7 +329,7 @@ function showClock() {
     nowSec = Number("0" + String(nowSec));
   }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
-  document.getElementById("currentTime").innerHTML = msg;
+  document.querySelector("#currentTime").innerHTML = msg;
 }
 
 async function checkPDFExistance() {

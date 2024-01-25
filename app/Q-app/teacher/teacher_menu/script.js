@@ -2,10 +2,8 @@ function showExpandedCode() {
   window.open("./class_invite.html", "_blank");
 }
 
+var class_Code;
 async function sendToGAS() {
-  const key = "class_Code";
-  const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-  var class_Code = value;
   Swal.fire({
     title: "通知",
     html: "エクスポートを開始しました。<br>完了すると新しいタブでスプレッドシートが開きます。",
@@ -31,7 +29,7 @@ async function sendToGAS() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.length != 0) {
+        if (data.length !== 0) {
           window.open(data.sharelink, "_blank");
         }
         else {
@@ -65,9 +63,6 @@ async function sendToGAS() {
 
 }
 async function startQuestion() {
-  const key = "class_Code";
-  const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-  var class_Code = value;
   var url = "https://teacher.api.cla-q.net/start_question";
   var postData = {
     class_Code: class_Code,
@@ -85,16 +80,15 @@ async function startQuestion() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.length != 0) {
+        if (data.length !== 0) {
           var responseresult = data[Object.keys(data).length - 1];
           console.log(responseresult.question_Number);
           if (responseresult.result == "success") {
             console.log("Successfully started the question");
             console.log(responseresult.question_Number);
             var questionnumber = responseresult.question_Number;
-            document.getElementById("status").innerHTML =
-              "現在:" + questionnumber + "問目実施中";
-            var select = document.getElementById("problemSelector");
+            document.querySelector("#status").innerHTML ="現在:" + questionnumber + "問目実施中";
+            var select = document.querySelector("#problemSelector");
             if (select.options.length === 0) {
               if (questionnumber !== 1) {
                 for (var i = 1; i <= questionnumber; i++) {
@@ -115,7 +109,7 @@ async function startQuestion() {
               option.text = "第" + questionnumber + "問";
               select.appendChild(option);
             }
-            document.getElementById("problemSelector").value = questionnumber;
+            document.querySelector("#problemSelector").value = questionnumber;
             Swal.fire({
               html: "問題を開始しました。現在" + questionnumber + "問目です。",
               title: "成功",
@@ -149,9 +143,6 @@ async function startQuestion() {
 }
 
 async function endQuestion() {
-  const key = "class_Code";
-  const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
-  var class_Code = value;
   var url = "https://teacher.api.cla-q.net/end_question";
   var postData = {
     class_Code: class_Code,
@@ -169,11 +160,11 @@ async function endQuestion() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.length != 0) {
+        if (data.length !== 0) {
           var responseresult = data[Object.keys(data).length - 1];
           if (responseresult.result == "success") {
             console.log("Successfully ended the question");
-            document.getElementById("status").innerHTML = "現在:問題開始待ち";
+            document.querySelector("#status").innerHTML = "現在:問題開始待ち";
             Swal.fire({
               html: "問題を終了しました。",
               title: "成功",
@@ -254,8 +245,8 @@ async function getStudentsList() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data != undefined) {
-          var tableBody = document.getElementById("studentsTableBody");
+        if (data !== undefined) {
+          var tableBody = document.querySelector("#studentsTableBody");
           tableBody.innerHTML = "";
           data.forEach(function (item) {
             var connectedTime = new Date(item.connected_Time * 1000);
@@ -268,7 +259,7 @@ async function getStudentsList() {
             newRow.appendChild(nameCell);
             tableBody.appendChild(newRow);
           });
-          document.getElementById("student_count").innerHTML =
+          document.querySelector("#student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
           Swal.fire({
             html: "生徒接続情報が更新されました。",
@@ -302,7 +293,7 @@ async function getStudentsList() {
 }
 
 async function getAnswersList() {
-  var comboBox = document.getElementById("problemSelector");
+  var comboBox = document.querySelector("#problemSelector");
   var selectedIndex = String(comboBox.selectedIndex + 1);
   console.log("答え一覧を取得しています。");
   var url = "https://teacher.api.cla-q.net/get_AnswersList";
@@ -323,8 +314,8 @@ async function getAnswersList() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data != undefined) {
-          var tableBody = document.getElementById("answersTableBody");
+        if (data !== undefined) {
+          var tableBody = document.querySelector("#answersTableBody");
           tableBody.innerHTML = "";
           data.forEach(function (item) {
             var newRow = document.createElement("tr");
@@ -404,7 +395,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.length != 0) {
+        if (data.length !== 0) {
           var responseresult = data[Object.keys(data).length - 1];
           console.log(responseresult.status_Code);
           if (responseresult.status_Code == "DR-01") {
@@ -421,11 +412,11 @@ firebase.auth().onAuthStateChanged(async function (user) {
         if (isStudent) {
           window.location.href = "../../student/student_start";
         }
-        document.getElementById("user_info").innerHTML =
+        document.querySelector("#user_info").innerHTML =
           user.displayName + "(" + user.email + ")";
-        document.getElementById("class_code").innerHTML =
+        document.querySelector("#class_code").innerHTML =
           "クラスコード:" + class_Code;
-        let screenLock = document.getElementById("screenLock");
+        let screenLock = document.querySelector("#screenLock");
         screenLock.parentNode.removeChild(screenLock);
         userName = user.displayName;
         userEmail = user.email;
@@ -465,7 +456,7 @@ async function disposeClass() {
           .then((response) => response.json())
           .then((data) => {
             try {
-              if (data != undefined && data.length != 0) {
+              if (data !== undefined && data.length !== 0) {
                 var responseresult = data[Object.keys(data).length - 1];
                 if (responseresult.result == "success") {
                   console.log("Successfully deleted the class");
@@ -533,7 +524,7 @@ function showClock() {
     nowSec = Number("0" + String(nowSec));
   }
   let msg = "現在時刻：" + nowHour + ":" + nowMin + ":" + nowSec;
-  document.getElementById("currentTime").innerHTML = msg;
+  document.querySelector("#currentTime").innerHTML = msg;
 }
 
 async function uploadFile(file) {
@@ -549,7 +540,7 @@ async function uploadFile(file) {
   })
     .then((response) => response.text())
     .then((data) => {
-      if (data != undefined && data.length != 0) {
+      if (data !== undefined && data.length !== 0) {
         var responseresult = data[Object.keys(data).length - 1];
         if (responseresult.result == "success") {
           Swal.fire({
@@ -587,7 +578,7 @@ async function uploadFile(file) {
         timer: 1500,
       })
         .then((result) => {
-          document.getElementById("filePicker").value = "";
+          document.querySelector("#filePicker").value = "";
         })
         .catch((error) => {
           console.error(error);
@@ -652,12 +643,12 @@ async function getClassInfo() {
             var classinfo = data[0];
             if (responseresult.result == "success") {
               console.log(classinfo)
-              var select = document.getElementById("problemSelector");
+              var select = document.querySelector("#problemSelector");
               if (classinfo.latest_Question_Number == "0") {
-                document.getElementById("status").innerHTML = "現在:問題開始待ち";
+                document.querySelector("#status").innerHTML = "現在:問題開始待ち";
               }
               else {
-                if (classinfo.latest_Question_Number !== 1) {
+                if (classinfo.latest_Question_Number != 1) {
                   for (var i = 1; i <= classinfo.latest_Question_Number; i++) {
                     var option = document.createElement("option");
                     option.value = i;
@@ -671,10 +662,12 @@ async function getClassInfo() {
                   select.appendChild(option);
                 }
                 if (classinfo.current_Question_Number != 0) {
-                  document.getElementById("status") = "現在" + classinfo.current_Question_Number + "問目";
+                  var statusvalue = "現在" + classinfo.current_Question_Number + "問目";
+                  document.querySelector("#status") = statusvalue;
                 }
                 else {
-                  document.getElementById("status").innerHTML = "現在:問題開始待ち";
+                  var statusvalue = "現在:問題開始待ち";
+                  document.querySelector("#status").innerHTML = statusvalue;
                 }
               }
             }
@@ -703,5 +696,89 @@ async function getClassInfo() {
   } catch (error) {
     console.log("APIアクセス中にエラー発生。");
     console.log(error);
+  }
+}
+
+
+function showSettingModal(){
+  const settingModal = new bootstrap.Modal(document.getElementById('settingModal'));
+  settingModal.show();
+}
+
+function applySettingChanges(){
+  var showClockOption = documetn.querySelector("#display-clock").checked;
+  if(showClockOption){
+    document.querySelector("#currentTime").style.display = "block";
+  }
+  else{
+    document.querySelector("#currentTime").style.display = "none";
+  }
+  var maximumStudentCount = document.querySelector("#maximum-student-count").value;
+  var chatAI_ModelOption = document.querySelector("#chat-llm-model-selector").value;
+  var settingjson = {
+    MaximumStudent : maximumStudentCount,
+    AIOption: chatAI_ModelOption
+  };
+  var url = "https://teacher.api.cla-q.net/settings";
+  var postData = {
+    class_Code: class_Code,
+    userEmail: userEmail,
+    settings: settingjson
+  };
+  try {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://cla-q.net/",
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        try {
+          if (data != undefined && data.length != 0) {
+            var responseresult = data[Object.keys(data).length - 1];
+            if (responseresult.result == "success") {
+              Swal.fire({
+                html: "クラス設定をサーバーに反映しました。",
+                toast: true,
+                title: "エラー",
+                icon: "error",
+              });
+            }
+          } else {
+            Swal.fire({
+              html: "クラス設定をサーバーに反映できませんでした。<br>再度お試しください。",
+              toast: true,
+              title: "エラー",
+              icon: "error",
+            });
+            window.location.href = "../teacher_start"
+          }
+        }
+        catch (error) {
+          console.log("レスポンス解析中にエラー発生。レスポンスは以下です。")
+          console.log(data)
+          console.log(error)
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          html: "API送信に失敗しました。<br>" + error,
+          toast: true,
+          title: "エラー",
+          icon: "error",
+        });
+      });
+  } catch (error) {
+    console.log("APIアクセス中にエラー発生。");
+    console.log(error);
+    Swal.fire({
+      html: "API送信に失敗しました。<br>" + error,
+      toast: true,
+      title: "エラー",
+      icon: "error",
+    });
   }
 }

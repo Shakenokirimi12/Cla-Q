@@ -6,7 +6,7 @@ function handleKeyDown(event) {
 }
 
 async function student_Join() {
-  var class_Code = document.getElementById("class-code-input").value;
+  var class_Code = document.querySelector("#class-code-input").value;
   var url = "https://student.api.cla-q.net/join";
   var postData = {
     class_Code: class_Code,
@@ -97,7 +97,7 @@ window.onload = function () {
   console.log(data);
   var class_Code = data;
   if (class_Code.length = !0) {
-    document.getElementById("class-code-input").value = class_Code;
+    document.querySelector("#class-code-input").value = class_Code;
   }
   mobileRedirect();
   prevent_Overlogin();
@@ -185,16 +185,16 @@ firebase.auth().onAuthStateChanged(function (user) {
             user.email +
             "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
 
-          let screenLock = document.getElementById("screenLock");
+          let screenLock = document.querySelector("#screenLock");
           screenLock.parentNode.removeChild(screenLock);
         }
-        document.getElementById("user_Name").innerHTML = user.displayName;
-        document.getElementById("user_Email").innerHTML =
+        document.querySelector("#user_Name").innerHTML = user.displayName;
+        document.querySelector("#user_Email").innerHTML =
           "(" + user.email + ")";
-        document.getElementById("class_code").innerHTML =
+        document.querySelector("#class_code").innerHTML =
           "参加中のクラス:" + class_Code;
 
-        let screenLock = document.getElementById("screenLock");
+        let screenLock = document.querySelector("#screenLock");
         screenLock.parentNode.removeChild(screenLock);
       });
   } else {
