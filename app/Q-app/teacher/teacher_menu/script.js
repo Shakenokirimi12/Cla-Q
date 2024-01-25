@@ -743,8 +743,8 @@ function applySettingChanges(){
               Swal.fire({
                 html: "クラス設定をサーバーに反映しました。",
                 toast: true,
-                title: "エラー",
-                icon: "error",
+                title: "情報",
+                icon: "info",
               });
             }
           } else {
