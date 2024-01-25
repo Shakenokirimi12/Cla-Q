@@ -98,6 +98,38 @@
       </table>
     </div>
   </div>
+
+  <div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="settingModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingModalLabel">クラスの設定</h5>
+        </div>
+        <div class="modal-body">
+
+          <h5 class="font-weight-bold">クラス管理画面設定</h5>
+          <input type="checkbox" name="display-clock" checked>時計を表示する
+          <br>
+          <br>
+          <h5 class="font-weight-bold">AIの使用設定</h5>
+          <select id="chat-llm-model-selector" class="form-select">
+            <option value="deny" selected>対話AIを許可しない</option>
+            <option value="gemini-pro">GeminiProの使用を許可する</option>
+          </select>
+
+          <br>
+
+          <h5 class="font-weight-bold">クラス設定</h5>
+          <input type="number" autocomplete="off" min="1" max="100" id="maximum-student-count" class="input-field"
+            placeholder="最大人数を入力" required="true" value="100" />
+          <br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="modal-close-button" data-bs-dismiss="modal">完了</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
