@@ -743,6 +743,8 @@ function applySettingChanges(){
               Swal.fire({
                 html: "クラス設定をサーバーに反映しました。",
                 toast: true,
+                showConfirmButton: false,
+                timer: 1000,
                 title: "情報",
                 icon: "info",
               });
@@ -751,8 +753,11 @@ function applySettingChanges(){
             Swal.fire({
               html: "クラス設定をサーバーに反映できませんでした。<br>再度お試しください。",
               toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1000,
               title: "エラー",
-              icon: "error",
+             icon: "error",
             });
             window.location.href = "../teacher_start"
           }
@@ -767,6 +772,9 @@ function applySettingChanges(){
         Swal.fire({
           html: "API送信に失敗しました。<br>" + error,
           toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1000,
           title: "エラー",
           icon: "error",
         });
@@ -777,6 +785,9 @@ function applySettingChanges(){
     Swal.fire({
       html: "API送信に失敗しました。<br>" + error,
       toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1000,
       title: "エラー",
       icon: "error",
     });
