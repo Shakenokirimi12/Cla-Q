@@ -2,7 +2,6 @@ function showExpandedCode() {
   window.open("./class_invite.html", "_blank");
 }
 
-var class_Code;
 async function sendToGAS() {
   Swal.fire({
     title: "通知",
@@ -62,6 +61,7 @@ async function sendToGAS() {
   }
 
 }
+
 async function startQuestion() {
   var url = "https://teacher.api.cla-q.net/start_question";
   var postData = {
@@ -377,56 +377,7 @@ function preventOverLogin() {
 }
 
 var userName, userEmail;
-firebase.auth().onAuthStateChanged(async function (user) {
-  if (user) {
-    var isStudent;
-    var url = "https://api.cla-q.net/detect_role";
-    var postData = {
-      userEmail: user.email,
-      userName: user.displayName,
-    };
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
-      },
-      body: JSON.stringify(postData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length !== 0) {
-          var responseresult = data[Object.keys(data).length - 1];
-          console.log(responseresult.status_Code);
-          if (responseresult.status_Code == "DR-01") {
-            isStudent = false;
-            console.log("user is not student.")
-          } else if (responseresult.status_Code == "DR-02") {
-            isStudent = true;
-            console.log("user is student.")
-          }
-        }
-      })
-      .catch((error) => { })
-      .finally(() => {
-        if (isStudent) {
-          window.location.href = "../../student/student_start";
-        }
-        document.querySelector("#user_info").innerHTML =
-          user.displayName + "(" + user.email + ")";
-        document.querySelector("#class_code").innerHTML =
-          "クラスコード:" + class_Code;
-        let screenLock = document.querySelector("#screenLock");
-        screenLock.parentNode.removeChild(screenLock);
-        userName = user.displayName;
-        userEmail = user.email;
-      });
-    await getClassInfo();
-    executeEveryTwoSeconds();
-  } else {
-    window.location.href = "../../login";
-  }
-});
+var class_Code;
 
 async function disposeClass() {
   await Swal.fire({
@@ -598,25 +549,6 @@ async function uploadFile(file) {
     });
 }
 
-
-function logOut() {
-  firebase
-    .auth()
-    .signOut()
-    .then(function () {
-      preventOverlogin();
-      Swal.fire({
-        html: "ログアウトしました。ログイン画面に戻ります。",
-        title: "情報",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500,
-      }).then((result) => {
-        location.reload();
-      });
-    });
-}
-
 async function getClassInfo() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
@@ -699,6 +631,12 @@ async function getClassInfo() {
   }
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Start
+//For-Setting-Modal-Window
 
 function showSettingModal(){
   const settingModal = new bootstrap.Modal(document.getElementById('settingModal'));
@@ -794,3 +732,87 @@ function applySettingChanges(){
     });
   }
 }
+
+function applyClassSettingToMenu(){
+
+}
+
+//End
+//For-Setting-Modal-Window
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Start
+//For-FirebaseAuth
+
+firebase.auth().onAuthStateChanged(async function (user) {
+  if (user) {
+    var isStudent;
+    var url = "https://api.cla-q.net/detect_role";
+    var postData = {
+      userEmail: user.email,
+      userName: user.displayName,
+    };
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Origin: "https://cla-q.net/",
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length !== 0) {
+          var responseresult = data[Object.keys(data).length - 1];
+          console.log(responseresult.status_Code);
+          if (responseresult.status_Code == "DR-01") {
+            isStudent = false;
+            console.log("user is not student.")
+          } else if (responseresult.status_Code == "DR-02") {
+            isStudent = true;
+            console.log("user is student.")
+          }
+        }
+      })
+      .catch((error) => { })
+      .finally(() => {
+        if (isStudent) {
+          window.location.href = "../../student/student_start";
+        }
+        document.querySelector("#user_info").innerHTML =
+          user.displayName + "(" + user.email + ")";
+        document.querySelector("#class_code").innerHTML =
+          "クラスコード:" + class_Code;
+        let screenLock = document.querySelector("#screenLock");
+        screenLock.parentNode.removeChild(screenLock);
+        userName = user.displayName;
+        userEmail = user.email;
+      });
+    await getClassInfo();
+    executeEveryTwoSeconds();
+  } else {
+    window.location.href = "../../login";
+  }
+});
+
+function logOut() {
+  firebase
+    .auth()
+    .signOut()
+    .then(function () {
+      preventOverlogin();
+      Swal.fire({
+        html: "ログアウトしました。ログイン画面に戻ります。",
+        title: "情報",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then((result) => {
+        location.reload();
+      });
+    });
+}
+
+//End
+//For-FirebaseAuth
