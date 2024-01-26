@@ -209,7 +209,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           console.log("user is not teacher.");
         }
       })
-      .catch((error) => {})
+      .catch((error) => { })
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -344,8 +344,8 @@ function showClock() {
   document.querySelector("#currentTime").innerHTML = msg;
 }
 
-async function checkPDFExistance() {
-  var url = "https://pdf.api.cla-q.net/list";
+async function checkIsAIAllowed() {
+  var url = "https://student.api.cla-q.net/Class_Setitngs";
   var postData = {
     class_Code: class_Code,
   };
@@ -361,22 +361,19 @@ async function checkPDFExistance() {
     .then((response) => response.json())
     .then((data) => {
       //ファイル名を抽出
-      console.log(data);
-      if (data.length != 0) {
-        var select = document.querySelector("#pdfSelector");
-        var currentvalue = select.value;
-        select.innerHTML = "";
-        data.forEach((key) => {
-          const option = document.createElement("option");
-          option.value = key;
-          option.text = key;
-          select.add(option);
-        });
-        select.value = currentvalue;
-        showPDF();
-      } else {
+      var responseresult = data[Object.keys(data).length - 1]; //レスポン状況ノードを抽出
+      var classSetting = data[0];
+      if (classSetting.AIOption == "gemini-pro") {
+        var chatzone = document.querySelector("#chatzone");
+        chatzone.src = "https://chat.cla-q.net/gemini-pro";
+      }
+      else if (classSetting.AIOption == "meta-llama") {
+        var chatzone = document.querySelector("#chatzone");
+        chatzone.src = "https://chat.cla-q.net/meta-llama";
+      }
+      else {
         Swal.fire({
-          html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
+          html: "このクラスではChatAIが有効ではありません。<br>通常の解答画面に戻ります。",
           icon: "info",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -394,7 +391,7 @@ async function checkPDFExistance() {
     });
 }
 
-function showPDF() {
+function showChatAI() {
   var comboBox = document.querySelector("#pdfSelector");
   var pdfzone = document.querySelector("#pdfzone");
   var pdffilename = comboBox.value;
