@@ -65,6 +65,14 @@ async function student_Join() {
                   icon: "error",
                 });  
               }
+              else if(responseresult.status_Code == "JE-06"){
+                Swal.fire({
+                  html:
+                    "クラスに設定されている参加可能な人数を超えたため、<br>クラスに接続できませんでした。<br>エラーコード:" + responseresult.status_Code,
+                  title: "エラー",
+                  icon: "error",
+                });  
+              }
               else{
                 Swal.fire({
                   html:
