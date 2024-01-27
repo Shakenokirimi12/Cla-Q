@@ -422,7 +422,7 @@ async function disposeClass() {
                     window.location.href = "../teacher_start";
                   });
                 }
-                else if (responseresult.status_Code == "IAE-13") {
+                else if (responseresult.status_Code == "ICE-13") {
                   Swal.fire({
                     html: "クラスはすでに閉じられています。<br>クラス参加画面に戻ります。",
                     title: "情報",
