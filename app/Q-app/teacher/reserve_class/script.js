@@ -32,7 +32,6 @@ async function uploadFile(file) {
           })
             .then((result) => {
               document.querySelector("#filePicker").value = "";
-              reserve_class();
             })
             .catch((error) => {
               console.error(error);
@@ -70,7 +69,7 @@ async function uploadFile(file) {
     });
 }
 
-async function reserve_class() {
+async function reserve_class(file) {
   var url = "https://teacher.api.cla-q.net/reserve_class";
   var postData = {
     userEmail: userEmail,
@@ -100,7 +99,10 @@ async function reserve_class() {
               title: "情報",
               icon: "success",
               showConfirmButton: true,
-            });
+            })
+              .then((result) => {
+                uploadFile(file)
+              });
           } else {
             Swal.fire({
               html: "クラスの予約に失敗しました。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
@@ -216,7 +218,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
   }
 });
 
-function back(){
+function back() {
   window.location.href = "../teacher_start";
 }
 
