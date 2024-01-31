@@ -93,17 +93,13 @@ async function reserve_class() {
           if (responseresult.result == "success") {
             prevent_Overlogin();
             console.log("Successfully rejoined the class");
-            document.cookie = "class_Code=" + classinfo.class_Code + ";path=/;";
             Swal.fire({
               html: "クラスを正常に予約完了しました。<br>クラスコードは書き留めて下さい。<br>クラスコードは" +
                 responseresult.class_Code +
                 "です。",
               title: "情報",
               icon: "success",
-              showConfirmButton: false,
-              timer: 1500,
-            }).then((result) => {
-              window.location.href = "../teacher_menu";
+              showConfirmButton: true,
             });
           } else {
             Swal.fire({
@@ -208,7 +204,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             user.displayName +
             "</p><p>メールアドレス: " +
             user.email +
-            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
+            "</p><button id='logout_button' class='flow-button' onclick='logOut()'>ログアウト</button><button id='back_button' class='flow-button' onclick='back()'>戻る</button>";
           let screenLock = document.querySelector("#screenLock");
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
@@ -220,6 +216,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
   }
 });
 
+function back(){
+  window.location.href = "../teacher_start";
+}
 
 function logOut() {
   firebase
