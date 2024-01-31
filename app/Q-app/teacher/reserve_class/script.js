@@ -101,6 +101,7 @@ async function reserve_class(file) {
               showConfirmButton: true,
             })
               .then((result) => {
+                class_Code = responseresult.class_Code;
                 uploadFile(file)
               });
           } else {
