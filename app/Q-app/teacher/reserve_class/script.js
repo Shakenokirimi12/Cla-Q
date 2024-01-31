@@ -5,83 +5,74 @@ function handleKeyDown(event) {
   }
 }
 
-async function startClass() {
-  var url = "https://teacher.api.cla-q.net/create_class";
-  var postData = {
-    userEmail: userEmail,
-    userName: userName,
-  };
-  try {
-    await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
-      },
-      body: JSON.stringify(postData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length != 0) {
-          var responseresult = data[Object.keys(data).length - 1];
-          if (responseresult.result == "success") {
-            console.log("Successfully created the class.");
-            prevent_Overlogin();
-            document.cookie = "class_Code=" + responseresult.class_Code + ";path=/;";
-            Swal.fire({
-              html:
-                "クラスを作成しました。<br>クラスコードは" +
-                responseresult.class_Code +
-                "です。",
-              title: "情報",
-              icon: "success",
-              showConfirmButton: false,
-              timer: 1500, 
-            }).then((result) => {
-              window.location.href = "../teacher_menu";
-            });
-          } else {
-            Swal.fire({
-              html: "クラスを開始できませんでした。<br>(" + responseresult.message + responseresult.status_Code + ")",
-              title: "エラー",
-              icon: "error",
-            });
-          }
-        }
-        else {
+async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  fetch("https://pdf.api.cla-q.net/" + class_Code + "-" + file.name, {
+    method: "POST",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": file.type,
+    },
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      if (data !== undefined && data.length !== 0) {
+        var responseresult = data[Object.keys(data).length - 1];
+        if (responseresult.result == "success") {
           Swal.fire({
-            html: "接続できませんでした。<br>サーバーから無効な応答が返されました。",
-            title: "エラー",
-            icon: "error",
-          });
+            html: "ファイルを共有しました。",
+            title: "成功",
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+            .then((result) => {
+              document.querySelector("#filePicker").value = "";
+              reserve_class();
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         }
-      })
-      .catch((error) => {
+      }
+      else {
         Swal.fire({
-          html: "クラスを開始できませんでした。(" + error + ")",
-          title: "エラー",
+          text: "ファイルを共有できませんでした。",
+          title: "失敗",
           icon: "error",
-        });
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+        })
+          .then((result) => {
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      Swal.fire({
+        html: "ファイルが選択されていません。",
+        title: "エラー",
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
       });
-  } catch (error) {
-    console.log("エラー発生。");
-    console.log(error);
-  }
+    });
 }
 
-async function teacher_Rejoin() {
-  var class_Code = document.querySelector("#class-code-input").value;
-  if (class_Code == null || class_Code == undefined || class_Code == "") {
-    Swal.fire({
-      html: "クラスコードが入力されていません。",
-      title: "情報",
-      icon: "info",
-    });
-    return;
-  }
-  var url = "https://teacher.api.cla-q.net/rejoin_class";
+async function reserve_class() {
+  var url = "https://teacher.api.cla-q.net/reserve_class";
   var postData = {
-    class_Code: class_Code,
     userEmail: userEmail,
     userName: userName,
   };
@@ -104,17 +95,19 @@ async function teacher_Rejoin() {
             console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + classinfo.class_Code + ";path=/;";
             Swal.fire({
-              html: "クラスに再接続しました。",
+              html: "クラスを正常に予約完了しました。<br>クラスコードは書き留めて下さい。<br>クラスコードは" +
+                responseresult.class_Code +
+                "です。",
               title: "情報",
               icon: "success",
               showConfirmButton: false,
-              timer: 1500, 
+              timer: 1500,
             }).then((result) => {
               window.location.href = "../teacher_menu";
             });
           } else {
             Swal.fire({
-              html: "接続できませんでした。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
+              html: "クラスの予約に失敗しました。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
               title: "エラー",
               icon: "error",
             });
@@ -122,7 +115,7 @@ async function teacher_Rejoin() {
         }
         else {
           Swal.fire({
-            html: "接続できませんでした。<br>サーバーから無効な応答が返されました。",
+            html: "予約できませんでした。<br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
           });
@@ -130,7 +123,7 @@ async function teacher_Rejoin() {
       })
       .catch((error) => {
         Swal.fire({
-          html: "クラスに再接続できませんでした。" + error,
+          html: "クラスを予約できませんでした。" + error,
           title: "エラー",
           icon: "error",
         });
@@ -144,14 +137,6 @@ async function teacher_Rejoin() {
 window.onload = function () {
   mobileRedirect();
   prevent_Overlogin();
-  Swal.fire({
-    title: "お知らせ",
-    html: '開発履歴などは<a href="https://dev.cla-q.net/" target="_blank">こちら</a><br>開発ブログは<a href="https://blog.cla-q.net/" target="_blank">こちら</a>',
-    icon: "info",
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-  });
 };
 
 function mobileRedirect() {
@@ -247,7 +232,7 @@ function logOut() {
         title: "情報",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500, 
+        timer: 1500,
       }).then((result) => {
         document.cookie = "class_Code=; path=/;";
         location.reload();
