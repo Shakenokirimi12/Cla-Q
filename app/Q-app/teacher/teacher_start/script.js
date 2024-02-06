@@ -219,9 +219,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
         } else {
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
-            "<p>ユーザー名: " +
+            "<p>" +
             user.displayName +
-            "</p><p>メールアドレス: " +
+            "</p><p>" +
             user.email +
             "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
           let screenLock = document.querySelector("#screenLock");
