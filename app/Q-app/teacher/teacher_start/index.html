@@ -49,7 +49,7 @@
 
   <div class="form-container">
     <div class="form-container">
-      <p class="fs-1">クラス開始</p>
+      <p class="fs-2">クラスを作成する</p>
       <form id="teacher-form">
         <button type="button" class="action-button" onclick="startClass()">
           授業を開始
@@ -57,7 +57,7 @@
       </form>
     </div>
     <div class="form-container">
-      <p class="fs-1">クラス予約</p>
+      <p class="fs-2">クラスの作成を予約</p>
       <form id="teacher-form">
         <button type="button" class="action-button" onclick="location.href='../reserve_class'">
           授業を予約する
@@ -67,9 +67,8 @@
   </div>
 
   <div class="form-container">
-    <p class="fs-1">クラス参加</p>
+    <p class="fs-2">自分のクラスへ再参加</p>
     <form id="class-join-form">
-      <p for="class-code-input" class="fs-4">再接続はこちら</p>
       <input type="number" autocomplete="off" id="class-code-input" class="input-field" placeholder="クラスコードを入力"
         min="100000" max="999999" onkeydown="handleKeyDown(event)" />
       <br />
