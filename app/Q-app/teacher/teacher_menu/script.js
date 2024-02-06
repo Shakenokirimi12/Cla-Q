@@ -221,7 +221,6 @@ async function executeEveryTwoSeconds() {
   while (true) {
     await getStudentsList();
     await getAnswersList();
-    console.log("処理を実行しました。");
     await new Promise((resolve) => setTimeout(resolve, 20000));
   }
 }
@@ -678,6 +677,7 @@ function applySettingChanges(){
           if (data != undefined && data.length != 0) {
             var responseresult = data[Object.keys(data).length - 1];
             if (responseresult.result == "success") {
+              console.log("クラス設定をサーバーに反映しました。");
               Swal.fire({
                 html: "クラス設定をサーバーに反映しました。",
                 toast: true,
