@@ -90,8 +90,9 @@ async function reserve_class(file) {
           var responseresult = data[Object.keys(data).length - 1];
           var classinfo = data[0];
           if (responseresult.result == "success") {
-            prevent_Overlogin();
-            console.log("Successfully rejoined the class");
+            class_Code = responseresult.class_Code;
+            uploadFile(file);
+            console.log("Successfully reserved the class");
             Swal.fire({
               html: "クラスを正常に予約完了しました。<br>クラスコードは書き留めて下さい。<br>クラスコードは" +
                 responseresult.class_Code +
@@ -100,10 +101,6 @@ async function reserve_class(file) {
               icon: "success",
               showConfirmButton: true,
             })
-              .then((result) => {
-                class_Code = responseresult.class_Code;
-                uploadFile(file)
-              });
           } else {
             Swal.fire({
               html: "クラスの予約に失敗しました。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
