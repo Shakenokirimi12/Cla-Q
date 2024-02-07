@@ -27,8 +27,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
         } else {
           //先生でも生徒でもない場合
           Swal.fire({
-            text:
-              "サーバーレスポンスエラーです。\n(ErrorCode:" +
+            html:
+              "<strong>サーバーレスポンスエラーです。</strong><br>(ErrorCode:" +
               responseresult.status_Code +
               ")",
             title: "エラー",
@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 
         if (isTeacher) {
           Swal.fire({
-            html: "<strong>ログインしました。</strong>教師接続画面に遷移します。",
+            html: "<strong>ログインしました。</strong><br>教師接続画面に遷移します。",
             title: "情報",
             icon: "info",
             showConfirmButton: false,
@@ -52,7 +52,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
           });
         } else {
           Swal.fire({
-            html: "<strong>ログインしました。</strong>生徒接続画面に遷移します。",
+            html: "<strong>ログインしました。</strong><br>生徒接続画面に遷移します。",
             title: "情報",
             icon: "info",
             showConfirmButton: false,
@@ -98,8 +98,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
               } else {
                 //先生でも生徒でもない場合
                 Swal.fire({
-                  text:
-                    "サーバーレスポンスエラーです。\n(ErrorCode:" +
+                  html:
+                    "<strong>サーバーレスポンスエラーです。</strong><br>(ErrorCode:" +
                     responseresult.status_Code +
                     ")",
                   title: "エラー",
@@ -113,7 +113,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 
               if (isTeacher) {
                 Swal.fire({
-                  html: "<strong>ログインしました。</strong>教師接続画面に遷移します。",
+                  html: "<strong>ログインしました。</strong><br>教師接続画面に遷移します。",
                   title: "情報",
                   icon: "info",
                   showConfirmButton: false,
@@ -123,7 +123,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
                 });
               } else {
                 Swal.fire({
-                  html: "<strong>ログインしました。</strong>生徒接続画面に遷移します。",
+                  html: "<strong>ログインしました。</strong><br>生徒接続画面に遷移します。",
                   title: "情報",
                   icon: "info",
                   showConfirmButton: false,
@@ -159,7 +159,7 @@ function logOut() {
     .signOut()
     .then(function () {
       Swal.fire({
-        html: "<strong>ログアウトしました。</strong>ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong><br>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,

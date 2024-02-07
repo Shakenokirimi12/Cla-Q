@@ -243,7 +243,7 @@ function logOut() {
     .then(function () {
       prevent_Overlogin();
       Swal.fire({
-        html: "<strong>ログアウトしました。</strong>ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong><br>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,
