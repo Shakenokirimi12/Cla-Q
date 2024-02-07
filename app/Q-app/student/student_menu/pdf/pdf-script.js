@@ -36,7 +36,7 @@ async function submitAnswer() {
                 if (responseresult.result == "success") {
                   console.log("Successfully submitted the question");
                   Swal.fire({
-                    html: "答えを提出しました。(" + answer + ")",
+                    html: "<strong>答えを提出しました。</strong><br>(" + answer + ")",
                     title: "情報",
                     icon: "info",
                     toast: true,
@@ -50,7 +50,7 @@ async function submitAnswer() {
                   if (responseresult.status_Code == "SSE-11") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" +
+                        "<strong>答えを提出できませんでした。</strong><br>問題が開始されていません。<br>先生の指示を待ってください。<br>エラーコード:" +
                         responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
@@ -58,7 +58,7 @@ async function submitAnswer() {
                   } else if (responseresult.status_Code == "SSE-12") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>答えを提出済みの可能性があります。<br>エラーコード:" +
+                        "<strong>答えを提出できませんでした。</strong><br>答えを提出済みの可能性があります。<br>エラーコード:" +
                         responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
@@ -66,7 +66,7 @@ async function submitAnswer() {
                   } else if (responseresult.status_Code == "SSE-01") {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" +
+                        "<strong>答えを提出できませんでした。</strong><br>サーバーエラーです。<br>サポートへご確認ください。<br>エラーコード:" +
                         responseresult.status_Code,
                       title: "エラー",
                       icon: "error",
@@ -74,7 +74,7 @@ async function submitAnswer() {
                   } else {
                     Swal.fire({
                       html:
-                        "答えを提出できませんでした。<br>不明なエラーです。<br>エラーコード:" +
+                        "<strong>答えを提出できませんでした。</strong><br>不明なエラーです。<br>エラーコード:" +
                         responseresult.status_Code +
                         "<br>" +
                         responseresult.message,
@@ -86,7 +86,7 @@ async function submitAnswer() {
               } else {
                 Swal.fire({
                   html:
-                    "回答を提出できませんでした。クライアントでエラーが発生しました。<br>" +
+                    "<strong>回答を提出できませんでした。</strong><br>クライアントでエラーが発生しました。<br>" +
                     error,
                   title: "エラー",
                   icon: "error",
@@ -96,7 +96,7 @@ async function submitAnswer() {
             .catch((error) => {
               Swal.fire({
                 html:
-                  "回答を提出できませんでした。再度試してみてください。<br>" +
+                  "<strong>回答を提出できませんでした。</strong><br>再度試してみてください。<br>" +
                   error,
                 title: "エラー",
                 icon: "error",
@@ -111,7 +111,7 @@ async function submitAnswer() {
     });
   } else {
     Swal.fire({
-      html: "回答を入力してください。",
+      html: "<strong>回答を入力してください。</strong>",
       title: "エラー",
       icon: "error",
       toast: true,
@@ -138,7 +138,7 @@ window.onload = async function () {
   if (class_Code == "" || class_Code == undefined) {
     prevent_Overlogin();
     Swal.fire({
-      html: "クラス情報が読み込めませんでした。(Code:CSE-01)",
+      html: "<strong>クラス情報が読み込めませんでした。</strong>(Code:CSE-01)",
       title: "エラー",
       icon: "error",
       timer: 1500,
@@ -266,7 +266,7 @@ async function leaveClass() {
           console.log("Successfully leaved the class");
           prevent_Overlogin();
           Swal.fire({
-            html: "クラスを離脱しました。クラス参加画面に戻ります。",
+            html: "<strong>クラスを離脱しました。</strong><br>クラス参加画面に戻ります。",
             title: "情報",
             icon: "info",
             showConfirmButton: false,
@@ -283,9 +283,8 @@ async function leaveClass() {
             prevent_Overlogin();
             Swal.fire({
               html:
-                "クラスが教師によって閉じられています。クラス参加画面に戻ります。:" +
-                responseresult.status_Code +
-                "",
+                "<strong>クラスが教師によって閉じられています。</strong><br>クラス参加画面に戻ります。:" +
+                responseresult.status_Code,
               title: "情報",
               icon: "info",
               showConfirmButton: false,
@@ -296,7 +295,7 @@ async function leaveClass() {
           } else {
             Swal.fire({
               html:
-                "クラスを離脱できませんでした。<br>エラーコード:" +
+                "<strong>クラスを離脱できませんでした。</strong><br>エラーコード:" +
                 responseresult.message +
                 "<br>" +
                 responseresult.status_Code,
@@ -309,7 +308,7 @@ async function leaveClass() {
       .catch((error) => {
         console.log("不明なエラー1。", error);
         Swal.fire({
-          html: "クラスを離脱できませんでした。<br>予期しないエラーが発生しました。<br>エラーコード:CSE-02",
+          html: "<strong>クラスを離脱できませんでした。</strong><br>予期しないエラーが発生しました。<br>エラーコード:CSE-02",
           title: "不明なエラー",
           icon: "error",
         });
@@ -318,7 +317,7 @@ async function leaveClass() {
     console.log("不明なエラー2。", error);
     Swal.fire({
       html:
-        "クラスを離脱できませんでした。<br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" +
+        "<strong>クラスを離脱できませんでした。</strong><br>APIへの接続または応答に失敗しました。<br>エラーコード:CSE-03<br>" +
         error,
       title: "不明なエラー",
       icon: "error",
@@ -376,7 +375,7 @@ async function checkPDFExistance() {
         showPDF();
       } else {
         Swal.fire({
-          html: "このクラスにはPDF資料がありません。<br>通常の解答画面に戻ります。",
+          html: "<strong>このクラスにはPDF資料がありません。</strong><br>通常の解答画面に戻ります。",
           icon: "info",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -388,7 +387,7 @@ async function checkPDFExistance() {
     .catch((error) => {
       Swal.fire({
         title: "エラー",
-        html: "サーバーでエラーが発生しました。<br>" + error,
+        html: "<strong>サーバーでエラーが発生しました。</strong><br>" + error,
         icon: "error",
       });
     });

@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .signOut()
       .then(function () {
         Swal.fire({
-          html: "ログアウトしました。",
+          html: "<strong>ログアウトしました。</strong>",
           title: "情報",
           icon: "info",
           toast: true,

@@ -30,7 +30,7 @@ async function startClass() {
             document.cookie = "class_Code=" + responseresult.class_Code + ";path=/;";
             Swal.fire({
               html:
-                "クラスを作成しました。<br>クラスコードは" +
+                "<strong>クラスを作成しました。</strong><br>クラスコードは" +
                 responseresult.class_Code +
                 "です。",
               title: "情報",
@@ -42,7 +42,7 @@ async function startClass() {
             });
           } else {
             Swal.fire({
-              html: "クラスを開始できませんでした。<br>(" + responseresult.message + responseresult.status_Code + ")",
+              html: "<strong>クラスを開始できませんでした。</strong><br>(" + responseresult.message + responseresult.status_Code + ")",
               title: "エラー",
               icon: "error",
             });
@@ -50,7 +50,7 @@ async function startClass() {
         }
         else {
           Swal.fire({
-            html: "接続できませんでした。<br>サーバーから無効な応答が返されました。",
+            html: "<strong>接続できませんでした。</strong><br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
           });
@@ -58,7 +58,7 @@ async function startClass() {
       })
       .catch((error) => {
         Swal.fire({
-          html: "クラスを開始できませんでした。(" + error + ")",
+          html: "<strong>クラスを開始できませんでした。</strong><br>(" + error + ")",
           title: "エラー",
           icon: "error",
         });
@@ -73,7 +73,7 @@ async function teacher_Rejoin() {
   var class_Code = document.querySelector("#class-code-input").value;
   if (class_Code == null || class_Code == undefined || class_Code == "") {
     Swal.fire({
-      html: "クラスコードが入力されていません。",
+      html: "<strong>クラスコードが入力されていません。</strong>",
       title: "情報",
       icon: "info",
     });
@@ -104,7 +104,7 @@ async function teacher_Rejoin() {
             console.log("Successfully rejoined the class");
             document.cookie = "class_Code=" + classinfo.class_Code + ";path=/;";
             Swal.fire({
-              html: "クラスに再接続しました。",
+              html: "<strong>クラスに再接続しました。</strong>",
               title: "情報",
               icon: "success",
               showConfirmButton: false,
@@ -114,7 +114,7 @@ async function teacher_Rejoin() {
             });
           } else {
             Swal.fire({
-              html: "接続できませんでした。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
+              html: "<strong>接続できませんでした。</strong><br>" + responseresult.message + "(" + responseresult.status_Code + ")",
               title: "エラー",
               icon: "error",
             });
@@ -122,7 +122,7 @@ async function teacher_Rejoin() {
         }
         else {
           Swal.fire({
-            html: "接続できませんでした。<br>サーバーから無効な応答が返されました。",
+            html: "<strong>接続できませんでした。</strong><br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
           });
@@ -130,7 +130,7 @@ async function teacher_Rejoin() {
       })
       .catch((error) => {
         Swal.fire({
-          html: "クラスに再接続できませんでした。" + error,
+          html: "<strong>クラスに再接続できませんでした。</strong><br>" + error,
           title: "エラー",
           icon: "error",
         });
@@ -243,7 +243,7 @@ function logOut() {
     .then(function () {
       prevent_Overlogin();
       Swal.fire({
-        html: "ログアウトしました。ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,

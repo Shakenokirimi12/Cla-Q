@@ -5,7 +5,7 @@ function showExpandedCode() {
 async function sendToGAS() {
   Swal.fire({
     title: "通知",
-    html: "エクスポートを開始しました。<br>完了すると新しいタブでスプレッドシートが開きます。",
+    html: "<strong>エクスポートを開始しました。</strong><br>完了すると新しいタブでスプレッドシートが開きます。",
     icon: "info",
     toast: true,
     position: "top-end",
@@ -35,7 +35,7 @@ async function sendToGAS() {
           console.log(responseresult.result);
           Swal.fire({
             title: "エラー",
-            html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
+            html: "<strong>共有リンクを取得できませんでした。</strong><br>エラーコード:" + responseresult.status_Code,
             icon: "error",
             toast: true,
             position: "top-end",
@@ -47,7 +47,7 @@ async function sendToGAS() {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          html: "共有リンクを取得できませんでした。<br>エラーコード:" + responseresult.status_Code,
+          html: "<strong>共有リンクを取得できませんでした。</strong><br>エラーコード:" + responseresult.status_Code,
           icon: "error",
           toast: true,
           position: "top-end",
@@ -111,7 +111,7 @@ async function startQuestion() {
             }
             document.querySelector("#problemSelector").value = questionnumber;
             Swal.fire({
-              html: "問題を開始しました。現在" + questionnumber + "問目です。",
+              html: "<strong>問題を開始しました。</strong>現在" + questionnumber + "問目です。",
               title: "成功",
               icon: "success",
               toast: true,
@@ -122,7 +122,7 @@ async function startQuestion() {
           } else {
             console.log(responseresult.result);
             Swal.fire({
-              html: "問題を開始できませんでした。<br>エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
+              html: "<strong>問題を開始できませんでした。</strong><br>エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -131,7 +131,7 @@ async function startQuestion() {
       })
       .catch((error) => {
         Swal.fire({
-          html: "問題を開始できませんでした。<br>(" + error + ")",
+          html: "<strong>問題を開始できませんでした。</strong><br>(" + error + ")",
           title: "エラー",
           icon: "error",
         });
@@ -166,7 +166,7 @@ async function endQuestion() {
             console.log("Successfully ended the question");
             document.querySelector("#status").innerHTML = "現在:問題開始待ち";
             Swal.fire({
-              html: "問題を終了しました。",
+              html: "<strong>問題を終了しました。</strong>",
               title: "成功",
               icon: "success",
               toast: true,
@@ -176,7 +176,7 @@ async function endQuestion() {
             });
           } else {
             Swal.fire({
-              html: "問題を終了できませんでした。<br>" + "エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
+              html: "<strong>問題を終了できませんでした。</strong><br>" + "エラーコード:" + responseresult.status_Code + "<br>" + responseresult.message,
               title: "エラー",
               icon: "error",
             });
@@ -187,7 +187,7 @@ async function endQuestion() {
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          html: "問題を終了できませんでした。<br>エラー内容:" + error,
+          html: "<strong>問題を終了できませんでした。</strong><br>エラー内容:" + error,
           title: "エラー",
           icon: "error",
         });
@@ -204,7 +204,7 @@ window.onload = async function () {
   class_Code = value;
   if (class_Code == "" || class_Code == undefined) {
     Swal.fire({
-      html: "クラス情報が読み込めませんでした。(Code:CTE-01)",
+      html: "<strong>クラス情報が読み込めませんでした。</strong><br>(Code:CTE-01)",
       title: "エラー",
       icon: "error",
       timer: 1500,
@@ -261,7 +261,7 @@ async function getStudentsList() {
           document.querySelector("#student_count").innerHTML =
             "生徒" + data.length + "人接続済み";
           Swal.fire({
-            html: "生徒接続情報が更新されました。",
+            html: "<strong>生徒接続情報が更新されました。</strong>",
             title: "情報",
             icon: "info",
             toast: true,
@@ -272,7 +272,7 @@ async function getStudentsList() {
         } else {
           Swal.fire({
             html:
-              "生徒一覧を取得できませんでした。<br>サーバーから無効な応答が返されました。",
+              "<strong>生徒一覧を取得できませんでした。</strong><br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -329,7 +329,7 @@ async function getAnswersList() {
         } else {
           Swal.fire({
             html:
-              "答えの一覧を取得できませんでした。<br>サーバーから無効な応答が返されました。",
+              "<strong>答えの一覧を取得できませんでした。</strong><br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
             toast: true,
@@ -383,7 +383,7 @@ async function disposeClass() {
     title:
       "続行しますか？",
     icon: "warning",
-    html: "クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。<br>続行しますか？",
+    html: "<strong>クラスを終了すると、クラスが無効になり、<br>先生、生徒全員が再入室できなくなります。</strong><br>続行しますか？",
     showCancelButton: true,
     confirmButtontext: "続行",
   }).then((result) => {
@@ -412,7 +412,7 @@ async function disposeClass() {
                   console.log("Successfully deleted the class");
                   document.cookie = "class_Code=; path=/;";
                   Swal.fire({
-                    html: "クラスを閉じました。<br>クラス参加画面に戻ります。",
+                    html: "<strong>クラスを閉じました。</strong><br>クラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -423,7 +423,7 @@ async function disposeClass() {
                 }
                 else if (responseresult.status_Code == "ICE-13") {
                   Swal.fire({
-                    html: "クラスはすでに閉じられています。<br>クラス参加画面に戻ります。",
+                    html: "<strong>クラスはすでに閉じられています。</strong><br>クラス参加画面に戻ります。",
                     title: "情報",
                     icon: "info",
                     showConfirmButton: false,
@@ -433,20 +433,20 @@ async function disposeClass() {
                   });
                 } else {
                   Swal.fire({
-                    html: "クラスを終了できませんでした",
+                    html: "<strong>クラスを終了できませんでした。</strong><br>(ErrorCode:" + responseresult.status_Code +")",
                     title: "エラー",
                     icon: "error",
                   });
                 }
               }
             } catch (error) {
-              console.log("レスポンス解析中にエラー発生。<br>レスポンスは以下です。")
+              console.log("レスポンス解析中にエラー発生。レスポンスは以下です。")
               console.log(data)
             }
           })
           .catch((error) => {
             Swal.fire({
-              html: "ログインできませんでした。",
+              html: "<strong>ログインできませんでした。</strong>",
               title: "エラー",
               icon: "error",
             });
@@ -494,7 +494,7 @@ async function uploadFile(file) {
         var responseresult = data[Object.keys(data).length - 1];
         if (responseresult.result == "success") {
           Swal.fire({
-            text: "ファイルを共有しました。",
+            text: "<strong>ファイルを共有しました。</strong>",
             title: "情報",
             icon: "info",
             showConfirmButton: false,
@@ -504,7 +504,7 @@ async function uploadFile(file) {
       }
       else {
         Swal.fire({
-          text: "ファイルを共有できませんでした。",
+          text: "<strong>ファイルを共有できませんでした。</strong>",
           title: "失敗",
           icon: "error",
           toast: true,
@@ -519,7 +519,7 @@ async function uploadFile(file) {
           });
       }
       Swal.fire({
-        html: "ファイルを共有しました。",
+        html: "<strong>ファイルを共有しました。</strong>",
         title: "成功",
         icon: "success",
         toast: true,
@@ -537,7 +537,7 @@ async function uploadFile(file) {
     .catch((error) => {
       console.error(error);
       Swal.fire({
-        html: "ファイルが選択されていません。",
+        html: "<strong>ファイルが選択されていません。</strong>",
         title: "エラー",
         icon: "error",
         toast: true,
@@ -604,7 +604,7 @@ async function getClassInfo() {
             }
           } else {
             Swal.fire({
-              html: "クラス情報を取得できませんでした",
+              html: "<strong>クラス情報を取得できませんでした。</strong>",
               title: "エラー",
               icon: "error",
             });
@@ -612,7 +612,7 @@ async function getClassInfo() {
           }
         }
         catch (error) {
-          console.log("レスポンス解析中にエラー発生。<br>レスポンスは以下です。")
+          console.log("レスポンス解析中にエラー発生。レスポンスは以下です。")
           console.log(data)
           console.log(error)
         }
@@ -679,7 +679,7 @@ function applySettingChanges(){
             if (responseresult.result == "success") {
               console.log("クラス設定をサーバーに反映しました。");
               Swal.fire({
-                html: "クラス設定をサーバーに反映しました。",
+                html: "<strong>クラス設定をサーバーに反映しました。</strong>",
                 toast: true,
                 position: "top-end",
                 showConfirmButton: false,
@@ -690,7 +690,7 @@ function applySettingChanges(){
             }
           } else {
             Swal.fire({
-              html: "クラス設定をサーバーに反映できませんでした。<br>再度お試しください。",
+              html: "<strong>クラス設定をサーバーに反映できませんでした。</strong><br>再度お試しください。",
               toast: true,
               position: "top-end",
               showConfirmButton: false,
@@ -709,7 +709,7 @@ function applySettingChanges(){
       })
       .catch((error) => {
         Swal.fire({
-          html: "API送信に失敗しました。<br>" + error,
+          html: "<strong>APIとの通信に失敗しました。</strong><br>" + error,
           toast: true,
           position: "top-end",
           showConfirmButton: false,
@@ -722,7 +722,7 @@ function applySettingChanges(){
     console.log("APIアクセス中にエラー発生。");
     console.log(error);
     Swal.fire({
-      html: "API送信に失敗しました。<br>" + error,
+      html: "<strong>APIとの通信に失敗しました。</strong><br>" + error,
       toast: true,
       position: "top-end",
       showConfirmButton: false,
@@ -803,7 +803,7 @@ function logOut() {
     .then(function () {
       preventOverlogin();
       Swal.fire({
-        html: "ログアウトしました。ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong><br>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,

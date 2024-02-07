@@ -34,7 +34,7 @@ async function student_Join() {
             document.cookie = "class_Code=" + classinfo.class_Code + "; path=/;";
             Swal.fire({
               title: "成功",
-              html: "クラス" + classinfo.class_Code + "に参加しました。",
+              html: "<strong>クラス" + classinfo.class_Code + "に参加しました。</strong>",
               icon: "success",
               showConfirmButton: false,
               timer: 1500,
@@ -45,14 +45,14 @@ async function student_Join() {
             if (responseresult.status_Code == undefined) {
               Swal.fire({
                 title: "エラー",
-                html: "クラスに参加できませんでした。<br>エラーコード:不明",
+                html: "<strong>クラスに参加できませんでした。</strong><br>エラーコード:不明",
                 icon: "error",
               });
             } else {
               if(responseresult.status_Code == "JE-12"){
                 Swal.fire({
                   html:
-                    "クラスに参加できませんでした。<br>クラスがアクティブでありませんでした。<br>エラーコード:" + responseresult.status_Code,
+                    "<strong>クラスに参加できませんでした。</strong><br>クラスがアクティブでありませんでした。<br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -60,7 +60,7 @@ async function student_Join() {
               else if(responseresult.status_Code == "JE-01"){
                 Swal.fire({
                   html:
-                    "クラスが見つからなかったため、クラスに参加できませんでした。<br>エラーコード:" + responseresult.status_Code,
+                    "<strong>クラスが見つからなかったため、クラスに参加できませんでした。</strong><br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -68,7 +68,7 @@ async function student_Join() {
               else if(responseresult.status_Code == "JE-06"){
                 Swal.fire({
                   html:
-                    "クラスに設定されている参加可能な人数を超えたため、<br>クラスに接続できませんでした。<br>エラーコード:" + responseresult.status_Code,
+                    "<strong>クラスに設定されている参加可能な人数を超えたため、<br>クラスに接続できませんでした。</strong><br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -76,7 +76,7 @@ async function student_Join() {
               else{
                 Swal.fire({
                   html:
-                    "クラスに参加できませんでした。<br>サポートへご確認ください。<br>エラーコード:" + responseresult.status_Code,
+                    "<strong>クラスに参加できませんでした。</strong><br>サポートへご確認ください。<br>エラーコード:" + responseresult.status_Code,
                   title: "エラー",
                   icon: "error",
                 });  
@@ -88,7 +88,7 @@ async function student_Join() {
       .catch((error) => {
         Swal.fire({
           title: "エラー",
-          html: "クラスに参加できませんでした。<br>エラー内容:「" + error + "」",
+          html: "<strong>クラスに参加できませんでした。</strong><br>エラー内容:「" + error + "」",
           icon: "error",
         });
       });
@@ -217,7 +217,7 @@ function logOut() {
     .then(function () {
       prevent_Overlogin();
       Swal.fire({
-        html: "ログアウトしました。ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,

@@ -22,7 +22,7 @@ async function uploadFile(file) {
         var responseresult = data[Object.keys(data).length - 1];
         if (responseresult.result == "success") {
           Swal.fire({
-            html: "ファイルを共有しました。",
+            html: "<strong>ファイルを共有しました。</strong>",
             title: "成功",
             icon: "success",
             toast: true,
@@ -58,7 +58,7 @@ async function uploadFile(file) {
     .catch((error) => {
       console.error(error);
       Swal.fire({
-        html: "ファイルが選択されていません。",
+        html: "<strong>ファイルが選択されていません。</strong>",
         title: "エラー",
         icon: "error",
         toast: true,
@@ -94,7 +94,7 @@ async function reserve_class(file) {
             uploadFile(file);
             console.log("Successfully reserved the class");
             Swal.fire({
-              html: "クラスを正常に予約完了しました。<br>クラスコードは書き留めて下さい。<br>クラスコードは" +
+              html: "<strong>クラスを正常に予約完了しました。</strong><br>クラスコードは書き留めて下さい。<br>クラスコードは" +
                 responseresult.class_Code +
                 "です。",
               title: "情報",
@@ -103,7 +103,7 @@ async function reserve_class(file) {
             })
           } else {
             Swal.fire({
-              html: "クラスの予約に失敗しました。<br>" + responseresult.message + "(" + responseresult.status_Code + ")",
+              html: "<strong>クラスの予約に失敗しました。</strong><br>" + responseresult.message + "(" + responseresult.status_Code + ")",
               title: "エラー",
               icon: "error",
             });
@@ -111,7 +111,7 @@ async function reserve_class(file) {
         }
         else {
           Swal.fire({
-            html: "予約できませんでした。<br>サーバーから無効な応答が返されました。",
+            html: "<strong>予約できませんでした。</strong><br>サーバーから無効な応答が返されました。",
             title: "エラー",
             icon: "error",
           });
@@ -119,7 +119,7 @@ async function reserve_class(file) {
       })
       .catch((error) => {
         Swal.fire({
-          html: "クラスを予約できませんでした。" + error,
+          html: "<strong>クラスを予約できませんでした。</strong>" + error,
           title: "エラー",
           icon: "error",
         });
@@ -227,7 +227,7 @@ function logOut() {
     .then(function () {
       prevent_Overlogin();
       Swal.fire({
-        html: "ログアウトしました。ログイン画面に戻ります。",
+        html: "<strong>ログアウトしました。</strong><br>ログイン画面に戻ります。",
         title: "情報",
         icon: "success",
         showConfirmButton: false,
