@@ -150,8 +150,10 @@ window.onload = async function () {
   await mobileRedirect();
   await prevent_Overlogin();
   await checkPDFExistance();
+  await checkIsAIAllowed();
   setInterval("showClock()", 1000);
-  setInterval("checkPDFExistance()",10000);
+  setInterval("checkPDFExistance()", 10000);
+  setInterval("checkIsAIAllowed()", 10000);
 };
 
 function mobileRedirect() {
@@ -210,7 +212,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         }
         return isTeacher;
       })
-      .catch((error) => {})
+      .catch((error) => { })
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -367,6 +369,47 @@ async function checkPDFExistance() {
           }
         });
       }
+    })
+    .catch((error) => {
+      Swal.fire({
+        title: "エラー",
+        html: "<strong>サーバーでエラーが発生しました。</strong><br>" + error,
+        icon: "error",
+      });
+    });
+}
+
+
+async function checkIsAIAllowed() {
+  var url = "https://student.api.cla-q.net/Class_Setitngs";
+  var postData = {
+    class_Code: class_Code,
+  };
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Origin: "https://cla-q.net/",
+      // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //ファイル名を抽出
+      var responseresult = data[Object.keys(data).length - 1]; //レスポン状況ノードを抽出
+      var classSetting = data[0];
+      if (classSetting.AIOption != "deny") {
+        Swal.fire({
+          html: "<strong>このクラスではChatAIが有効です。</strong><br>AI搭載の画面に遷移します。",
+          icon: "info",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "./chatai";
+          }
+        });
+      }
+
     })
     .catch((error) => {
       Swal.fire({
