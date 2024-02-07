@@ -365,11 +365,11 @@ async function checkIsAIAllowed() {
       var classSetting = data[0];
       if (classSetting.AIOption == "gemini-pro") {
         var chatzone = document.querySelector("#chatzone");
-        chatzone.src = "https://chat.cla-q.net/gemini-pro";
+        chatzone.src = "https://app.cla-q.net/app/ChatAI/gemini-pro";
       }
       else if (classSetting.AIOption == "meta-llama") {
         var chatzone = document.querySelector("#chatzone");
-        chatzone.src = "https://chat.cla-q.net/meta-llama";
+        chatzone.src = "https://app.cla-q.net/app/ChatAI/meta-llama";
       }
       else {
         Swal.fire({
