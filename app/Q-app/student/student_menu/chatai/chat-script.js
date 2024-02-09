@@ -148,9 +148,9 @@ window.onload = async function () {
   }
   await mobileRedirect();
   await prevent_Overlogin();
-  await checkPDFExistance();
+  await checkIsAIAllowed();
   setInterval("showClock()", 1000);
-  setInterval("checkPDFExistance()", 10000);
+  setInterval("checkIsAIAllowed()", 10000);
 };
 
 function mobileRedirect() {
@@ -163,6 +163,8 @@ function mobileRedirect() {
     location.href = "../../../mobile.html";
   }
 }
+
+
 function prevent_Overlogin() {
   let lock_screen = document.createElement("div");
   lock_screen.id = "screenLock";
@@ -389,8 +391,4 @@ async function checkIsAIAllowed() {
         icon: "error",
       });
     });
-}
-
-function showChatAI() {
-
 }
