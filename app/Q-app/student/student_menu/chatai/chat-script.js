@@ -36,7 +36,8 @@ async function submitAnswer() {
                 if (responseresult.result == "success") {
                   console.log("Successfully submitted the question");
                   Swal.fire({
-                    html: "<strong>答えを提出しました。</strong>(" + answer + ")",
+                    html:
+                      "<strong>答えを提出しました。</strong>(" + answer + ")",
                     title: "情報",
                     icon: "info",
                     toast: true,
@@ -164,7 +165,6 @@ function mobileRedirect() {
   }
 }
 
-
 function prevent_Overlogin() {
   let lock_screen = document.createElement("div");
   lock_screen.id = "screenLock";
@@ -211,7 +211,7 @@ firebase.auth().onAuthStateChanged(function (user) {
           console.log("user is not teacher.");
         }
       })
-      .catch((error) => { })
+      .catch((error) => {})
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
@@ -365,23 +365,23 @@ async function checkIsAIAllowed() {
       //ファイル名を抽出
       var responseresult = data[Object.keys(data).length - 1]; //レスポン状況ノードを抽出
       var classSetting = data[0];
-      if (classSetting.AIOption == "gemini-pro") {
-        var chatzone = document.querySelector("#chatzone");
-        chatzone.src = "https://app.cla-q.net/app/ChatAI/gemini-pro";
-      }
-      else if (classSetting.AIOption == "meta-llama") {
-        var chatzone = document.querySelector("#chatzone");
-        chatzone.src = "https://app.cla-q.net/app/ChatAI/meta-llama";
-      }
-      else {
-        Swal.fire({
-          html: "<strong>このクラスではChatAIが有効ではありません。</strong><br>通常の解答画面に戻ります。",
-          icon: "info",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "../";
-          }
-        });
+      if (responseresult.result == "success") {
+        if (classSetting.AIOption == "gemini-pro") {
+          var chatzone = document.querySelector("#chatzone");
+          chatzone.src = "https://app.cla-q.net/app/ChatAI/gemini-pro";
+        } else if (classSetting.AIOption == "meta-llama") {
+          var chatzone = document.querySelector("#chatzone");
+          chatzone.src = "https://app.cla-q.net/app/ChatAI/meta-llama";
+        } else {
+          Swal.fire({
+            html: "<strong>このクラスではChatAIが有効ではありません。</strong><br>通常の解答画面に戻ります。",
+            icon: "info",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "../";
+            }
+          });
+        }
       }
     })
     .catch((error) => {

@@ -399,7 +399,7 @@ async function checkIsAIAllowed() {
       //ファイル名を抽出
       var responseresult = data[Object.keys(data).length - 1]; //レスポン状況ノードを抽出
       var classSetting = data[0];
-      if (classSetting.AIOption != "deny") {
+      if (classSetting.AIOption != "deny" && responseresult.result == "success") {
         Swal.fire({
           html: "<strong>このクラスではChatAIが有効です。</strong><br>AI搭載の画面に遷移します。",
           icon: "info",
