@@ -70,7 +70,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", {
       'signInOptions': [
-        firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,
+        firebase.auth.GoogleAuthProvider(),
       ],
       'tosUrl': 'https://app.cla-q.net/tos',
       'privacyPolicyUrl': 'https://app.cla-q.net/tos',
