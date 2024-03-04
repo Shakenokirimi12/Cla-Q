@@ -50,7 +50,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
             showConfirmButton: false,
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = default_destination + "/teacher/teacher_start";
+            window.location.href =
+              default_destination + "/teacher/teacher_start";
           });
         } else {
           Swal.fire({
@@ -60,87 +61,27 @@ firebase.auth().onAuthStateChanged(async function (user) {
             showConfirmButton: false,
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
-            window.location.href = default_destination + "/student/student_start";
+            window.location.href =
+              default_destination + "/student/student_start";
           });
         }
       })
       .catch((error) => {});
   } else {
-    // 未ログイン時
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start("#firebaseui-auth-container", {
-      'signInOptions': [
-        firebase.auth.GoogleAuthProvider(),
-      ],
-      'tosUrl': 'https://app.cla-q.net/tos',
-      'privacyPolicyUrl': 'https://app.cla-q.net/tos',
-      'callbacks': {
-        signInSuccess: function (currentUser, credential, redirectUrl) {
-          var url = "https://api.cla-q.net/detect_role";
-          var postData = {
-            userEmail: currentUser.email,
-            userName: currentUser.displayName,
-          };
-          fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Origin: "https://cla-q.net/",
-            },
-            body: JSON.stringify(postData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              var responseresult = data[Object.keys(data).length - 1];
-              var isTeacher; //boolean
-              if (responseresult.status_Code == "DR-01") {
-                isTeacher = true;
-              } else if (responseresult.status_Code == "DR-02") {
-                isTeacher = false;
-              } else {
-                //先生でも生徒でもない場合
-                Swal.fire({
-                  html:
-                    "<strong>サーバーレスポンスエラーです。</strong><br>(ErrorCode:" +
-                    responseresult.status_Code +
-                    ")",
-                  title: "エラー",
-                  icon: "error",
-                  showConfirmButton: false,
-                  timer: 1500, //3秒経過後に閉じる
-                }).then((result) => {
-                  logOut();
-                });
-              }
-
-              if (isTeacher) {
-                Swal.fire({
-                  html: "<strong>ログインしました。</strong><br>教師接続画面に遷移します。",
-                  title: "情報",
-                  icon: "info",
-                  showConfirmButton: false,
-                  timer: 1500, //3秒経過後に閉じる
-                }).then((result) => {
-                  window.location.href = default_destination + "/teacher/teacher_start";
-                });
-              } else {
-                Swal.fire({
-                  html: "<strong>ログインしました。</strong><br>生徒接続画面に遷移します。",
-                  title: "情報",
-                  icon: "info",
-                  showConfirmButton: false,
-                  timer: 1500, //3秒経過後に閉じる
-                }).then((result) => {
-                  window.location.href = default_destination + "/student/student_start";
-                });
-              }
-            })
-            .catch((error) => {});
-          return false;
-        },
-      },
-    });
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        location.reload();
+      })
+      .catch(function (error) {
+        Swal.fire({
+          html: "Googleログインに失敗しました。<br>内部エラー:" + error,
+          title: "情報",
+          icon: "info",
+        });
+      });
   }
 });
 
