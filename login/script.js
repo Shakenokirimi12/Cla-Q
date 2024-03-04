@@ -76,11 +76,19 @@ firebase.auth().onAuthStateChanged(async function (user) {
         location.reload();
       })
       .catch(function (error) {
-        Swal.fire({
-          html: "Googleログインに失敗しました。<br>内部エラー:" + error,
-          title: "情報",
-          icon: "info",
-        });
+        if (string(error).include("popup")) {
+          Swal.fire({
+            html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
+            title: "情報",
+            icon: "info",
+          });
+        } else {
+          Swal.fire({
+            html: "Googleログインに失敗しました。<br>内部エラー:" + error,
+            title: "情報",
+            icon: "info",
+          });
+        }
       });
   }
 });
