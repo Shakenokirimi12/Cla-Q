@@ -792,7 +792,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     await getClassInfo();
     executeEveryTwoSeconds();
   } else {
-    window.location.href = "../../login";
+    window.location.href = "/login/index.html";
   }
 });
 

@@ -212,7 +212,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         }
       });
   } else {
-    window.location.href = "../../login";
+    window.location.href = "/login/index.html";
   }
 });
 

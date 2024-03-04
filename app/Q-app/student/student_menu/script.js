@@ -230,7 +230,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         userEmail = user.email;
       });
   } else {
-    window.location.href = "../../login";
+    window.location.href = "/login/index.html";
   }
 });
 
