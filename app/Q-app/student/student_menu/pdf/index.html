@@ -1,75 +1,88 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>ClaQ - 生徒メニュー</title>
+    <!--vue javascript area-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <!--vue javascript area-->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Cache-Control" content="no-cache" />
-  <title>ClaQ - 生徒メニュー</title>
-  <!--vue javascript area-->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-  <!--vue javascript area-->
+    <!--sweet alert area-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweet alert area-->
 
-  <!--sweet alert area-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!--sweet alert area-->
+    <!--firebase authentication javascript area-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <script src="/firebase_config.js"></script>
+    <!--firebase authentication javascript area-->
 
-  <!--firebase authentication javascript area-->
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-  <!--firebase authentication javascript area-->
+    <!--normal javascript area-->
+    <link rel="stylesheet" href="./pdf-style.css" />
+    <script src="./pdf-script.js"></script>
+    <!--normal javascript area-->
 
-  <!--normal javascript area-->
-  <script src="../../../firebase_config.js"></script>
-  <link rel="stylesheet" href="pdf-style.css" />
-  <script src="pdf-script.js"></script>
-  <!--normal javascript area-->
+    <!--Bootstrap5 javascript and css area-->
+    <script src="/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" />
+    <!--Bootstrap5 javascript and css area-->
+  </head>
 
-  <!--Bootstrap5 javascript and css area-->
-  <script src="../../../bootstrap/bootstrap.js"></script>
-  <link rel="stylesheet" href="../../../bootstrap/bootstrap.css" />
-  <!--Bootstrap5 javascript and css area-->
-</head>
-
-<body>
-  <span class="version">Version: Stable v3.0.0_BootStrap</span>
-  <a class="status" href="https://status.cla-q.net/" target="_blank">障害発生情報</a>
-  <div class="row h-100 w-100">
-    <div id="control-and-answer-Zone" class="border shadow col-md-4">
-      <div id="control-area">
-        <div id="class_info" class="m-2 p-3 rounded border shadow rounded bg-yellow text-center">
-          <p id="user_Name" class="fs-5">クラス情報を読み込み中.....</p>
-          <p id="user_Email" class="fs-5"></p>
-          <p id="class_code" class="fs-5"></p>
-          <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
-          <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
+  <body>
+    <span class="version">Version: Stable v3.0.0_BootStrap</span>
+    <a class="status" href="https://status.cla-q.net/" target="_blank"
+      >障害発生情報</a
+    >
+    <div class="row h-100 w-100">
+      <div id="control-and-answer-Zone" class="border shadow col-md-4">
+        <div id="control-area">
+          <div
+            id="class_info"
+            class="m-2 p-3 rounded border shadow rounded bg-yellow text-center"
+          >
+            <p id="user_Name" class="fs-5">クラス情報を読み込み中.....</p>
+            <p id="user_Email" class="fs-5"></p>
+            <p id="class_code" class="fs-5"></p>
+            <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
+            <button id="logout_button" onclick="logOut()">
+              クラスを抜ける
+            </button>
+          </div>
         </div>
+
+        <div id="answerArea" class="h-200">
+          <textarea
+            id="answer-box"
+            autocomplete="off"
+            placeholder="答えを入力してください"
+            onkeydown="handleKeyDown(event)"
+          ></textarea>
+          <button id="submit-button" onclick="submitAnswer()">送信</button>
+        </div>
+
+        <select id="pdfSelector" class="form-select m-1" onchange="showPDF()">
+          <!--PDFをここで選択-->
+        </select>
       </div>
 
-      <div id="answerArea" class="h-200">
-        <textarea id="answer-box" autocomplete="off" placeholder="答えを入力してください"
-          onkeydown="handleKeyDown(event)"></textarea>
-        <button id="submit-button" onclick="submitAnswer()">送信</button>
+      <div id="PDF-Zone" class="col-md-8 border shadow bg-white">
+        <embed
+          src="about:blank"
+          type="application/pdf"
+          width="100%"
+          height="100%"
+          id="pdfzone"
+        />
       </div>
-
-      <select id="pdfSelector" class="form-select m-1" onchange="showPDF()">
-        <!--PDFをここで選択-->
-      </select>
     </div>
-
-    <div id="PDF-Zone" class="col-md-8 border shadow　bg-white">
-      <embed src="" type="application/pdf" width="100%" height="100%" id="pdfzone">
-      <noembed>
-        <p>
-          PDF非対応ブラウザです。今頃どんなブラウザをお使いで？
-        </p>
-      </noembed>
-      </embed>
-    </div>
-  </div>
-</body>
-
+  </body>
 </html>
