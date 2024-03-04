@@ -1,60 +1,72 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>ClaQ - 生徒メニュー</title>
+    <!--vue javascript area-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <!--vue javascript area-->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Cache-Control" content="no-cache" />
-  <title>ClaQ - 生徒メニュー</title>
-  <!--vue javascript area-->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-  <!--vue javascript area-->
+    <!--sweet alert area-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweet alert area-->
 
-  <!--sweet alert area-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!--sweet alert area-->
+    <!--firebase authentication javascript area-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <script src="/firebase_config.js"></script>
+    <!--firebase authentication javascript area-->
 
-  <!--firebase authentication javascript area-->
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-  <!--firebase authentication javascript area-->
+    <!--normal javascript area-->
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <!--normal javascript area-->
 
-  <!--normal javascript area-->
-  <script src="../../firebase_config.js"></script>
-  <script src="./script.js"></script>
-  <link rel="stylesheet" href="./style.css" />
-  <!--normal javascript area-->
+    <!--Bootstrap5 javascript and css area-->
+    <script src="/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" />
+    <!--Bootstrap5 javascript and css area-->
 
-  <!--Bootstrap5 javascript and css area-->
-  <script src="../../bootstrap/bootstrap.js"></script>
-  <link rel="stylesheet" href="../../bootstrap/bootstrap.css" />
-  <!--Bootstrap5 javascript and css area-->
+    <!--noto sans font area-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
+      rel="stylesheet"
+    />
+    <!--noto sans font area-->
+  </head>
 
-  <!--noto sans font area-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
-  <!--noto sans font area-->
-</head>
+  <body>
+    <span class="version">Version: Stable v3.0.0_BootStrap</span>
+    <a class="status" href="https://status.cla-q.net/" target="_blank"
+      >障害発生情報</a
+    >
+    <div id="class-info" class="bg-white">
+      <p id="user_Name" class="fs-5">クラス情報を読み込み中.....</p>
+      <p id="user_Email" class="fs-5"></p>
+      <p id="class_code" class="fs-5"></p>
+      <p class="fs-5 bg-white m-1" id="currentTime"></p>
+      <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
+    </div>
 
-<body>
-  <span class="version">Version: Stable v3.0.0_BootStrap</span>
-  <a class="status" href="https://status.cla-q.net/" target="_blank">障害発生情報</a>
-  <div id="class-info" class="bg-white">
-    <p id="user_Name" class="fs-5">クラス情報を読み込み中.....</p>
-    <p id="user_Email" class="fs-5"></p>
-    <p id="class_code" class="fs-5"></p>
-    <p class="fs-5 bg-white m-1" id="currentTime"></p>
-    <button id="logout_button" onclick="logOut()">クラスを抜ける</button>
-  </div>
-
-  <div id="answerArea">
-    <textarea id="answer-box" autocomplete="off" placeholder="答えを入力してください" onkeydown="handleKeyDown(event)"></textarea>
-    <button id="submit-button" onclick="submitAnswer()">送信</button>
-  </div>
-</body>
-
+    <div id="answerArea">
+      <textarea
+        id="answer-box"
+        autocomplete="off"
+        placeholder="答えを入力してください"
+        onkeydown="handleKeyDown(event)"
+      ></textarea>
+      <button id="submit-button" onclick="submitAnswer()">送信</button>
+    </div>
+  </body>
 </html>
