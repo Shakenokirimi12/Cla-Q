@@ -1,4 +1,5 @@
 const default_destination = "/app/Q-app";
+//一生反映されないので追加
 
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
