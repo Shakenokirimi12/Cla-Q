@@ -1,158 +1,214 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>ClaQ - 先生メニュー</title>
+    <!--vue javascript area-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <!--vue javascript area-->
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Cache-Control" content="no-cache" />
-  <title>ClaQ - 先生メニュー</title>
-  <!--vue javascript area-->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-  <!--vue javascript area-->
+    <!--sweet alert area-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--sweet alert area-->
 
-  <!--sweet alert area-->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!--sweet alert area-->
+    <!--firebase authentication javascript area-->
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <script src="/src/firebase_config.js"></script>
+    <!--firebase authentication javascript area-->
 
-  <!--firebase authentication javascript area-->
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-  <script src="/firebase_config.js"></script>
-  <!--firebase authentication javascript area-->
+    <!--normal javascript area-->
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <!--normal javascript area-->
 
-  <!--normal javascript area-->
-  <script src="./script.js"></script>
-  <link rel="stylesheet" href="./style.css" />
-  <!--normal javascript area-->
+    <!--Bootstrap5 javascript and css area-->
+    <script src="/src/bootstrap/bootstrap.js"></script>
+    <link rel="stylesheet" href="/src/bootstrap/bootstrap.css" />
+    <!--Bootstrap5 javascript and css area-->
 
-  <!--Bootstrap5 javascript and css area-->
-  <script src="/bootstrap/bootstrap.js"></script>
-  <link rel="stylesheet" href="/bootstrap/bootstrap.css" />
-  <!--Bootstrap5 javascript and css area-->
+    <!--noto sans font area-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
+      rel="stylesheet"
+    />
+    <!--noto sans font area-->
+  </head>
 
-  <!--noto sans font area-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
-  <!--noto sans font area-->
-</head>
+  <body>
+    <!-- version -->
+    <span class="version">Version: Stable v3.0.0_BootStrap</span>
+    <a class="status" href="https://status.cla-q.net/" target="_blank"
+      >障害発生情報</a
+    >
+    <!-- version -->
+    <div class="row h-100 w-100">
+      <div id="control-area" class="col-md-4">
+        <div
+          id="class_info"
+          class="m-2 p-3 rounded border shadow rounded bg-yellow"
+        >
+          <p id="user_info" class="fs-5">クラス情報を読み込み中.....</p>
+          <p id="class_code" onclick="showExpandedCode()" class="fs-5"></p>
+          <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
+        </div>
 
-<body>
-  <!-- version -->
-  <span class="version">Version: Stable v3.0.0_BootStrap</span>
-  <a class="status" href="https://status.cla-q.net/" target="_blank">障害発生情報</a>
-  <!-- version -->
-  <div class="row h-100 w-100">
-    <div id="control-area" class="col-md-4">
-      <div id="class_info" class="m-2 p-3 rounded border shadow rounded bg-yellow">
-        <p id="user_info" class="fs-5">クラス情報を読み込み中.....</p>
-        <p id="class_code" onclick="showExpandedCode()" class="fs-5"></p>
-        <p class="fs-5 bg-yellow m-1" id="currentTime"></p>
-      </div>
-
-      <div id="class_control" class="p-3 rounded border shadow rounded m-3 bg-yellow">
-        <button id="start-button" class="flow-button" onclick="startQuestion()">
-          問題の開始
-        </button>
-        <button id="end-button" class="flow-button" onclick="endQuestion()">
-          問題の終了
-        </button>
-        <p id="status" class="fs-5">現在:問題開始待ち</p>
-        <p id="student_count" class="fs-5">生徒接続情報を読み込み中....</p>
-        <button id="logout_button" class="flow-button" onclick="disposeClass()">
-          クラスを終了
-        </button>
-        <button id="gas_Link" class="flow-button" onclick="sendToGAS()">
-          答えを書き出し
-        </button>
-        <br />
-        <button id="open-setting" class="flow-button m-2" onclick="showSettingModal()">
-          クラス設定
-        </button>
-      </div>
-      <div id="fileShare" class="p-1 rounded border shadow rounded m-3 bg-yellow position-relative">
-        <p class="fs-8 bg-yellow m-1" for="filePicker">
-          生徒への共有ファイルをアップロード
-        </p>
-        <div class="m-1">
-          <input type="file" class="form-control form-control-sm" id="filePicker" accept=".pdf" />
-          <button id="file-submit-button" class="fs-6 m-2 flow-button" onclick="uploadFile(filePicker.files[0])">
-            共有
+        <div
+          id="class_control"
+          class="p-3 rounded border shadow rounded m-3 bg-yellow"
+        >
+          <button
+            id="start-button"
+            class="flow-button"
+            onclick="startQuestion()"
+          >
+            問題の開始
+          </button>
+          <button id="end-button" class="flow-button" onclick="endQuestion()">
+            問題の終了
+          </button>
+          <p id="status" class="fs-5">現在:問題開始待ち</p>
+          <p id="student_count" class="fs-5">生徒接続情報を読み込み中....</p>
+          <button
+            id="logout_button"
+            class="flow-button"
+            onclick="disposeClass()"
+          >
+            クラスを終了
+          </button>
+          <button id="gas_Link" class="flow-button" onclick="sendToGAS()">
+            答えを書き出し
+          </button>
+          <br />
+          <button
+            id="open-setting"
+            class="flow-button m-2"
+            onclick="showSettingModal()"
+          >
+            クラス設定
           </button>
         </div>
+        <div
+          id="fileShare"
+          class="p-1 rounded border shadow rounded m-3 bg-yellow position-relative"
+        >
+          <p class="fs-8 bg-yellow m-1" for="filePicker">
+            生徒への共有ファイルをアップロード
+          </p>
+          <div class="m-1">
+            <input
+              type="file"
+              class="form-control form-control-sm"
+              id="filePicker"
+              accept=".pdf"
+            />
+            <button
+              id="file-submit-button"
+              class="fs-6 m-2 flow-button"
+              onclick="uploadFile(filePicker.files[0])"
+            >
+              共有
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="answersTableZone" onchange="getAnswersList()" class="col-md-4">
+        <select id="problemSelector" class="form-select">
+          <!--問題をここで選択-->
+        </select>
+        <table id="answerTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>生徒の名前</th>
+              <th>生徒の答え</th>
+            </tr>
+          </thead>
+          <tbody id="answersTableBody">
+            <!--ここに答えが入る-->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="studentListZone" class="col-md-4 mr-0">
+        <table id="stdList" class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th>接続日時</th>
+              <th>名前</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <!--ここに生徒のリストが入る-->
+          </tbody>
+        </table>
       </div>
     </div>
 
-    <div id="answersTableZone" onchange="getAnswersList()" class="col-md-4">
-      <select id="problemSelector" class="form-select">
-        <!--問題をここで選択-->
-      </select>
-      <table id="answerTable" class="table table-striped">
-        <thead>
-          <tr>
-            <th>生徒の名前</th>
-            <th>生徒の答え</th>
-          </tr>
-        </thead>
-        <tbody id="answersTableBody">
-          <!--ここに答えが入る-->
-        </tbody>
-      </table>
-    </div>
+    <div
+      class="modal fade"
+      id="settingModal"
+      tabindex="-1"
+      aria-labelledby="settingModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="settingModalLabel">クラスの設定</h5>
+          </div>
+          <div class="modal-body">
+            <h5 class="font-weight-bold">クラス管理画面設定</h5>
+            <input type="checkbox" id="display-clock" checked />時計を表示する
+            <br />
+            <br />
+            <h5 class="font-weight-bold">AIの使用設定</h5>
+            <select id="chat-llm-model-selector" class="form-select">
+              <option value="deny" selected>対話AIを許可しない</option>
+              <option value="gemini-pro">GeminiProの使用を許可する</option>
+              <option value="meta-llama">Meta-LLaMaの使用を許可する</option>
+            </select>
 
-    <div id="studentListZone" class="col-md-4 mr-0">
-      <table id="stdList" class="table table-striped mt-3">
-        <thead>
-          <tr>
-            <th>接続日時</th>
-            <th>名前</th>
-          </tr>
-        </thead>
-        <tbody id="studentsTableBody">
-          <!--ここに生徒のリストが入る-->
-        </tbody>
-      </table>
-    </div>
-  </div>
+            <br />
 
-  <div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="settingModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="settingModalLabel">クラスの設定</h5>
-        </div>
-        <div class="modal-body">
-          <h5 class="font-weight-bold">クラス管理画面設定</h5>
-          <input type="checkbox" id="display-clock" checked />時計を表示する
-          <br />
-          <br />
-          <h5 class="font-weight-bold">AIの使用設定</h5>
-          <select id="chat-llm-model-selector" class="form-select">
-            <option value="deny" selected>対話AIを許可しない</option>
-            <option value="gemini-pro">GeminiProの使用を許可する</option>
-            <option value="meta-llama">Meta-LLaMaの使用を許可する</option>
-          </select>
-
-          <br />
-
-          <h5 class="font-weight-bold">クラス設定</h5>
-          最大参加人数:
-          <input type="number" autocomplete="off" min="1" max="100" id="maximum-student-count" class="input-field"
-            required="true" value="100" />
-          <br />
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" id="modal-close-button" data-bs-dismiss="modal"
-            onclick="applySettingChanges()">
-            完了
-          </button>
+            <h5 class="font-weight-bold">クラス設定</h5>
+            最大参加人数:
+            <input
+              type="number"
+              autocomplete="off"
+              min="1"
+              max="100"
+              id="maximum-student-count"
+              class="input-field"
+              required="true"
+              value="100"
+            />
+            <br />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="modal-close-button"
+              data-bs-dismiss="modal"
+              onclick="applySettingChanges()"
+            >
+              完了
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
