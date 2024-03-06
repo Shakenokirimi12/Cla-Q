@@ -72,12 +72,12 @@ firebase.auth().onAuthStateChanged(async function (user) {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth()
-      .signInWithPopup(provider)
+      .signInWithRedirect(provider)
       .then((result) => {
         location.reload();
       })
       .catch(function (error) {
-        if (string(error).include("popup")) {
+        if (String(error).includes("popup")) {
           Swal.fire({
             html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
             title: "情報",
