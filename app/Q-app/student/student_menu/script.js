@@ -12,7 +12,7 @@ async function submitAnswer() {
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
         // Add your login logic here
-        var url = "https://student.api.cla-q.net/submit_answer";
+        var url = "https://api.cla-q.net/v2/student/submit_answer";
         var postData = {
           class_Code: class_Code,
           userName: userName,
@@ -186,7 +186,7 @@ function prevent_Overlogin() {
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     var isTeacher;
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -239,7 +239,7 @@ async function logOut() {
 }
 
 async function leaveClass() {
-  var url = "https://student.api.cla-q.net/leave";
+  var url = "https://api.cla-q.net/v2/student/leave";
   var postData = {
     userName: userName,
     userEmail: userEmail,
@@ -381,7 +381,7 @@ async function checkPDFExistance() {
 
 
 async function checkIsAIAllowed() {
-  var url = "https://student.api.cla-q.net/Class_Setitngs";
+  var url = "https://api.cla-q.net/v2/student/Class_Setitngs";
   var postData = {
     class_Code: class_Code,
   };

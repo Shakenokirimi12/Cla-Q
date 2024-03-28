@@ -12,7 +12,7 @@ async function sendToGAS() {
     showConfirmButton: false,
     timer: 3000,
   });
-  var url = "https://teacher.api.cla-q.net/export";
+  var url = "https://api.cla-q.net/v2/teacher/export";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -63,7 +63,7 @@ async function sendToGAS() {
 }
 
 async function startQuestion() {
-  var url = "https://teacher.api.cla-q.net/start_question";
+  var url = "https://api.cla-q.net/v2/teacher/start_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -143,7 +143,7 @@ async function startQuestion() {
 }
 
 async function endQuestion() {
-  var url = "https://teacher.api.cla-q.net/end_question";
+  var url = "https://api.cla-q.net/v2/teacher/end_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -227,7 +227,7 @@ async function executeEveryTwoSeconds() {
 
 async function getStudentsList() {
   console.log("生徒一覧を取得しています。");
-  var url = "https://teacher.api.cla-q.net/get_StudentsList";
+  var url = "https://api.cla-q.net/v2/teacher/get_StudentsList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -295,7 +295,7 @@ async function getAnswersList() {
   var comboBox = document.querySelector("#problemSelector");
   var selectedIndex = String(comboBox.selectedIndex + 1);
   console.log("答え一覧を取得しています。");
-  var url = "https://teacher.api.cla-q.net/get_AnswersList";
+  var url = "https://api.cla-q.net/v2/teacher/get_AnswersList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -388,7 +388,7 @@ async function disposeClass() {
     confirmButtontext: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
-      var url = "https://teacher.api.cla-q.net/inactivate_class";
+      var url = "https://api.cla-q.net/v2/teacher/inactivate_class";
       var postData = {
         class_Code: class_Code,
         userEmail: userEmail,
@@ -552,7 +552,7 @@ async function getClassInfo() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
-  var url = "https://teacher.api.cla-q.net/class_info";
+  var url = "https://api.cla-q.net/v2/teacher/class_info";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -656,7 +656,7 @@ function applySettingChanges(){
     MaximumStudent : maximumStudentCount,
     AIOption: chatAI_ModelOption
   };
-  var url = "https://teacher.api.cla-q.net/settings";
+  var url = "https://api.cla-q.net/v2/teacher/settings";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,

@@ -7,7 +7,7 @@ function handleKeyDown(event) {
 
 async function student_Join() {
   var class_Code = document.querySelector("#class-code-input").value;
-  var url = "https://student.api.cla-q.net/join";
+  var url = "https://api.cla-q.net/v2/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -152,7 +152,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     userName = user.displayName;
     userEmail = user.email;
     var isTeacher;
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,

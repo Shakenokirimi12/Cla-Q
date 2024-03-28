@@ -70,7 +70,7 @@ async function uploadFile(file) {
 }
 
 async function reserve_class(file) {
-  var url = "https://teacher.api.cla-q.net/reserve_class";
+  var url = "https://api.cla-q.net/v2/teacher/reserve_class";
   var postData = {
     userEmail: userEmail,
     userName: userName,
