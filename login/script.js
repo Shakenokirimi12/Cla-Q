@@ -81,13 +81,13 @@ firebase.auth().onAuthStateChanged(async function (user) {
           Swal.fire({
             html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
             title: "情報",
-            icon: "info",
+            icon: "error",
           });
         } else {
           Swal.fire({
             html: "Googleログインに失敗しました。<br>内部エラー:" + error,
             title: "情報",
-            icon: "info",
+            icon: "error",
           });
         }
       });
