@@ -143,7 +143,7 @@ window.onload = async function () {
       icon: "error",
       timer: 1500,
     }).then((result) => {
-      window.location.href = "../../student_start";
+      window.location.href = "../../student_join";
     });
   }
   await mobileRedirect();
@@ -213,7 +213,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
-          window.location.href = "../../../teacher/teacher_start";
+          window.location.href = "../../../teacher/teacher_join";
         }
         // ログイン時
         // Update the user information display
@@ -273,7 +273,7 @@ async function leaveClass() {
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
-            window.location.href = "../../student_start";
+            window.location.href = "../../student_join";
           });
         } else {
           //レスポン失敗
@@ -290,7 +290,7 @@ async function leaveClass() {
               showConfirmButton: false,
               timer: 1500, //3秒経過後に閉じる
             }).then((result) => {
-              window.location.href = "../../student_start";
+              window.location.href = "../../student_join";
             });
           } else {
             Swal.fire({

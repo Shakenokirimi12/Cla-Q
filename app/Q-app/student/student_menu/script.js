@@ -144,7 +144,7 @@ window.onload = async function () {
       icon: "error",
       timer: 1500,
     }).then((result) => {
-      window.location.href = "../../student/student_start";
+      window.location.href = "../../student/student_join";
     });
   }
   await mobileRedirect();
@@ -216,7 +216,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       .finally(() => {
         console.log(isTeacher);
         if (isTeacher) {
-          window.location.href = "../../teacher/teacher_start";
+          window.location.href = "../../teacher/teacher_join";
         }
         document.querySelector("#user_Name").innerHTML = user.displayName;
         document.querySelector("#user_Email").innerHTML =
@@ -267,7 +267,7 @@ async function leaveClass() {
             timer: 1500,
           }).then((result) => {
             document.cookie = "class_Code=; path=/;";
-            window.location.href = "../student_start";
+            window.location.href = "../student_join";
           });
         } else {
           console.log("データエラー。successが返されなかった。");
@@ -283,7 +283,7 @@ async function leaveClass() {
               showConfirmButton: false,
               timer: 1500,
             }).then((result) => {
-              window.location.href = "../student_start";
+              window.location.href = "../student_join";
             });
           } else {
             Swal.fire({

@@ -196,7 +196,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       .catch((error) => { })
       .finally(() => {
         if (isStudent) {
-          window.location.href = "../../student/student_start";
+          window.location.href = "../../student/student_join";
         } else {
           var userInfoElement = document.querySelector(".user-info");
           userInfoElement.innerHTML =
@@ -217,7 +217,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
 });
 
 function back() {
-  window.location.href = "../teacher_start";
+  window.location.href = "../teacher_join";
 }
 
 function logOut() {

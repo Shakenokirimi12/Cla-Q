@@ -52,7 +52,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             window.location.href =
-              default_destination + "/teacher/teacher_start";
+              default_destination + "/teacher/teacher_join";
           });
         } else {
           Swal.fire({
@@ -63,7 +63,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             timer: 1500, //3秒経過後に閉じる
           }).then((result) => {
             window.location.href =
-              default_destination + "/student/student_start";
+              default_destination + "/student/student_join";
           });
         }
       })

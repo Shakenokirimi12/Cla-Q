@@ -209,7 +209,7 @@ window.onload = async function () {
       icon: "error",
       timer: 1500,
     }).then((result) => {
-      window.location.href = "../teacher_start";
+      window.location.href = "../teacher_join";
     });
   }
   await redirectMobile();
@@ -418,7 +418,7 @@ async function disposeClass() {
                     showConfirmButton: false,
                     timer: 1500,
                   }).then((result) => {
-                    window.location.href = "../teacher_start";
+                    window.location.href = "../teacher_join";
                   });
                 }
                 else if (responseresult.status_Code == "ICE-13") {
@@ -429,7 +429,7 @@ async function disposeClass() {
                     showConfirmButton: false,
                     timer: 1500,
                   }).then((result) => {
-                    window.location.href = "../teacher_start";
+                    window.location.href = "../teacher_join";
                   });
                 } else {
                   Swal.fire({
@@ -608,7 +608,7 @@ async function getClassInfo() {
               title: "エラー",
               icon: "error",
             });
-            window.location.href = "../teacher_start"
+            window.location.href = "../teacher_join"
           }
         }
         catch (error) {
@@ -698,7 +698,7 @@ function applySettingChanges(){
               title: "エラー",
              icon: "error",
             });
-            window.location.href = "../teacher_start"
+            window.location.href = "../teacher_join"
           }
         }
         catch (error) {
@@ -778,7 +778,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       .catch((error) => { })
       .finally(() => {
         if (isStudent) {
-          window.location.href = "../../student/student_start";
+          window.location.href = "../../student/student_join";
         }
         document.querySelector("#user_info").innerHTML =
           user.displayName + "(" + user.email + ")";

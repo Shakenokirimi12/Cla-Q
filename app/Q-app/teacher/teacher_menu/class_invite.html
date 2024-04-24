@@ -88,14 +88,14 @@
         )[1];
         class_Code = value;
         if (class_Code == "" || class_Code == undefined) {
-          window.location.href = "/teacher/teacher_start";
+          window.location.href = "/teacher/teacher_join";
         }
         await redirectMobile();
         await preventOverLogin();
         document.getElementById("class-code").innerHTML =
           "クラスコード:" + class_Code;
         document.getElementById("qr").src =
-          "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net/app/Q-app/student/student_start?class_Code=" +
+          "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://app.cla-q.net/app/Q-app/student/student_join?class_Code=" +
           class_Code;
       };
 
@@ -131,7 +131,7 @@
         if (user) {
           // ログイン時
           if (user.email.includes("_")) {
-            window.location.href = "/student/student_start";
+            window.location.href = "/student/student_join";
           }
           // Update the user information display
           document.getElementById("mail_address").innerHTML = user.email;
