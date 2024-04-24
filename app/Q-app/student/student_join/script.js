@@ -39,7 +39,7 @@ async function student_Join() {
               showConfirmButton: false,
               timer: 1500,
             }).then((result) => {
-              window.location.href = "../student_menu";
+              window.location.href = "../student_board";
             });
           } else {
             if (responseresult.status_Code == undefined) {

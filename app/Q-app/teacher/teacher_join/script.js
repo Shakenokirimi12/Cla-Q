@@ -38,7 +38,7 @@ async function startClass() {
               showConfirmButton: false,
               timer: 1500, 
             }).then((result) => {
-              window.location.href = "../teacher_menu";
+              window.location.href = "../teacher_board";
             });
           } else {
             Swal.fire({
@@ -110,7 +110,7 @@ async function teacher_Rejoin() {
               showConfirmButton: false,
               timer: 1500, 
             }).then((result) => {
-              window.location.href = "../teacher_menu";
+              window.location.href = "../teacher_board";
             });
           } else {
             Swal.fire({
