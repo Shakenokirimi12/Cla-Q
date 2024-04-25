@@ -166,7 +166,7 @@ var userName, userEmail;
 firebase.auth().onAuthStateChanged(async function (user) {
   var isStudent;
   if (user) {
-    var url = "https://api.cla-q.net/detect_role";
+    var url = "https://api.cla-q.net/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,

@@ -2,30 +2,25 @@ const default_destination = "/app/Q-app";
 //一生反映されないので追加
 
 firebase.auth().onAuthStateChanged(async function (user) {
-  if (user) {
-    console.log(user);
-    location.href = "../login_success";
-  } else {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithRedirect(provider)
-      .catch(function (error) {
-        if (String(error).includes("popup")) {
-          Swal.fire({
-            html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
-            title: "情報",
-            icon: "error",
-          });
-        } else {
-          Swal.fire({
-            html: "Googleログインに失敗しました。<br>内部エラー:" + error,
-            title: "情報",
-            icon: "error",
-          });
-        }
-      });
-  }
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase
+    .auth()
+    .signInWithRedirect(provider)
+    .catch(function (error) {
+      if (String(error).includes("popup")) {
+        Swal.fire({
+          html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
+          title: "情報",
+          icon: "error",
+        });
+      } else {
+        Swal.fire({
+          html: "Googleログインに失敗しました。<br>内部エラー:" + error,
+          title: "情報",
+          icon: "error",
+        });
+      }
+    });
 });
 
 firebase.auth()
