@@ -1,81 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <title>Cla-Qにログイン</title>
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="no-cache" />
-    <meta charset="utf-8" />
-    <!--vue javascript area-->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-    <!--vue javascript area-->
 
-    <!--sweet alert area-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!--sweet alert area-->
+<head>
+  <title>Cla-Qにログイン</title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta charset="utf-8" />
+  <!--vue javascript area-->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <!--vue javascript area-->
 
-    <!--firebase authentication javascript area-->
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
-    />
-    <script src="/src/firebase_config.js"></script>
-    <!--firebase authentication javascript area-->
+  <!--sweet alert area-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!--sweet alert area-->
 
-    <!--normal javascript area-->
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-    <!--normal javascript area-->
+  <!--firebase authentication javascript area-->
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <script src="/src/firebase_config.js"></script>
+  <!--firebase authentication javascript area-->
 
-    <!--Bootstrap5 javascript and css area-->
-    <script src="/src/bootstrap/bootstrap.js"></script>
-    <link rel="stylesheet" href="/src/bootstrap/bootstrap.css" />
-    <!--Bootstrap5 javascript and css area-->
+  <!--normal javascript area-->
+  <script src="./script.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+  <!--normal javascript area-->
 
-    <!--noto sans font area-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
-      rel="stylesheet"
-    />
-    <!--noto sans font area-->
+  <!--Bootstrap5 javascript and css area-->
+  <script src="/src/bootstrap/bootstrap.js"></script>
+  <link rel="stylesheet" href="/src/bootstrap/bootstrap.css" />
+  <!--Bootstrap5 javascript and css area-->
 
-    <!--typewritten text js and css area-->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@auroratide/typewritten-text/lib/style.css"
-    />
-    <script
-      type="module"
-      src="https://unpkg.com/@auroratide/typewritten-text/lib/define.js"
-    ></script>
-    <!--typewritten text js and css area-->
-  </head>
+  <!--noto sans font area-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet" />
+  <!--noto sans font area-->
 
-  <body style="height: 100%">
-    <span class="version">Version: Stable v3.2.0_BootStrap</span>
-    <a class="status" href="https://status.cla-q.net/" target="_blank"
-      >障害発生情報</a
-    >
-    <div class="row h-100 w-100">
-      <div
-        id="login-header"
-        class="col-md-12 d-flex align-items-center justify-content-center"
-      >
-        <p>
-          <typewritten-text class="fs-2"
-            >Cla-Qにログイン</typewritten-text
-          >
-          <br />
-          <typewritten-text class="fs-4"
-            >読み込み中です...</typewritten-text
-          >
-        </p>
-      </div>
+  <!--typewritten text js and css area-->
+  <link rel="stylesheet" href="https://unpkg.com/@auroratide/typewritten-text/lib/style.css" />
+  <script type="module" src="https://unpkg.com/@auroratide/typewritten-text/lib/define.js"></script>
+  <!--typewritten text js and css area-->
+</head>
+
+<body style="height: 100%">
+  <span class="version">Version: Stable v3.2.0_BootStrap</span>
+  <a class="status" href="https://status.cla-q.net/" target="_blank">障害発生情報</a>
+  <div class="row h-100 w-100">
+    <div id="login-header" class="col-md-12 d-flex align-items-center justify-content-center">
+      <p>
+        <typewritten-text class="fs-2">Cla-Qにログイン</typewritten-text>
+        <br />
+        <br />
+        <button type="button" class="flow-button" onclick="onStartClick()">Cla-Qをはじめる</button>
+      </p>
+      <br />
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

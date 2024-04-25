@@ -1,7 +1,6 @@
 const default_destination = "/app/Q-app";
 //一生反映されないので追加
-
-firebase.auth().onAuthStateChanged(async function (user) {
+function onStartClick() {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase
     .auth()
@@ -21,11 +20,12 @@ firebase.auth().onAuthStateChanged(async function (user) {
         });
       }
     });
-});
+}
 
 firebase.auth()
   .getRedirectResult()
   .then((result) => {
+    document.querySelector("#")
     if (result.credential) {
       /** @type {firebase.auth.OAuthCredential} */
       var credential = result.credential;
@@ -35,7 +35,6 @@ firebase.auth()
       // ...
       console.log(result);
       location.href = "../login_success";
-
     }
     // The signed-in user info.
     var user = result.user;
@@ -63,23 +62,3 @@ window.onload = function () {
     location.href = "../mobile";
   }
 };
-
-function logOut() {
-  firebase
-    .auth()
-    .signOut()
-    .then(function () {
-      Swal.fire({
-        html: "<strong>ログアウトしました。</strong><br>ログイン画面に戻ります。",
-        title: "情報",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500, //3秒経過後に閉じる
-      }).finally((result) => {
-        location.reload();
-      });
-    });
-}
-
-const sleep = (waitTime) =>
-  new Promise((resolve) => setTimeout(resolve, waitTime));
