@@ -3,6 +3,7 @@ const default_destination = "/app/Q-app";
 
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
+    console.log(user);
     location.href = "../login_success";
   } else {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -26,6 +27,35 @@ firebase.auth().onAuthStateChanged(async function (user) {
       });
   }
 });
+
+firebase.auth()
+  .getRedirectResult()
+  .then((result) => {
+    if (result.credential) {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // ...
+      location.href = "../login_success";
+
+    }
+    // The signed-in user info.
+    var user = result.user;
+    // IdP data available in result.additionalUserInfo.profile.
+    // ...
+
+  }).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
 
 window.onload = function () {
   if (
@@ -54,5 +84,6 @@ function logOut() {
       });
     });
 }
+
 const sleep = (waitTime) =>
   new Promise((resolve) => setTimeout(resolve, waitTime));

@@ -80,6 +80,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       title: "情報",
       icon: "error",
     });
+    location.href = "../login";
   }
 });
 
