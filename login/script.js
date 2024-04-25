@@ -6,6 +6,7 @@ function onStartClick() {
     .auth()
     .signInWithRedirect(provider)
     .catch(function (error) {
+      console.log(error);
       if (String(error).includes("popup")) {
         Swal.fire({
           html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
@@ -25,7 +26,7 @@ function onStartClick() {
 firebase.auth()
   .getRedirectResult()
   .then((result) => {
-    document.querySelector("#")
+    console.log(result);
     if (result.credential) {
       /** @type {firebase.auth.OAuthCredential} */
       var credential = result.credential;
@@ -36,6 +37,7 @@ firebase.auth()
       console.log(result);
       location.href = "../login_success";
     }
+    location.href = "../login_success";
     // The signed-in user info.
     var user = result.user;
     // IdP data available in result.additionalUserInfo.profile.
