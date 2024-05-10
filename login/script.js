@@ -42,6 +42,7 @@ firebase.auth()
       location.href = "../login_success";
     }
     if (result == null) {
+      console.log("user was null.");
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
@@ -81,6 +82,7 @@ firebase.auth()
     var email = error.email;
     // The firebase.auth.AuthCredential type that was used.
     var credential = error.credential;
+    console.log(error);
     // ...
   });
 
