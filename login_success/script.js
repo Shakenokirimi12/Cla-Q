@@ -72,6 +72,8 @@ firebase.auth().onAuthStateChanged(async function (user) {
           html: "Googleログインに失敗しました。<br>内部エラー:" + error,
           title: "情報",
           icon: "error",
+        }).then((result) => {
+          location.href = "../login";
         });
       });
   } else {
@@ -79,8 +81,9 @@ firebase.auth().onAuthStateChanged(async function (user) {
       html: "Googleログインに失敗しました。再度試してください。",
       title: "情報",
       icon: "error",
+    }).then((result) => {
+      location.href = "../login";
     });
-    location.href = "../login";
   }
 });
 
