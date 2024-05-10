@@ -223,8 +223,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
             user.displayName +
             "</p><p>" +
             user.email +
-            "</p><button id='logout_button' onclick='logOut()'>ログアウト</button>";
-          let screenLock = document.querySelector("#screenLock");
+            "</p>";
           screenLock.parentNode.removeChild(screenLock);
           userName = user.displayName;
           userEmail = user.email;

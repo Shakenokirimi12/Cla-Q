@@ -41,7 +41,7 @@ firebase.auth()
       console.log(result);
       location.href = "../login_success";
     }
-    else{
+    else {
       console.log("user was null.");
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase
