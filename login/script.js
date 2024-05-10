@@ -42,29 +42,7 @@ firebase.auth()
       location.href = "../login_success";
     }
     if (result == null) {
-      firebase
-        .auth()
-        .signInWithRedirect(provider)
-        .catch(function (error) {
-          console.log(error);
-          if (String(error).includes("popup")) {
-            Swal.fire({
-              html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
-              title: "情報",
-              icon: "error",
-            }).then((result) => {
-              window.location.href = "./";
-            });
-          } else {
-            Swal.fire({
-              html: "Googleログインに失敗しました。<br>内部エラー:" + error,
-              title: "情報",
-              icon: "error",
-            }).then((result) => {
-              window.location.href = "./";
-            });
-          }
-        });
+      firebase.auth().signInWithRedirect(provider);
     }
     // The signed-in user info.
     var user = result.user;
