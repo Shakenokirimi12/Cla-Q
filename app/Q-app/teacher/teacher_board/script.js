@@ -87,7 +87,7 @@ async function startQuestion() {
             console.log("Successfully started the question");
             console.log(responseresult.question_Number);
             var questionnumber = responseresult.question_Number;
-            document.querySelector("#status").innerHTML ="現在:" + questionnumber + "問目実施中";
+            document.querySelector("#status").innerHTML = "現在:" + questionnumber + "問目実施中";
             var select = document.querySelector("#problemSelector");
             if (select.options.length === 0) {
               if (questionnumber !== 1) {
@@ -432,11 +432,24 @@ async function disposeClass() {
                     window.location.href = "../teacher_join";
                   });
                 } else {
-                  Swal.fire({
-                    html: "<strong>クラスを終了できませんでした。</strong><br>(ErrorCode:" + responseresult.status_Code +")",
-                    title: "エラー",
-                    icon: "error",
-                  });
+                  if (responseresult.status_Code == "ICE-14") {
+                    wal.fire({
+                      html: "<strong>このクラスを閉じることはできません。</strong><br>クラス参加画面に戻ります。",
+                      title: "情報",
+                      icon: "info",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    }).then((result) => {
+                      window.location.href = "../teacher_join";
+                    });
+                  }
+                  else {
+                    Swal.fire({
+                      html: "<strong>クラスを終了できませんでした。</strong><br>(ErrorCode:" + responseresult.status_Code + ")",
+                      title: "エラー",
+                      icon: "error",
+                    });
+                  }
                 }
               }
             } catch (error) {
@@ -637,23 +650,23 @@ async function getClassInfo() {
 //Start
 //For-Setting-Modal-Window
 
-function showSettingModal(){
+function showSettingModal() {
   const settingModal = new bootstrap.Modal(document.getElementById('settingModal'));
   settingModal.show();
 }
 
-function applySettingChanges(){
+function applySettingChanges() {
   var showClockOption = document.querySelector("#display-clock").checked;
-  if(showClockOption){
+  if (showClockOption) {
     document.querySelector("#currentTime").style.display = "block";
   }
-  else{
+  else {
     document.querySelector("#currentTime").style.display = "none";
   }
   var maximumStudentCount = document.querySelector("#maximum-student-count").value;
   var chatAI_ModelOption = document.querySelector("#chat-llm-model-selector").value;
   var settingjson = {
-    MaximumStudent : maximumStudentCount,
+    MaximumStudent: maximumStudentCount,
     AIOption: chatAI_ModelOption
   };
   var url = "https://api.cla-q.net/v2/teacher/settings";
@@ -696,7 +709,7 @@ function applySettingChanges(){
               showConfirmButton: false,
               timer: 1000,
               title: "エラー",
-             icon: "error",
+              icon: "error",
             });
             window.location.href = "../teacher_join"
           }
@@ -733,7 +746,7 @@ function applySettingChanges(){
   }
 }
 
-function applyClassSettingToMenu(){
+function applyClassSettingToMenu() {
 
 }
 
