@@ -30,7 +30,7 @@ function onStartClick() {
 firebase.auth()
   .getRedirectResult()
   .then((result) => {
-    console.log(result);
+    console.log(result, "this is the result.");
     if (result.credential) {
       /** @type {firebase.auth.OAuthCredential} */
       var credential = result.credential;
@@ -41,7 +41,31 @@ firebase.auth()
       console.log(result);
       location.href = "../login_success";
     }
-    location.href = "../login_success";
+    if (result == null) {
+      firebase
+        .auth()
+        .signInWithRedirect(provider)
+        .catch(function (error) {
+          console.log(error);
+          if (String(error).includes("popup")) {
+            Swal.fire({
+              html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
+              title: "情報",
+              icon: "error",
+            }).then((result) => {
+              window.location.href = "./";
+            });
+          } else {
+            Swal.fire({
+              html: "Googleログインに失敗しました。<br>内部エラー:" + error,
+              title: "情報",
+              icon: "error",
+            }).then((result) => {
+              window.location.href = "./";
+            });
+          }
+        });
+    }
     // The signed-in user info.
     var user = result.user;
     // IdP data available in result.additionalUserInfo.profile.
