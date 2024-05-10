@@ -431,35 +431,33 @@ async function disposeClass() {
                   }).then((result) => {
                     window.location.href = "../teacher_join";
                   });
+                } else if (responseresult.status_Code == "ICE-14") {
+                  wal.fire({
+                    html: "<strong>このクラスを閉じることはできません。</strong><br>クラス参加画面に戻ります。",
+                    title: "情報",
+                    icon: "info",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  }).then((result) => {
+                    window.location.href = "../teacher_join";
+                  });
                 } else {
-                  if (responseresult.status_Code == "ICE-14") {
-                    wal.fire({
-                      html: "<strong>このクラスを閉じることはできません。</strong><br>クラス参加画面に戻ります。",
-                      title: "情報",
-                      icon: "info",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    }).then((result) => {
-                      window.location.href = "../teacher_join";
-                    });
-                  }
-                  else {
-                    Swal.fire({
-                      html: "<strong>クラスを終了できませんでした。</strong><br>(ErrorCode:" + responseresult.status_Code + ")",
-                      title: "エラー",
-                      icon: "error",
-                    });
-                  }
+                  Swal.fire({
+                    html: "<strong>クラスを終了できませんでした。</strong><br>(ErrorCode:" + responseresult.status_Code + ")",
+                    title: "エラー",
+                    icon: "error",
+                  });
                 }
               }
             } catch (error) {
+              console.log(error);
               console.log("レスポンス解析中にエラー発生。レスポンスは以下です。")
               console.log(data)
             }
           })
           .catch((error) => {
             Swal.fire({
-              html: "<strong>ログインできませんでした。</strong>",
+              html: "<strong>捜査を完了できませんでした。</strong>" + error,
               title: "エラー",
               icon: "error",
             });
