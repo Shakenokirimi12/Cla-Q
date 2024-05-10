@@ -388,7 +388,7 @@ async function disposeClass() {
     confirmButtontext: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
-      var url = "https://api.cla-q.net/v2/teacher/inactivate_class";
+      var url = "https://api.cla-q.net/v2/teacher/delete_class";
       var postData = {
         class_Code: class_Code,
         userEmail: userEmail,
