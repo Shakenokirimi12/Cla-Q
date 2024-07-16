@@ -12,16 +12,12 @@ function onStartClick() {
           html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
           title: "情報",
           icon: "error",
-        }).then((result) => {
-          window.location.href = "./";
         });
       } else {
         Swal.fire({
           html: "Googleログインに失敗しました。<br>内部エラー:" + error,
           title: "情報",
           icon: "error",
-        }).then((result) => {
-          window.location.href = "./";
         });
       }
     });
@@ -54,16 +50,12 @@ firebase.auth()
               html: "Googleログインに失敗しました。<br>画面右上のポップアップ設定を許可してください。<br>内部エラー:" + error,
               title: "情報",
               icon: "error",
-            }).then((result) => {
-              window.location.href = "./";
             });
           } else {
             Swal.fire({
               html: "Googleログインに失敗しました。<br>内部エラー:" + error,
               title: "情報",
               icon: "error",
-            }).then((result) => {
-              window.location.href = "./";
             });
           }
         });
