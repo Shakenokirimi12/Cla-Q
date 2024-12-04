@@ -12,7 +12,7 @@ async function sendToGAS() {
     showConfirmButton: false,
     timer: 3000,
   });
-  var url = "https://api.cla-q.net/v2/teacher/export";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/export";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -22,7 +22,7 @@ async function sendToGAS() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -63,7 +63,7 @@ async function sendToGAS() {
 }
 
 async function startQuestion() {
-  var url = "https://api.cla-q.net/v2/teacher/start_question";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/start_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -74,7 +74,7 @@ async function startQuestion() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -143,7 +143,7 @@ async function startQuestion() {
 }
 
 async function endQuestion() {
-  var url = "https://api.cla-q.net/v2/teacher/end_question";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/end_question";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -154,7 +154,7 @@ async function endQuestion() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -227,7 +227,7 @@ async function executeEveryTwoSeconds() {
 
 async function getStudentsList() {
   console.log("生徒一覧を取得しています。");
-  var url = "https://api.cla-q.net/v2/teacher/get_StudentsList";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/get_StudentsList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -238,7 +238,7 @@ async function getStudentsList() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -295,7 +295,7 @@ async function getAnswersList() {
   var comboBox = document.querySelector("#problemSelector");
   var selectedIndex = String(comboBox.selectedIndex + 1);
   console.log("答え一覧を取得しています。");
-  var url = "https://api.cla-q.net/v2/teacher/get_AnswersList";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/get_AnswersList";
   var postData = {
     userEmail: userEmail,
     userName: userName,
@@ -307,7 +307,7 @@ async function getAnswersList() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -388,7 +388,7 @@ async function disposeClass() {
     confirmButtontext: "続行",
   }).then((result) => {
     if (result.isConfirmed) {
-      var url = "https://api.cla-q.net/v2/teacher/delete_class";
+      var url = "https://api.cla-q.shakenokiri.me/v2/teacher/delete_class";
       var postData = {
         class_Code: class_Code,
         userEmail: userEmail,
@@ -399,7 +399,7 @@ async function disposeClass() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Origin: "https://cla-q.net/",
+            Origin: "https://cla-q.shakenokiri.me/",
           },
           body: JSON.stringify(postData),
         })
@@ -491,7 +491,7 @@ function showClock() {
 async function uploadFile(file) {
   const formData = new FormData();
   formData.append("file", file);
-  fetch("https://pdf.api.cla-q.net/" + class_Code + "-" + file.name, {
+  fetch("https://pdf.api.cla-q.shakenokiri.me/" + class_Code + "-" + file.name, {
     method: "POST",
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -563,7 +563,7 @@ async function getClassInfo() {
   const key = "class_Code";
   const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
   var class_Code = value;
-  var url = "https://api.cla-q.net/v2/teacher/class_info";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/class_info";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -573,7 +573,7 @@ async function getClassInfo() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -667,7 +667,7 @@ function applySettingChanges() {
     MaximumStudent: maximumStudentCount,
     AIOption: chatAI_ModelOption
   };
-  var url = "https://api.cla-q.net/v2/teacher/settings";
+  var url = "https://api.cla-q.shakenokiri.me/v2/teacher/settings";
   var postData = {
     class_Code: class_Code,
     userEmail: userEmail,
@@ -678,7 +678,7 @@ function applySettingChanges() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -759,7 +759,7 @@ function applyClassSettingToMenu() {
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
     var isStudent;
-    var url = "https://api.cla-q.net/v2/system/detect_role";
+    var url = "https://api.cla-q.shakenokiri.me/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -768,7 +768,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })

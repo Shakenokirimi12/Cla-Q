@@ -3,7 +3,7 @@ const default_destination = "/app/Q-app";
 
 firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    var url = "https://api.cla-q.net/v2/system/detect_role";
+    var url = "https://api.cla-q.shakenokiri.me/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -12,7 +12,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),

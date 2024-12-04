@@ -12,7 +12,7 @@ async function submitAnswer() {
         const value = document.cookie.match(new RegExp(key + "=([^;]*);*"))[1];
         var class_Code = value;
         // Add your login logic here
-        var url = "https://api.cla-q.net/v2/student/submit_answer";
+        var url = "https://api.cla-q.shakenokiri.me/v2/student/submit_answer";
         var postData = {
           class_Code: class_Code,
           userName: userName,
@@ -24,7 +24,7 @@ async function submitAnswer() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Origin: "https://cla-q.net/",
+              Origin: "https://cla-q.shakenokiri.me/",
               // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
             },
             body: JSON.stringify(postData),
@@ -185,7 +185,7 @@ firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     var isTeacher; //boolean
     //教師か検知
-    var url = "https://api.cla-q.net/v2/system/detect_role";
+    var url = "https://api.cla-q.shakenokiri.me/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -194,7 +194,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -245,7 +245,7 @@ async function logOut() {
 //以下workers
 async function leaveClass() {
   // Add your login logic here
-  var url = "https://api.cla-q.net/v2/student/leave";
+  var url = "https://api.cla-q.shakenokiri.me/v2/student/leave";
   var postData = {
     userName: userName,
     userEmail: userEmail,
@@ -255,7 +255,7 @@ async function leaveClass() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
         // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
       },
       body: JSON.stringify(postData),
@@ -347,7 +347,7 @@ function showClock() {
 }
 
 async function checkIsAIAllowed() {
-  var url = "https://api.cla-q.net/v2/student/Class_Setitngs";
+  var url = "https://api.cla-q.shakenokiri.me/v2/student/Class_Setitngs";
   var postData = {
     class_Code: class_Code,
   };
@@ -355,7 +355,7 @@ async function checkIsAIAllowed() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Origin: "https://cla-q.net/",
+      Origin: "https://cla-q.shakenokiri.me/",
       // 追加: カスタムヘッダーや認証情報などが必要な場合はここに追加
     },
     body: JSON.stringify(postData),
@@ -368,10 +368,10 @@ async function checkIsAIAllowed() {
       if (responseresult.result == "success") {
         if (classSetting.AIOption == "gemini-pro") {
           var chatzone = document.querySelector("#chatzone");
-          chatzone.src = "https://app.cla-q.net/app/ChatAI/gemini-pro";
+          chatzone.src = "https://app.cla-q.shakenokiri.me/app/ChatAI/gemini-pro";
         } else if (classSetting.AIOption == "meta-llama") {
           var chatzone = document.querySelector("#chatzone");
-          chatzone.src = "https://app.cla-q.net/app/ChatAI/meta-llama";
+          chatzone.src = "https://app.cla-q.shakenokiri.me/app/ChatAI/meta-llama";
         } else {
           Swal.fire({
             html: "<strong>このクラスではChatAIが有効ではありません。</strong><br>通常の解答画面に戻ります。",

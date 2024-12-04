@@ -7,4 +7,4 @@ Using Cla-Q,
 - Students Can
 - - Send answers to teachers.
 # How to use?
-Access "app.cla-q.net"
+Access "app.cla-q.shakenokiri.me"

@@ -7,7 +7,7 @@ function handleKeyDown(event) {
 
 async function student_Join() {
   var class_Code = document.querySelector("#class-code-input").value;
-  var url = "https://api.cla-q.net/v2/student/join";
+  var url = "https://api.cla-q.shakenokiri.me/v2/student/join";
   var postData = {
     class_Code: class_Code,
     userName: userName,
@@ -19,7 +19,7 @@ async function student_Join() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })
@@ -111,7 +111,7 @@ window.onload = function () {
   prevent_Overlogin();
   Swal.fire({
     title: "お知らせ",
-    html: '開発履歴などは<a href="https://dev.cla-q.net/" target="_blank">こちら</a><br>開発ブログは<a href="https://blog.cla-q.net/" target="_blank">こちら</a>',
+    html: '開発履歴などは<a href="https://dev.cla-q.shakenokiri.me/" target="_blank">こちら</a><br>開発ブログは<a href="https://blog.cla-q.shakenokiri.me/" target="_blank">こちら</a>',
     icon: "info",
     toast: true,
     position: "top-end",
@@ -152,7 +152,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     userName = user.displayName;
     userEmail = user.email;
     var isTeacher;
-    var url = "https://api.cla-q.net/v2/system/detect_role";
+    var url = "https://api.cla-q.shakenokiri.me/v2/system/detect_role";
     var postData = {
       userEmail: user.email,
       userName: user.displayName,
@@ -161,7 +161,7 @@ firebase.auth().onAuthStateChanged(function (user) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: "https://cla-q.net/",
+        Origin: "https://cla-q.shakenokiri.me/",
       },
       body: JSON.stringify(postData),
     })

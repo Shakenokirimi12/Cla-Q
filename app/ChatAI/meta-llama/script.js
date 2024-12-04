@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             responseDiv.innerHTML += `<div class="user-message">${userMessage}</div>`;
             
             // APIにリクエストを送信
-            const response = await fetch(`https://api.chatai.cla-q.net/?prompt=${encodeURIComponent(userMessage)}&model=fb-llama`);
+            const response = await fetch(`https://api.chatai.cla-q.shakenokiri.me/?prompt=${encodeURIComponent(userMessage)}&model=fb-llama`);
             const data = await response.json();
             
             if (data.length > 0) {
